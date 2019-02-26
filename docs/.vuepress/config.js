@@ -60,9 +60,12 @@ module.exports = {
                     ]
                 }
             ],
-            '/outils/': [
-
-            ],
+            '/outils/': [{
+                title: '工具',
+                children: [
+                    '/outils/terminal/command', // 终端命令
+                ]
+            }],
             '/work/': [{
                 title: '面试',
                 children: [
