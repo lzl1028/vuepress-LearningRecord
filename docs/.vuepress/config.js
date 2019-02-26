@@ -22,7 +22,8 @@ module.exports = {
         // 导航栏配置
         nav: [
             { text: '前端积累', link: '/accumulate/' }, // 内部链接 以docs为根目录
-            { text: '工具函数', link: 'outils' },
+            { text: '工具函数', link: '/outils/' },
+            { text: '工作', link: '/work/' },
             { text: '博客', link: 'https://lzl1028.github.io/' }, // 外部链接
             // 下拉列表
             {
@@ -55,12 +56,19 @@ module.exports = {
                     children: [
                         '/accumulate/browser/work', // 浏览器工作原理
                         '/accumulate/browser/compatibility', // H5 键盘兼容性
+                        '/accumulate/browser/request', // 向服务端发送请求方式
                     ]
                 }
             ],
-            'outils': [
+            '/outils/': [
 
-            ]
+            ],
+            '/work/': [{
+                title: '面试',
+                children: [
+                    '/work/interview/question', //面试题
+                ]
+            }]
         }
     }
 };
