@@ -24,12 +24,13 @@ module.exports = {
             { text: '前端积累', link: '/accumulate/' }, // 内部链接 以docs为根目录
             { text: '工具函数', link: '/outils/' },
             { text: '工作', link: '/work/' },
-            { text: '博客', link: 'https://lzl1028.github.io/' }, // 外部链接
+            { text: '实例', link: '/example/' },
             // 下拉列表
             {
-                text: 'GitHub',
+                text: '更多',
                 items: [
                     { text: 'GitHub地址', link: 'https://github.com/lzl1028' },
+                    { text: '博客', link: 'https://lzl1028.github.io/' }, // 外部链接
                     // {
                     //     text: '算法仓库',
                     //     link: 'https://github.com/OBKoro1/Brush_algorithm'
@@ -60,6 +61,11 @@ module.exports = {
                         '/accumulate/browser/store', // 前端本地存储
                         '/accumulate/browser/statusCode', // 具有代表性的 HTTP 状态码
                     ]
+                }, {
+                    title: 'CSS',
+                    children: [
+                        // '/accumulate/css/intro'
+                    ]
                 }
             ],
             '/outils/': [{
@@ -72,6 +78,12 @@ module.exports = {
                 title: '面试',
                 children: [
                     '/work/interview/question', //面试题
+                ]
+            }],
+            '/example/': [{
+                title: 'CSS',
+                children: [
+                    '/example/css/descartes', // 笛卡尔心型曲线
                 ]
             }]
         }
