@@ -51,6 +51,7 @@ module.exports = {
                         // 自动加.md 每个子选项的标题 是该md文件中的第一个h1/h2/h3标题
                         '/accumulate/JS/dom', // DOM事件机制
                         '/accumulate/JS/promise', // 前端异步技术-Promise
+                        '/accumulate/JS/async', // 前端异步编程
                     ]
                 }, {
                     title: '浏览器',
