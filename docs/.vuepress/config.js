@@ -60,6 +60,7 @@ module.exports = {
                         '/accumulate/browser/request', // 向服务端发送请求方式
                         '/accumulate/browser/store', // 前端本地存储
                         '/accumulate/browser/statusCode', // 具有代表性的 HTTP 状态码
+                        '/accumulate/browser/crossDomain', // 浏览器跨域请求
                     ]
                 }, {
                     title: 'CSS',
