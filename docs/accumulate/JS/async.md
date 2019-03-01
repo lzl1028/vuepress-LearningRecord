@@ -61,13 +61,12 @@ jQuery.unsubscribe('done', f2);
 ### 1. Promise的三种状态
 
 - Pending----Promise对象实例创建时候的初始状态
-- Fulfilled----可以理解为成功的状态
+- Fulfilled----成功的操作，为表述方便，fulfilled 使用 resolved 代替
 - Rejected----可以理解为失败的状态
 
 ![image](https://user-gold-cdn.xitu.io/2019/1/6/16821592df2d2d58?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
-- 这个承诺一旦从等待状态变成为其他状态就永远不能更改状态了，比如说一旦状态变为 resolved 后，就不能再次改变为Fulfilled
-
+- pending可以转化为fulfilled或rejected并且只能转化一次，也就是说如果pending转化到fulfilled状态，那么就不能再转化到rejected。并且fulfilled和rejected状态只能由pending转化而来，两者之间不能互相转换。
 
 ### 2. promise的链式调用
 
