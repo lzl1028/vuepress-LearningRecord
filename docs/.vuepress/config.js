@@ -68,6 +68,7 @@ module.exports = {
                 }, {
                     title: 'CSS',
                     children: [
+                        '/accumulate/css/middle', // css居中
                         // '/accumulate/css/intro'
                     ]
                 }
