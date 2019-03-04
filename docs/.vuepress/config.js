@@ -52,6 +52,8 @@ module.exports = {
                         '/accumulate/JS/dom', // DOM事件机制
                         '/accumulate/JS/promise', // 前端异步技术-Promise
                         '/accumulate/JS/async', // 前端异步编程
+                        '/accumulate/JS/performance', // 性能优化
+                        '/accumulate/JS/eventLoop', // 事件循环
                     ]
                 }, {
                     title: '浏览器',
