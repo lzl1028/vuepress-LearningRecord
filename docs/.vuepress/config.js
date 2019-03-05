@@ -82,7 +82,12 @@ module.exports = {
             '/work/': [{
                 title: '面试',
                 children: [
-                    '/work/interview/question', //面试题
+                    '/work/interview/question', // 面试题
+                ]
+            }, {
+                title: '项目问题',
+                children: [
+                    '/work/project/question', // 项目问题总结
                 ]
             }],
             '/example/': [{

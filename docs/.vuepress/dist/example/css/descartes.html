@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>笛卡尔心型曲线 | 天狼</title>
+    <meta name="description" content="这是Scorpion的Vue技术文档（博客）">
+    <link rel="icon" href="/web_accumulate/favicon.ico">
+    
+    <link rel="preload" href="/web_accumulate/assets/css/0.styles.5ee51b8f.css" as="style"><link rel="preload" href="/web_accumulate/assets/js/app.908c1d8d.js" as="script"><link rel="preload" href="/web_accumulate/assets/js/19.654aabb2.js" as="script"><link rel="prefetch" href="/web_accumulate/assets/js/10.5c5febeb.js"><link rel="prefetch" href="/web_accumulate/assets/js/11.0ef94423.js"><link rel="prefetch" href="/web_accumulate/assets/js/12.7e5e2998.js"><link rel="prefetch" href="/web_accumulate/assets/js/13.d1512c19.js"><link rel="prefetch" href="/web_accumulate/assets/js/14.dc5d268f.js"><link rel="prefetch" href="/web_accumulate/assets/js/15.37f47050.js"><link rel="prefetch" href="/web_accumulate/assets/js/16.e1820d72.js"><link rel="prefetch" href="/web_accumulate/assets/js/17.1d3d0ef9.js"><link rel="prefetch" href="/web_accumulate/assets/js/18.d1328f2c.js"><link rel="prefetch" href="/web_accumulate/assets/js/2.7431f574.js"><link rel="prefetch" href="/web_accumulate/assets/js/20.66cfabdd.js"><link rel="prefetch" href="/web_accumulate/assets/js/21.e81a1afa.js"><link rel="prefetch" href="/web_accumulate/assets/js/22.44ef478d.js"><link rel="prefetch" href="/web_accumulate/assets/js/23.30d4cb59.js"><link rel="prefetch" href="/web_accumulate/assets/js/24.204c16da.js"><link rel="prefetch" href="/web_accumulate/assets/js/25.0fd83d2c.js"><link rel="prefetch" href="/web_accumulate/assets/js/3.3be908ae.js"><link rel="prefetch" href="/web_accumulate/assets/js/4.779d2a4e.js"><link rel="prefetch" href="/web_accumulate/assets/js/5.8c55dc3f.js"><link rel="prefetch" href="/web_accumulate/assets/js/6.7200ca57.js"><link rel="prefetch" href="/web_accumulate/assets/js/7.ac1a62fe.js"><link rel="prefetch" href="/web_accumulate/assets/js/8.48724332.js"><link rel="prefetch" href="/web_accumulate/assets/js/9.d38ea70d.js">
+    <link rel="stylesheet" href="/web_accumulate/assets/css/0.styles.5ee51b8f.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/web_accumulate/" class="home-link router-link-active"><!----> <span class="site-name">天狼</span></a> <div class="links" style="max-width:nullpx;"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/web_accumulate/accumulate/" class="nav-link">前端积累</a></div><div class="nav-item"><a href="/web_accumulate/outils/" class="nav-link">工具函数</a></div><div class="nav-item"><a href="/web_accumulate/work/" class="nav-link">工作</a></div><div class="nav-item"><a href="/web_accumulate/example/" class="nav-link router-link-active">实例</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">更多</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/lzl1028" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub地址
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://lzl1028.github.io/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  博客
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/web_accumulate/accumulate/" class="nav-link">前端积累</a></div><div class="nav-item"><a href="/web_accumulate/outils/" class="nav-link">工具函数</a></div><div class="nav-item"><a href="/web_accumulate/work/" class="nav-link">工作</a></div><div class="nav-item"><a href="/web_accumulate/example/" class="nav-link router-link-active">实例</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">更多</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/lzl1028" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub地址
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://lzl1028.github.io/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  博客
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><div class="sidebar-group first collapsable"><p class="sidebar-heading open"><span>CSS</span> <span class="arrow down"></span></p> <ul class="sidebar-group-items"><li><a href="/web_accumulate/example/css/descartes.html" class="active sidebar-link">笛卡尔心型曲线</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/web_accumulate/example/css/descartes.html#_1-canvas-平面直角坐标系画法" class="sidebar-link">1. canvas:平面直角坐标系画法</a></li><li class="sidebar-sub-header"><a href="/web_accumulate/example/css/descartes.html#_2-平面直角坐标系-画法-（空心心形）" class="sidebar-link">2. 平面直角坐标系 画法 （空心心形）</a></li><li class="sidebar-sub-header"><a href="/web_accumulate/example/css/descartes.html#_3-极坐标系画法" class="sidebar-link">3. 极坐标系画法</a></li><li class="sidebar-sub-header"><a href="/web_accumulate/example/css/descartes.html#_4-极坐标系-画法-（空心心形）" class="sidebar-link">4. 极坐标系 画法  （空心心形）</a></li></ul></li></ul></div></li></ul> </div> <div class="page"> <div class="content"><h1 id="笛卡尔心型曲线"><a href="#笛卡尔心型曲线" aria-hidden="true" class="header-anchor">#</a> 笛卡尔心型曲线</h1> <h2 id="_1-canvas-平面直角坐标系画法"><a href="#_1-canvas-平面直角坐标系画法" aria-hidden="true" class="header-anchor">#</a> 1. canvas:平面直角坐标系画法</h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+ &lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+    &lt;canvas width=&quot;400&quot; height=&quot;400&quot;&gt;&lt;/canvas&gt;
+
+    &lt;script&gt;
+        var canvas = document.querySelector('canvas');
+        var context = canvas.getContext('2d');  
+        context.lineWidth = 3;
+        // 将画布的原点（0,0），移动到(200,200)
+        // 移动原点是为了能让整个心形显示出来
+        context.translate(200,200); 
+
+        // t 代表弧度
+        var t=0;
+        // maxt 代表 t 的最大值
+        var maxt = 2*Math.PI;
+        // vt 代表 t 的增量
+        var vt = 0.01;
+        // 需要循环的次数
+        var maxi = Math.ceil(maxt/vt);
+        // 保存所有点的坐标的数组
+        var pointArr=[];
+        // x 用来暂时保存每次循环得到的 x 坐标
+        var x=0;
+        // y 用来暂时保存每次循环得到的 y 坐标
+        var y=0;
+
+        // 根据方程得到所有点的坐标
+        for(var i=0;i&lt;=maxi;i++){
+            // x=a*(2*sin(t)+sin(2*t))
+            x=50*(2*Math.sin(t)+Math.sin(2*t));
+
+            // y=a*(2*cos(t)+cos(2*t))
+            y=50*(2*Math.cos(t)+Math.cos(2*t));
+            t+=vt;
+            pointArr.push([x,y]); 
+        }
+
+        // 根据点的坐标，画出心形线
+		context.moveTo(pointArr[0][0],pointArr[0][1]);
+        draw();
+        function draw(){
+             context.fillStyle='#c00';
+             // 把每个点连接起来
+            for(var i=1;i&lt;pointArr.length;i++){
+                x = pointArr[i][0];
+                y = pointArr[i][1];
+                context.lineTo(x,y);
+            }
+            context.fill();
+        }
+    &lt;/script&gt;
+ &lt;/body&gt;
+&lt;/html&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br></div></div><h2 id="_2-平面直角坐标系-画法-（空心心形）"><a href="#_2-平面直角坐标系-画法-（空心心形）" aria-hidden="true" class="header-anchor">#</a> 2. 平面直角坐标系 画法 （空心心形）</h2> <ul><li>只需要改改 draw( ) 函数就好，把原来的 fill( ) 方法，改为 stroke( ) 方法，并且把 strokeStyle 设置了颜色就行了。</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>function draw(){
+     //context.fillStyle='#c00';
+     context.strokeStyle='#c00';
+     // 把每个点连接起来
+    for(var i=1;i&lt;pointArr.length;i++){
+        x = pointArr[i][0];
+        y = pointArr[i][1];
+        context.lineTo(x,y);
+    }
+     //context.fill();
+     context.stroke();
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><h2 id="_3-极坐标系画法"><a href="#_3-极坐标系画法" aria-hidden="true" class="header-anchor">#</a> 3. 极坐标系画法</h2> <ul><li><p>根据极坐标方程 r=a(1+sinθ) ，得到 r ，以 r 作为半径，根据 r 连续的去画圆弧，画完一圈后，心形就出来了。</p></li> <li><p>心形线 极坐标方程：
+r=a(1+sinθ)</p></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>
+&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;canvas width=&quot;400&quot; height=&quot;400&quot;&gt;&lt;/canvas&gt;
+
+  &lt;script&gt;
+     var canvas = document.querySelector('canvas');
+     var context = canvas.getContext('2d');
+     // 将画布的原点（0,0），移动到(200,100)
+     // 移动原点是为了能让整个心形显示出来
+     context.translate(200, 100);
+
+     // 画心形
+     draw();
+     function draw() {
+      // 画圆弧时，圆的半径
+      var r = 0;
+     //  start 代表画弧线时的 起始角
+      var start = 0;
+      //  end 代表画弧线时的 结束角
+      var end = 0;
+      //  一个常数，用来控制心形的大小
+      var a = 100;
+
+      context.fillStyle = '#e21f27';
+      //连续的画圆弧
+      for (var q = 0; q &lt; 500; q++) {
+         start += Math.PI * 2 / 500;
+         // 当 结束角 是 Math.PI * 2 时也就是已经画了一圈了,心形就出来了
+         end = start + Math.PI * 2 / 500;
+         // 根据极坐标方程 r=a(1+sinθ)，得到 r（半径）
+         r = a * (1 + Math.sin(start)); 
+         // 画弧线
+         context.arc(0, 0, r, start, end, false);
+      }
+      context.fill();
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br></div></div><p><img src="https://user-gold-cdn.xitu.io/2018/6/10/163e9325cdb7c727?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="image"></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+ &lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+    &lt;canvas width=&quot;400&quot; height=&quot;400&quot;&gt;&lt;/canvas&gt;
+
+	&lt;script&gt;
+		var canvas = document.querySelector('canvas');
+		var context = canvas.getContext('2d');  
+		context.lineWidth = 3;
+		// 将画布的原点（0,0），移动到(200,200)
+		// 移动原点是为了能让整个心形显示出来
+		context.translate(200,200); 
+
+		// t 代表弧度
+		var t=0;
+		// vt 代表 t 的增量
+		var vt = 0.01;
+		// maxt 代表 t 的最大值
+		var maxt = 2*Math.PI;
+		// 需要循环的次数
+		var maxi = Math.ceil(maxt/vt);
+		// 保存所有点的坐标的数组
+		var pointArr=[];
+		// 控制心形大小
+		var size = 10;
+		// x 用来暂时保存每次循环得到的 x 坐标
+		var x=0;
+		// y 用来暂时保存每次循环得到的 y 坐标
+		var y=0;
+
+		// 根据方程得到所有点的坐标
+		for(var i=0;i&lt;=maxi;i++){
+			// x=16 * (sin(t)) ^ 3;
+			var x = 16 * Math.pow(Math.sin(t),3);
+			// y=13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t)
+			var y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) -2 * Math.cos(3 * t)- Math.cos(4 * t);
+			t+=vt;
+			pointArr.push([x*size,-y*size]); 
+		}
+
+		// 根据点的坐标，画出心形线
+		context.moveTo(pointArr[0][0],pointArr[0][1]);
+		draw();
+		function draw(){
+			context.fillStyle='#c00';
+			// 把每个点连接起来
+			for(var i=1;i&lt;pointArr.length;i++){
+				x = pointArr[i][0];
+				y = pointArr[i][1];
+				context.lineTo(x,y);
+			}
+			context.fill();
+		}
+	&lt;/script&gt;
+ &lt;/body&gt;
+&lt;/html&gt;
+
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br></div></div><p><img src="https://user-gold-cdn.xitu.io/2018/6/10/163e93273209968d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="image"></p> <h2 id="_4-极坐标系-画法-（空心心形）"><a href="#_4-极坐标系-画法-（空心心形）" aria-hidden="true" class="header-anchor">#</a> 4. 极坐标系 画法  （空心心形）</h2> <ul><li>用极坐标系 画法，画空心心形，也是一样的需要改改 draw( )  函数，把原来的  fill( )  方法，改为 stroke( ) 方法，并且把 strokeStyle  设置了颜色就行了。</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>function draw() {
+  var r = 0;
+  var start = 0;
+  var end = 0;
+  var a = 100;
+
+  //context.fillStyle = '#e21f27';
+  context.strokeStyle = '#e21f27';
+  for (var i = 0; i &lt; 500; i++) {
+    start += Math.PI * 2 / 500;
+    end = start + Math.PI * 2 / 500;
+    r = a * (1 + Math.sin(start)); 
+    context.arc(0, 0, r, start, end, false);
+  }
+  //context.fill();
+  // 改用 stroke() 方法
+  context.stroke();   
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div></div> <div class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">2/27/2019, 4:11:13 PM</span></div></div> <!----> </div> <!----></div></div>
+    <script src="/web_accumulate/assets/js/app.908c1d8d.js" defer></script><script src="/web_accumulate/assets/js/19.654aabb2.js" defer></script>
+  </body>
+</html>
