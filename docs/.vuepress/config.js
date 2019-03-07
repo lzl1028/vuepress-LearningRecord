@@ -1,10 +1,3 @@
-// config.js是VuePress必要的配置文件，它导出一个javascript对象。
-
-// module.exports = {
-//     title: 'Hello VuePress',
-//     description: 'Just playing around'
-// }
-
 module.exports = {
     title: '天狼',
     description: '这是Scorpion的Vue技术文档（博客）',
@@ -64,6 +57,7 @@ module.exports = {
                         '/accumulate/browser/store', // 前端本地存储
                         '/accumulate/browser/statusCode', // 具有代表性的 HTTP 状态码
                         '/accumulate/browser/crossDomain', // 浏览器跨域请求
+                        '/accumulate/browser/compatible', // 浏览器兼容
                     ]
                 }, {
                     title: 'CSS',
