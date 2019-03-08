@@ -1,11 +1,114 @@
 # CSS居中
 
-## 1. 水平居中
+## 水平居中
+
+### 1. 使用inline-block+text-align
+
+- 原理：先将子框由块级元素改变为行内块元素，再通过设置行内块元素居中以达到水平居中。
+
+- 用法：对子框设置display:inline-block，对父框设置text-align:center。
+
+```
+<div class="parent">
+    <div class="child>DEMO</div>
+</div>
+```
+
+```
+.child{
+    display:inline-block;
+}
+.parent{
+    text-align:center;
+}
+```
+
+### 2. 使用table+margin
+
+- 原理：先将子框设置为块级表格来显示（类似 table），再设置子框居中以达到水平居中。
+
+- 用法：对子框设置display:table，再设置margin:0 auto。
+
+```
+<div class="parent">
+    <div class="child>DEMO</div>
+</div>
+```
+
+```
+.child {
+    display:table;
+    margin:0 auto;
+}
+```
+
+### 3. 使用absolute+transform
+
+- 原理：将子框设置为绝对定位，移动子框，使子框左侧距离相对框左侧边框的距离为相对框宽度的一半，再通过向左移动子框的一半宽度以达到水平居中。当然，在此之前，我们需要设置父框为相对定位，使父框成为子框的相对框。
+
+- 用法：对父框设置position:relative，对子框设置position:absolute，left:50%，transform:translateX(-50%)。
+
+```
+<div class="parent">
+    <div class="child>DEMO</div>
+</div>
+```
+
+```
+.parent {
+    position:relative;
+}
+.child {
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+}
+```
+
+### 4. 使用flex+justify-content
+
+- 原理：通过CSS3中的布局利器flex中的justify-content属性来达到水平居中。
+
+- 用法：先将父框设置为display:flex，再设置justify-content:center。
+
+```
+<div class="parent">
+    <div class="child>DEMO</div>
+</div>
+```
+
+```
+.parent {
+    display:flex;
+    justify-content:center;
+}
+```
+
+### 5. 使用flex+margin
+
+- 原理：通过CSS3中的布局利器flex将子框转换为flex item，再设置子框居中以达到居中。
+
+- 用法：先将父框设置为display:flex，再设置子框margin:0 auto。
+
+```
+<div class="parent">
+    <div class="child>DEMO</div>
+</div>
+```
+
+```
+.parent {
+    display:flex;
+}
+.child {
+    margin:0 auto;
+}
+```
 
 
-## 2. 垂直居中
+## 垂直居中
 
-### 采用伪元素实现垂直居中
+### 1. 采用伪元素实现垂直居中
 
 - 通过在父元素上添加一个高度 100%、vertical-align: middle的伪元素实现垂直居中
 
@@ -38,4 +141,107 @@
     vertical-align: middle;            
 }
 ```
+
+### 2. 使用table-cell+vertical-align
+
+- 原理：通过将父框转化为一个表格单元格显示（类似 td 和 th），再通过设置属性，使表格单元格内容垂直居中以达到垂直居中。
+
+- 用法：先将父框设置为display:table-cell，再设置vertical-align:middle。
+
+```
+<div class="parent">
+    <div class="child>DEMO</div>
+</div>
+```
+
+```
+.parent {
+    display:table-cell;
+    vertical-align:middle;
+}
+```
+
+### 3. 使用absolute+transform
+
+- 原理：类似于水平居中时的absolute+transform原理。将子框设置为绝对定位，移动子框，使子框上边距离相对框上边边框的距离为相对框高度的一半，再通过向上移动子框的一半高度以达到垂直居中。当然，在此之前，我们需要设置父框为相对定位，使父框成为子框的相对框。
+
+- 用法：先将父框设置为position:relative，再设置子框position:absolute，top:50%，transform:translateY(-50%)。
+
+```
+.parent {
+    position:relative;
+}
+.child {
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+}
+```
+
+### 4. 使用flex+align-items
+
+- 原理：通过设置CSS3中的布局利器flex中的属性align-times，使子框垂直居中。
+
+- 用法：先将父框设置为position:flex，再设置align-items:center。
+
+```
+.parent {
+    position:flex;
+    align-items:center;
+}
+```
+
+## 水平垂直居中
+
+### 1. 使用inline-block+text-align+table-cell+vertical-align
+
+- 原理：使用inline-block+text-align水平居中，再用table-cell+vertical-align垂直居中，将二者结合起来。。
+
+```
+.parent {
+    text-align:center;
+    display:table-cell;
+    vertical-align:middle;
+}
+.child {
+    display:inline-block;
+}
+```
+
+### 2. 使用absolute+transform
+
+- 原理：将水平居中时的absolute+transform和垂直居中时的absolute+transform相结合。
+
+```
+.parent {
+    position:relative;
+}
+.child {
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:tranplate(-50%,-50%);
+}
+```
+
+### 3. 使用flex+justify-content+align-items
+
+- 原理：通过设置CSS3布局利器flex中的justify-content和align-items，从而达到水平垂直居中。
+
+```
+.parent {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+```
+
+
+
+
+
+
+
+
+
 
