@@ -58,6 +58,7 @@ module.exports = {
                         '/accumulate/browser/statusCode', // 具有代表性的 HTTP 状态码
                         '/accumulate/browser/crossDomain', // 浏览器跨域请求
                         '/accumulate/browser/compatible', // 浏览器兼容
+                        '/accumulate/browser/re', // 浏览器的回流和重绘
                     ]
                 }, {
                     title: 'CSS',
