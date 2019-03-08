@@ -65,7 +65,7 @@ module.exports = {
                     children: [
                         '/accumulate/css/middle', // css居中
                         '/accumulate/css/layout', // css布局
-                        // '/accumulate/css/intro'
+                        '/accumulate/css/text', // css 文本
                     ]
                 }
             ],
