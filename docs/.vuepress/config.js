@@ -47,6 +47,7 @@ module.exports = {
                         '/accumulate/JS/async', // 前端异步编程
                         '/accumulate/JS/performance', // 性能优化
                         '/accumulate/JS/eventLoop', // 事件循环
+                        '/accumulate/JS/copy', // 深拷贝
                     ]
                 }, {
                     title: '浏览器',
