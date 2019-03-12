@@ -67,6 +67,11 @@ module.exports = {
                         '/accumulate/css/layout', // css布局
                         '/accumulate/css/text', // css 文本
                     ]
+                }, {
+                    title: 'HTML',
+                    children: [
+                        '/accumulate/html/label', // html标签介绍
+                    ]
                 }
             ],
             '/outils/': [{
