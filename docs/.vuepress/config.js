@@ -92,6 +92,11 @@ module.exports = {
                 children: [
                     '/work/project/question', // 项目问题总结
                 ]
+            }, {
+                title: '代码规范',
+                children: [
+                    '/work/code/specification_readme', //README规范
+                ]
             }],
             '/example/': [{
                 title: 'CSS',
