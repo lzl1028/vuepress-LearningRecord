@@ -60,6 +60,7 @@ module.exports = {
                         '/accumulate/browser/crossDomain', // 浏览器跨域请求
                         '/accumulate/browser/compatible', // 浏览器兼容
                         '/accumulate/browser/re', // 浏览器的回流和重绘
+                        '/accumulate/browser/nginx', // nginx介绍
                     ]
                 }, {
                     title: 'CSS',
