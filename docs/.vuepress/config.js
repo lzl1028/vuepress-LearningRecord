@@ -49,6 +49,7 @@ module.exports = {
                         '/accumulate/JS/eventLoop', // 事件循环
                         '/accumulate/JS/copy', // 深拷贝
                         '/accumulate/JS/this', // this指向
+                        '/accumulate/JS/request', // 网络请求
                     ]
                 }, {
                     title: '浏览器',
