@@ -87,6 +87,11 @@ module.exports = {
                     '/outils/terminal/command', // 终端命令
                     '/outils/terminal/pdf', // HTML转成PDF
                 ]
+            }, {
+                title: '前端API',
+                children: [
+                    '/outils/api/screenwh', // 获取屏幕宽高总结
+                ]
             }],
             '/work/': [{
                 title: '面试',
