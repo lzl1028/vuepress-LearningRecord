@@ -78,6 +78,7 @@ module.exports = {
                     title: 'HTML',
                     children: [
                         '/accumulate/html/label', // html标签介绍
+                        '/accumulate/html/special', // html特殊标签
                     ]
                 }
             ],
@@ -91,6 +92,12 @@ module.exports = {
                 title: '前端API',
                 children: [
                     '/outils/api/screenwh', // 获取屏幕宽高总结
+                    '/outils/api/datachange', // Js数据转换
+                ]
+            }, {
+                title: '常用函数处理',
+                children: [
+                    '/outils/methods/url', // 常用URL参数操作方法
                 ]
             }],
             '/work/': [{
