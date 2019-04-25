@@ -620,3 +620,85 @@ body{
 Position | 好 | 好 | 部分自适应
 Flex|	较差|	差|	可自适应
 Grid|	差|	较好|	可自适应
+
+## 多列布局
+
+### 多列布局（multi-column）相关属性：
+- 列数和列宽：column-count、column-width、columns
+- 列的间距和分列样式：column-gap、column-rule-color、column-rule-style、column-rule-width、column-rule
+- 跨越列：column-span
+- 填充列：column-fill
+- 分栏符：column-break-before、column-break-after、column-break-inside
+
+![image](https://dn-mhke0kuv.qbox.me/3b8a45dbf1b7f3e177ea.jpg?imageView2/0/w/1280/h/960/ignore-error/1)
+
+### 1. 列数和列宽
+- 列数（column-count）：用来指定一个多列元素的列数。语法：
+```css
+<!--auto是column-count的默认值，当设置为auto时，元素分栏由其他属性决定，比如后面要讲的column-width；
+它还可以是任何正整数数字，不能带单位，用来表示多列布局的列数。-->
+
+column-count: auto || number
+<!--兼容写法-->
+-moz-column-count: auto || number;
+-webkit-column-count: auto || number;
+column-count: auto || number;
+
+```
+- 列宽（column-width）：用来设置多列布局的列宽。
+```css
+column-width: auto || length;
+
+<!--默认值为auto，如果设置为auto或没有显式的设置此值时，列宽由其他属性来决定，比如：由column-count来决定；
+此值还可以用固定值来设置列宽，单位可以是px或em，但不能是负值。-->
+
+```
+
+- columns是复合属性:
+
+### 2. 列的间距和分列样式
+- 列的间距（column-gap）:用来设置列与列之间的距离.
+```css
+column-gap: normal || length;
+<!--默认值为normal，W3C建议1em值。此值还可以是任何非负整数值，单位可以是px、em、vw等。-->
+```
+- 分列样式（column-rule）：用来设置列与列之间的边框宽度、样式和颜色。
+```css
+column-rule:  ||   ||  ;
+<!--参数说明-->
+<!--column-rule-width：用来设置column-rule的样式，默认值为“none”，类似于border-width属性。-->
+<!--column-rule-style：用来设置column-rule的样式，默认为none，此属性的样式和border-style的样式一样：-->
+column-rule-style: none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
+<!--column-rule-color：用来设置column-rule的颜色，类似border-color属性，如果不想显示颜色，可设置为transparent（透明色）。-->
+```
+
+### 3. 跨越列（column-span）：指定某个元素跨越多少列。
+```css
+column-span: none || all;
+<!--默认值为none，表示不跨越任何列；all表示元素跨越所有列。-->
+```
+```
+.columns{   
+    border:1px solid #000;   
+    padding:10px;   
+    width:350px;   
+    columns:auto 3;   
+}   
+h2{   
+    -webkit-column-span:all;   
+    column-span:all;   
+}
+```
+![image](https://user-gold-cdn.xitu.io/2016/11/29/c15a2de98da5ed16d1632dc29bc5ab99?imageView2/0/w/1280/h/960/ignore-error/1)
+
+### 4. 填充列（column-fill）：用来设置元素所有列的高度是否统一。  
+```css
+column-fill: auto || balance;
+<!--默认值为auto，表示列高度自适应内容；此值设为balance时，所有列的高度以其中最高的一列统一。-->
+```
+### 5. 分栏符（column-break-before、column-break-after、column-break-inside） 三个属性都是用来设置对象何时断行。   
+```css
+column-break-before：设置或检索对象之前是否断行。
+column-break-after：设置或检索对象之后是否断行。
+column-break-inside：设置或检索对象内部是否断行。
+```
