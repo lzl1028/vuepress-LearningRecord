@@ -83,6 +83,7 @@ module.exports = {
                 title: '工具',
                 children: [
                     '/outils/terminal/command', // 终端命令
+                    '/outils/terminal/pdf', // HTML转成PDF
                 ]
             }],
             '/work/': [{
