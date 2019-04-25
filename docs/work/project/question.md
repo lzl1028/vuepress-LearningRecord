@@ -82,7 +82,36 @@ parseFloat((9.7 * 100).toFixed(10)) // 结果为 970
 parseFloat((2.22 + 0.1).toFixed(10)) // 结果为 2.32
 ```
 
+## 2. 用attr 修改多选框状态会失效
+- 选中：$("input[type='checkbox']").attr("checked",true);
 
+- 取消选中：$("input[type='checkbox']").attr("checked",false);
+
+- 应该使用
+- 选中：　　
+
+$("input[type='checkbox']").prop("checked",true);
+
+$("input[type='checkbox']").prop({checked:true}); //map键值对
+
+$("input[type='checkbox']").prop("checked",function(){return true;});//函数返回true或false
+
+$("input[type='checkbox']").prop("checked","checked");
+
+- 取消选中：
+
+$("input[type='checkbox']").prop("checked",false);
+
+## 3. IE浏览器兼容问题
+
+1. 时间戳兼容
+- safari、IE、360浏览器兼容模式 js 中若想将普通时间格式转换为时间戳，需要将‘-’转换为‘/’
+```
+new Date(time.replace(/-/g, '/')).getTime();
+```
+
+2. input光标不居中问题
+- 将input中的padding去掉
 
 
 
