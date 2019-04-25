@@ -64,6 +64,7 @@ module.exports = {
                         '/accumulate/browser/re', // 浏览器的回流和重绘
                         '/accumulate/browser/nginx', // nginx介绍
                         '/accumulate/browser/cache', // 浏览器缓存
+                        '/accumulate/browser/requests', // 前端网络请求
                     ]
                 }, {
                     title: 'CSS',
