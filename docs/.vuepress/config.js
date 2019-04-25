@@ -50,6 +50,7 @@ module.exports = {
                         '/accumulate/JS/copy', // 深拷贝
                         '/accumulate/JS/this', // this指向
                         '/accumulate/JS/request', // 网络请求
+                        '/accumulate/JS/code', // 代码优化
                     ]
                 }, {
                     title: '浏览器',
@@ -101,6 +102,11 @@ module.exports = {
                 title: '代码规范',
                 children: [
                     '/work/code/specification_readme', //README规范
+                ]
+            }, {
+                title: '移动端总结',
+                children: [
+                    '/work'
                 ]
             }],
             '/example/': [{
