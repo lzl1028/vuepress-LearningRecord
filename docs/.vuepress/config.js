@@ -51,6 +51,7 @@ module.exports = {
                         '/accumulate/JS/this', // this指向
                         '/accumulate/JS/request', // 网络请求
                         '/accumulate/JS/code', // 代码优化
+                        '/accumulate/JS/obj', // 对象操作
                     ]
                 }, {
                     title: '浏览器',
