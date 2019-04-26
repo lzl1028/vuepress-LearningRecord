@@ -80,6 +80,7 @@ module.exports = {
                     children: [
                         '/accumulate/html/label', // html标签介绍
                         '/accumulate/html/special', // html特殊标签
+                        '/accumulate/html/base', // heml基础标签
                     ]
                 }
             ],
