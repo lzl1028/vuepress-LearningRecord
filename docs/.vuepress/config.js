@@ -109,6 +109,7 @@ module.exports = {
                 title: '面试',
                 children: [
                     '/work/interview/question', // 面试题
+                    '/work/interview/personnel', // 面试题（人事篇）
                 ]
             }, {
                 title: '项目问题',
