@@ -122,6 +122,7 @@ module.exports = {
                 title: '移动端总结',
                 children: [
                     '/work/mobile/navigator', // 移动端系统判断
+                    '/work/mobile/question', // 移动端问题总结
                 ]
             }],
             '/example/': [{
