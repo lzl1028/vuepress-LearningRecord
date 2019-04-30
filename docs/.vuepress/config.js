@@ -75,6 +75,7 @@ module.exports = {
                         '/accumulate/css/middle', // css居中
                         '/accumulate/css/layout', // css布局
                         '/accumulate/css/text', // css 文本
+                        '/accumulate/css/adapter', // 前端适配
                     ]
                 }, {
                     title: 'HTML',
