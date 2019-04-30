@@ -116,7 +116,8 @@ module.exports = {
             }, {
                 title: '代码规范',
                 children: [
-                    '/work/code/specification_readme', //README规范
+                    '/work/code/specification_readme', // README规范
+                    '/work/code/specification_code', // 前端代码规范
                 ]
             }, {
                 title: '移动端总结',
