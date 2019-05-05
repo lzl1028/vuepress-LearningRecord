@@ -110,6 +110,8 @@ module.exports = {
                 children: [
                     '/work/interview/question', // 面试题
                     '/work/interview/personnel', // 面试题（人事篇）
+                    '/work/interview/css', // 面试题（css篇）
+                    '/work/interview/html', // 面试题（html篇）
                 ]
             }, {
                 title: '项目问题',
