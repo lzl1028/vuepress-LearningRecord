@@ -53,6 +53,7 @@ module.exports = {
                         '/accumulate/JS/code', // 代码优化
                         '/accumulate/JS/obj', // 对象操作
                         '/accumulate/JS/fun', // js基础之函数
+                        '/accumulate/JS/es6',
                     ]
                 }, {
                     title: '浏览器',
