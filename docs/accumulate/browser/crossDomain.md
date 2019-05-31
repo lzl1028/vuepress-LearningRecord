@@ -4,7 +4,15 @@
 
 - 跨域是指去向一个为非本origin(协议、域名、端口任意一个不同)的目标地址发送请求的过程，这样之所以会产生问题是因为浏览器的同源策略限制。
 
+- 跨域只存在于浏览器端，不存在于安卓/ios/Node.js/python/ java等其它环境
+
+- 跨域请求能发出去，服务端能收到请求并正常返回结果，只是结果被浏览器拦截了。之所以会跨域，是因为受到了同源策略的限制，同源策略要求源相同才能正常进行通信，即协议、域名、端口号都完全一致。
+
 - 目的：同源策略限制了从同一个源加载的文档或脚本如何与来自另一个源的资源进行交互。这是一个用于隔离潜在恶意文件的重要安全机制。
+
+- 域名、协议和端口号不一致
+
+![image](https://user-gold-cdn.xitu.io/2018/1/20/16113382cc94c517?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
 - eg: 正常网站免登的请求流程
     1. 我们进入一个网站，发送登陆请求给后端
@@ -22,7 +30,8 @@
 
 - 最早的解决方案之一就是jsonp,实现方式是通过script标签传递数据，因为script请求不会被同源策略禁止，所以通过script标签去请求跨域数据，并且在script的cb对应func中实现对数据的获取是可行的,当然这种方式需要后端进行配合，后端在前端进行对应请求的时候返回对应的jsonp格式的数据
 php案例如下:
-```
+
+```js
 <?php
 header('Content-type: application/json');
 //获取回调函数名
@@ -35,7 +44,8 @@ echo $jsoncallback . "(" . $json_data . ")";
 ```
 
 - 客户端用法如下:
-```
+
+```html
  <script type="text/javascript">
 		function callbackFunction(result, methodName)
         {
@@ -65,20 +75,20 @@ echo $jsoncallback . "(" . $json_data . ")";
     - 设置了Accept、Accept-Language、Content-Language、Content-Type 之外的headers中任一的配置，比如常见的token:authorization,缓存机制cache-contorl
     - Content-Type设置了简单请求不允许的值，如常用的application/json
     - 预检请求就需要后端设置更多的respones headers：
-    ```
-    Access-Control-Allow-Origin: http://foo.example
-    Access-Control-Allow-Methods: POST, GET
-    Access-Control-Allow-Headers: X-PINGOTHER, Content-Type
-    Access-Control-Max-Age: 86400
-    <!--Access-Control-Allow-Methods代表可接受methods-->
-    <!--Access-Control-Allow-Headers代表可接受的headers修改-->
-    <!--Access-Control-Max-Age代表预检的残留时间，代表预检之后可以免预检的时间-->
-    ```
+        ```
+        Access-Control-Allow-Origin: http://foo.example
+        Access-Control-Allow-Methods: POST, GET
+        Access-Control-Allow-Headers: X-PINGOTHER, Content-Type
+        Access-Control-Max-Age: 86400
+        <!--Access-Control-Allow-Methods代表可接受methods-->
+        <!--Access-Control-Allow-Headers代表可接受的headers修改-->
+        <!--Access-Control-Max-Age代表预检的残留时间，代表预检之后可以免预检的时间-->
+        ```
 
 - 实现CORS的几种方式
 
     1. 本地代理：在dva中的实现方式是在.webpackrc中添加如下代码
-        ```
+        ```js
         "proxy": {
             "/api": {
             "target": "http://127.0.0.1:8988/",
@@ -92,17 +102,16 @@ echo $jsoncallback . "(" . $json_data . ")";
         pathRewrite代表路径重写，
         别的脚手架直接加载webpack配置文件即可
         ```
-
     2. nodejs中间件
         1. 用express脚手架生成express模具
             
-        ```
+        ```js
         npm install express-generator -g
         express --view=pug myapp
         ```
         2. 设置一个全局路由拦截
         
-        ```
+        ```js
         app.all('*', function (req, res, next) {
         res.header('Access-Control-Allow-Origin', '*');
         if (req.method == 'OPTIONS') {
@@ -114,7 +123,7 @@ echo $jsoncallback . "(" . $json_data . ")";
         ```
         3. 再设置对应的代理逻辑
         
-        ```
+        ```js
         var options = {
         target: 'https://xxxx.xxx.xxx/abc/req',
         changeOrigin: true,
@@ -127,12 +136,12 @@ echo $jsoncallback . "(" . $json_data . ")";
         ```
         4. 进入bin/www中设置对应的端口，或者在process.env.PORT设置port启动值
         
-        ```
+        ```js
         var port = normalizePort(process.env.PORT || '7002');
         ```
         5. 启动脚手架
 
-        ```
+        ```js
         DEBUG=myapp:* npm start
         ```
     
@@ -173,7 +182,7 @@ echo $jsoncallback . "(" . $json_data . ")";
         ```
         
         - 实现反向代理的方式:
-        ```
+        ```js
         server {
                 listen       80;
             server_name  localhost;
@@ -192,7 +201,7 @@ echo $jsoncallback . "(" . $json_data . ")";
         ```
         - 拓展话题 nginx还可以用于实现多入口
         
-        ```
+        ```js
         server {
                 listen       80;
             server_name  www.aaa.com;
