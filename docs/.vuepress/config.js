@@ -14,7 +14,16 @@ module.exports = {
         lastUpdated: 'Last Updated', // 文档更新时间：每个文件git最后提交的时间
         // 导航栏配置
         nav: [
-            { text: '前端积累', link: '/accumulate/' }, // 内部链接 以docs为根目录
+            // { text: '前端积累', link: '/accumulate/' }, // 内部链接 以docs为根目录
+            {
+                text: 'Blog',
+                items: [
+                    { text: 'Javascript', link: '/Javascript/' },
+                    { text: 'CSS', link: '/CSS/' },
+                    { text: 'HTML', link: '/HTML/' },
+                    { text: 'Browser(浏览器)', link: '/browser/' }
+                ]
+            },
             { text: '工具函数', link: '/outils/' },
             { text: '工作', link: '/work/' },
             { text: '实例', link: '/example/' },
@@ -34,62 +43,49 @@ module.exports = {
         // 侧边栏配置：
         sidebar: {
             // docs文件夹下面的accumulate文件夹 文档中md文件 书写的位置(命名随意)
-            '/accumulate/': [
-                // '/accumulate/', // accumulate文件夹的README.md 不是下拉框形式
-                {
-                    title: 'Javascript',
-                    children: [
-                        // 以docs为根目录来查找文件 
-                        // 上面地址查找的是：docs>accumulate>JS>test.md 文件
-                        // 自动加.md 每个子选项的标题 是该md文件中的第一个h1/h2/h3标题
-                        '/accumulate/JS/dom', // DOM事件机制
-                        '/accumulate/JS/promise', // 前端异步技术-Promise
-                        '/accumulate/JS/async', // 前端异步编程
-                        '/accumulate/JS/performance', // 性能优化
-                        '/accumulate/JS/eventLoop', // 事件循环
-                        '/accumulate/JS/copy', // 深拷贝
-                        '/accumulate/JS/this', // this指向
-                        '/accumulate/JS/request', // 网络请求
-                        '/accumulate/JS/code', // 代码优化
-                        '/accumulate/JS/obj', // 对象操作
-                        '/accumulate/JS/fun', // js基础之函数
-                        '/accumulate/JS/es6',
-                    ]
-                }, {
-                    title: '浏览器',
-                    children: [
-                        '/accumulate/browser/work', // 浏览器工作原理
-                        '/accumulate/browser/compatibility', // H5 键盘兼容性
-                        '/accumulate/browser/request', // 向服务端发送请求方式
-                        '/accumulate/browser/store', // 前端本地存储
-                        '/accumulate/browser/statusCode', // 具有代表性的 HTTP 状态码
-                        '/accumulate/browser/crossDomain', // 浏览器跨域请求
-                        '/accumulate/browser/compatible', // 浏览器兼容
-                        '/accumulate/browser/re', // 浏览器的回流和重绘
-                        '/accumulate/browser/nginx', // nginx介绍
-                        '/accumulate/browser/cache', // 浏览器缓存
-                        '/accumulate/browser/requests', // 前端网络请求
-                    ]
-                }, {
-                    title: 'CSS',
-                    children: [
-                        '/accumulate/css/middle', // css居中
-                        '/accumulate/css/layout', // css布局
-                        '/accumulate/css/text', // css 文本
-                        '/accumulate/css/adapter', // 前端适配
-                    ]
-                }, {
-                    title: 'HTML',
-                    children: [
-                        '/accumulate/html/label', // html标签介绍
-                        '/accumulate/html/special', // html特殊标签
-                        '/accumulate/html/base', // html基础标签
-                        '/accumulate/html/methods', // html元素方法
-                    ]
-                }
+            '/Javascript/': [
+                // '',
+                'dom', // DOM事件机制
+                'promise', // 前端异步技术-Promise
+                'async', // 前端异步编程
+                'performance', // 性能优化
+                'eventLoop', // 事件循环
+                'copy', // 深拷贝
+                'this', // this指向
+                'request', // 网络请求
+                'code', // 代码优化
+                'obj', // 对象操作
+                'fun', // js基础之函数
+                'es6',
+            ],
+            '/CSS/': [
+                'middle', // css居中
+                'layout', // css布局
+                'text', // css 文本
+                'adapter', // 前端适配
+            ],
+            '/HTML/': [
+                'label', // html标签介绍
+                'special', // html特殊标签
+                'base', // html基础标签
+                'methods', // html元素方法
+            ],
+            '/browser/': [
+                'work', // 浏览器工作原理
+                'compatibility', // H5 键盘兼容性
+                'request', // 向服务端发送请求方式
+                'store', // 前端本地存储
+                'statusCode', // 具有代表性的 HTTP 状态码
+                'crossDomain', // 浏览器跨域请求
+                'compatible', // 浏览器兼容
+                're', // 浏览器的回流和重绘
+                'nginx', // nginx介绍
+                'cache', // 浏览器缓存
+                'requests', // 前端网络请求
             ],
             '/outils/': [{
                 title: '工具',
+                collapsable: false, // 是否折叠
                 children: [
                     '/outils/terminal/command', // 终端命令
                     '/outils/terminal/pdf', // HTML转成PDF
