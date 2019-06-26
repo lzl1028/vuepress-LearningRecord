@@ -75,7 +75,7 @@ module.exports = {
                 'compatibility', // H5 键盘兼容性
                 'request', // 向服务端发送请求方式
                 'store', // 前端本地存储
-                'statusCode', // 具有代表性的 HTTP 状态码
+                'statusCode', // HTTP详解
                 'crossDomain', // 浏览器跨域请求
                 'compatible', // 浏览器兼容
                 're', // 浏览器的回流和重绘
