@@ -108,9 +108,21 @@
 
 ## 垂直居中
 
-### 1. 采用伪元素实现垂直居中
+### 1. 设定行高line-height
+
+- 只适用于==单行==的==行内元素==
+
+- 将line-heigh设置为行高一样的值
+
+- 原理：在行内元素的上下加上行高的1/2
+
+### 2. 采用伪元素实现垂直居中（::before, ::after）
+
+- 适用于多行元素垂直居中
 
 - 通过在父元素上添加一个高度 100%、vertical-align: middle的伪元素实现垂直居中
+
+- vertical-align: 指在元素内的所有元素垂直位置互相置中，而不是相对于外部边框，所以应该利用伪元素添加一个伪div到框内，并使该div的高度为100%。
 
 - 原理：利用content: ''; height: 100% 得到一个宽度为 0 的伪元素，即它不会显示出来；高度 100%，所以它最高，是所在行的基准元素；利用 vertical-align: middle 将父元素的基线设置为伪元素的中线，然后其他行内元素采用中线对齐时，自然就是要对齐伪元素的中线了。而伪元素的高度为 100%，所以它的中线就是整个父元素的中线，这就实现了其他行内元素的垂直居中。
 
@@ -142,7 +154,7 @@
 }
 ```
 
-### 2. 使用table-cell+vertical-align
+### 3. 使用table-cell+vertical-align
 
 - 原理：通过将父框转化为一个表格单元格显示（类似 td 和 th），再通过设置属性，使表格单元格内容垂直居中以达到垂直居中。
 
@@ -154,20 +166,20 @@
 </div>
 ```
 
-```
+```css
 .parent {
     display:table-cell;
     vertical-align:middle;
 }
 ```
 
-### 3. 使用absolute+transform
+### 4. 使用absolute+transform
 
 - 原理：类似于水平居中时的absolute+transform原理。将子框设置为绝对定位，移动子框，使子框上边距离相对框上边边框的距离为相对框高度的一半，再通过向上移动子框的一半高度以达到垂直居中。当然，在此之前，我们需要设置父框为相对定位，使父框成为子框的相对框。
 
 - 用法：先将父框设置为position:relative，再设置子框position:absolute，top:50%，transform:translateY(-50%)。
 
-```
+```css
 .parent {
     position:relative;
 }
@@ -178,7 +190,7 @@
 }
 ```
 
-### 4. 使用flex+align-items
+### 5. 使用flex+align-items
 
 - 原理：通过设置CSS3中的布局利器flex中的属性align-times，使子框垂直居中。
 
@@ -190,6 +202,17 @@
     align-items:center;
 }
 ```
+### 6. calc（动态计算）
+
+- 原理：让div的top属性与上方的距离（50%的外框高度 - 50%的div高度）
+
+```
+div {
+    position: relative;
+    top: calc(50% - 20px);
+}
+```
+
 
 ## 水平垂直居中
 
