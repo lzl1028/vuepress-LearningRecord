@@ -44,7 +44,6 @@ module.exports = {
         sidebar: {
             // docs文件夹下面的accumulate文件夹 文档中md文件 书写的位置(命名随意)
             '/Javascript/': [
-                // '',
                 'dom', // DOM事件机制
                 'promise', // 前端异步技术-Promise
                 'async', // 前端异步编程
@@ -56,6 +55,13 @@ module.exports = {
                 'code', // 代码优化
                 'obj', // 对象操作
                 'fun', // js基础之函数
+                {
+                    title: 'Js函数方法解析',
+                    collapsable: true,
+                    children: [
+                        '/Javascript/fun-parsing/cycle', // 循环
+                    ]
+                }, // js函数解析
                 'es6',
             ],
             '/CSS/': [
@@ -85,7 +91,7 @@ module.exports = {
             ],
             '/outils/': [{
                 title: '工具',
-                collapsable: false, // 是否折叠
+                collapsable: true, // 是否折叠
                 children: [
                     '/outils/terminal/command', // 终端命令
                     '/outils/terminal/pdf', // HTML转成PDF
