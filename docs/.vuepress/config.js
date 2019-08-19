@@ -108,6 +108,11 @@ module.exports = {
                 children: [
                     '/outils/methods/url', // 常用URL参数操作方法
                 ]
+            }, {
+                title: '算法总结',
+                children: [
+                    'outils/methods/sorting', // 排序算法
+                ]
             }],
             '/work/': [{
                 title: '面试',
