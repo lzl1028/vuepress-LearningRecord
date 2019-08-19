@@ -1,6 +1,7 @@
 # 常用URL参数操作方法
 
-## 1.获取单个参数
+## 自定义函数方法
+### 1.获取单个参数
 
 ```js
 /**
@@ -26,7 +27,7 @@ getParam('query','https://juejin.im/search?query=hello&time=2017-11-12')
 // "hello"
 ```
 
-## 2.设置单个参数
+### 2.设置单个参数
 
 ```js
 /**
@@ -57,7 +58,7 @@ setParam('query','world','https://juejin.im/search?query=hello&time=2017-11-12')
 // "https://juejin.im/search?query=world&time=2017-11-12"
 ```
 
-## 3.移除单个参数
+### 3.移除单个参数
 
 ```js
 /**
@@ -89,7 +90,7 @@ removeParam('query','https://juejin.im/search?query=hello&time=2017-11-12')
 // "https://juejin.im/search?time=2017-11-12"
 ```
 
-## 4.获取多个参数
+### 4.获取多个参数
 
 ```js
 /**
@@ -115,7 +116,7 @@ getParams('query time','https://juejin.im/search?query=hello&time=2017-11-12')
 // {query: "hello", time: "2017-11-12"}
 ```
 
-## 5.设置多个参数
+### 5.设置多个参数
 
 ```js
 /**
@@ -137,7 +138,7 @@ setParams({a:111,b:222,query:'world'},'https://juejin.im/search?query=hello&time
 // "https://juejin.im/search?query=world&time=2017-11-12&a=111&b=222"
 ```
 
-## 6.移除多个参数
+### 6.移除多个参数
 
 ```js
 /**
@@ -163,7 +164,7 @@ removeParams('query time','https://juejin.im/search?query=hello&time=2017-11-12'
 // "https://juejin.im/search"
 ```
 
-## 7.url hash 操作
+### 7.url hash 操作
 
 ```js
 /**
@@ -191,3 +192,71 @@ function removeHash() {
 }
 ```
 
+## WebAPI: URLSearchParams
+### 1. 简单使用（URLSearchParams）:IE的支持不是很理想
+
+```js
+let url = '?wd=蔡徐坤&skill=篮球&year=2019';
+let searchParams = new URLSearchParams(url);
+
+for (let p of searchParams) {
+  console.log(p);
+}
+// ["wd", "蔡徐坤"]
+// ["skill", "篮球"]
+// ["year", "2019"]
+```
+
+
+### 2. 获取单个字段
+
+- 只想获取单个字段的值，该怎么办呢？只需要调用这个实例的get方法即可
+
+```js
+searchParams.get('wd') // "蔡徐坤"
+searchParams.get('skill') // "篮球"
+searchParams.get('year') // "2019"
+```
+
+- 不知道一个字段是否存在，所以想事先校验下。使用实例的has方法进行判断
+
+```js
+searchParams.has('wd') // true
+searchParams.has('age') // false
+```
+
+
+### 3. 添加字段
+
+- 实例提供了append方法来添加字段，这个方法接收两个参数，前者是key，后者是value，代码：
+
+```js
+searchParams.append('age', 26);
+searchParams.has('age'); // true
+searchParams.get('age'); // 26
+```
+
+### 4. 删除字段
+
+- 现在不想要year字段了，直接使用delete即可，代码：
+
+```js
+searchParams.delete('year');
+searchParams.has('year'); // false
+```
+
+### 5. 设置字段
+
+- 有时候想重写一个字段，而不是添加(append)一个字段，这时候需要使用set方法，比如，我们觉得坤哥不仅会篮球，还会唱，跳，rap。代码：
+
+```js
+searchParams.set('skill', '篮球 唱 跳 rap');
+```
+
+### 6. 转为字符串
+
+- 修改实例后，有时候需要再转为字符串，进行路由跳转等，使用toString方法:
+
+```js
+searchParams.toString(); // "wd=蔡徐坤&skill=篮球+唱+跳+rap&year=2019&age=26"
+```
