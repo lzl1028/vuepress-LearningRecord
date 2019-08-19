@@ -69,6 +69,7 @@ module.exports = {
                 'layout', // css布局
                 'text', // css 文本
                 'adapter', // 前端适配
+                'concept', // 核心概念
             ],
             '/HTML/': [
                 'label', // html标签介绍
