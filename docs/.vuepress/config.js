@@ -89,6 +89,7 @@ module.exports = {
                 'nginx', // nginx介绍
                 'cache', // 浏览器缓存
                 'requests', // 前端网络请求
+                'login', // 浏览器登录验证
             ],
             '/outils/': [{
                 title: '工具',
