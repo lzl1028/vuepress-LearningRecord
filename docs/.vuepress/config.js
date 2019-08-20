@@ -64,6 +64,7 @@ module.exports = {
                 'fun', // js基础之函数
                 'es6',
                 'errorCode', // Js常见报错
+                'memoryManagement', // JS中的内存管理
             ],
             '/CSS/': [
                 'middle', // css居中
