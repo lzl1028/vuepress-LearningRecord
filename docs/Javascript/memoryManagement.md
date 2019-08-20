@@ -37,7 +37,6 @@ someElement.addEventListener('click', function(){
 ```
 
 - 有些函数调用结果是分配对象内存：
-
 ```js
 var d = new Date(); // 分配一个 Date 对象
 
@@ -45,7 +44,6 @@ var e = document.createElement('div'); // 分配一个 DOM 元素
 ```
 
 - 有些方法分配新变量或者新对象：
-
 ```js
 var s = "azerty";
 var s2 = s.substr(0, 3); // s2 是一个新的字符串
@@ -62,7 +60,6 @@ var a3 = a.concat(a2);
 ### JS 的内存使用
 
 - 使用值的过程实际上是对分配内存进行读取与写入的操作。 读取与写入可能是写入一个变量或者一个对象的属性值，甚至传递函数的参数。
-
 ```js
 var a = 10; // 分配内存
 console.log(a); // 对内存的使用
@@ -84,7 +81,9 @@ console.log(a); // 对内存的使用
 ### 引用
 
 - 在内存管理的环境中，一个对象如果有访问另一个对象的权限（隐式或者显式），叫做一个对象引用另一个对象。
+    
     - eg: 一个Javascript对象具有对它原型的引用（隐式引用）和对它属性的引用（显式引用）。
+    
     - “对象”的概念不仅特指 JavaScript 对象，还包括函数作用域（或者全局词法作用域）。
 
 
@@ -93,7 +92,6 @@ console.log(a); // 对内存的使用
 - 这是最初级的垃圾回收算法。
 
 - 引用计数算法定义“内存不再使用”的标准很简单，就是看一个对象是否有指向它的引用。 如果没有其他对象指向它了，说明该对象已经不再需了。
-
 ```js
 var o = { 
   a: {
@@ -102,7 +100,6 @@ var o = {
 }; 
 // 两个对象被创建，一个作为另一个的属性被引用，另一个被分配给变量o
 // 很显然，没有一个可以被垃圾收集
-
 
 var o2 = o; // o2变量是第二个对“这个对象”的引用
 
@@ -124,7 +121,6 @@ oa = null; // a属性的那个对象现在也是零引用了
 - 如果两个对象相互引用，尽管他们已不再使用，垃圾回收不会进行回收，导致内存泄露。
 
 - 来看一个循环引用的例子：
-
 ```js
 function f(){
   var o = {};
@@ -142,7 +138,6 @@ f();
 ```
 
 - 实际的例子：
-
 ```js
 var div = document.createElement("div");
 div.onclick = function() {
@@ -165,7 +160,9 @@ div.onclick = function() {
     1. 垃圾收集器会在运行的时候会给存储在内存中的所有变量都加上标记。
     
     2. 从根部出发将能触及到的对象的标记清除。
+    
     3. 那些还存在标记的变量被视为准备删除的变量。
+    
     4. 最后垃圾收集器会执行最后一步内存清除的工作，销毁那些带标记的值并回收它们所占用的内存空间。
 
 ![image](https://user-gold-cdn.xitu.io/2019/6/17/16b637393a752456?imageslim)
@@ -205,7 +202,6 @@ div.onclick = function() {
 
 
 - 在服务器环境中使用 Node 提供的 process.memoryUsage 方法查看内存情况
-
 ```js
 console.log(process.memoryUsage());
 // { 
@@ -238,7 +234,6 @@ foo();
 #### 被遗忘的定时器和回调函数
 
 - 在很多库中, 如果使用了观察者模式, 都会提供回调方法, 来调用一些回调函数。 要记得回收这些回调函数。举一个 setInterval的例子：
-
 ```js
 var serverData = loadData();
 setInterval(function() {
@@ -254,7 +249,6 @@ setInterval(function() {
 #### 闭包
 
 - 在 JS 开发中，我们会经常用到闭包，一个内部函数，有权访问包含其的外部函数中的变量。 下面这种情况下，闭包也会造成内存泄露:
-
 ```js
 var theThing = null;
 var replaceThing = function () {
@@ -282,7 +276,6 @@ setInterval(replaceThing, 1000);
 #### DOM 引用
 
 - 很多时候, 我们对 Dom 的操作, 会把 Dom 的引用保存在一个数组或者 Map 中。
-
 ```js
 var elements = {
     image: document.getElementById('image')
@@ -307,6 +300,7 @@ function removeImage() {
 ### 如何避免内存泄漏
 
 1. 减少不必要的全局变量，使用严格模式避免意外创建全局变量。
+
 2. 在你使用完数据后，及时解除引用（闭包中的变量，dom引用，定时器清除）。
 
 3. 组织好你的逻辑，避免死循环等造成浏览器卡顿，崩溃的问题。
