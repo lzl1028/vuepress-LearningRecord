@@ -139,10 +139,22 @@ _background-color:#1e0bd1;/*IE6识别*/
     2. firefox，opera和IE，使用collapse值和使用display：none没有什么区别。
 
 ---
-## 11. display:none与visibility：hidden的区别？
-- display：none 不显示对应的元素，在文档布局中不再分配空间（回流+重绘）
+## 11. 元素隐藏的几种方式的区别？
+- display：none 不显示对应的元素，在文档布局中不再分配空间（回流+重绘）（不占据空间，无法点击，后面的元素会跟进）
 
-- visibility：hidden 隐藏对应元素，在文档布局中仍保留原来的空间（重绘）
+- visibility：hidden 隐藏对应元素，在文档布局中仍保留原来的空间（重绘）（占据空间，无法点击，位置保留）
+
+- 
+position | area | result
+---|--- | ---
+absolute | top: -999em | 不占据空间
+relative | top: -999em | 占据空间
+
+- height: 0;overflow: hidden;
+
+- opacity: 0; 或 rgba(0)
+    1. opacity(0 ~ 1) : 0为完全透明（内部文字及元素都会透明）
+    2. rgba : 其中alpha表示不透明度（内部文字和元素未发生变化），即只针对当前元素
 
 ---
 
