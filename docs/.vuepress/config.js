@@ -63,6 +63,7 @@ module.exports = {
                 'obj', // 对象操作
                 'fun', // js基础之函数
                 'es6',
+                'errorCode', // Js常见报错
             ],
             '/CSS/': [
                 'middle', // css居中
