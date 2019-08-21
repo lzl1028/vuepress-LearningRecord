@@ -65,6 +65,7 @@ module.exports = {
                 'es6',
                 'errorCode', // Js常见报错
                 'memoryManagement', // JS中的内存管理
+                'throttle', // Js防抖和节流
             ],
             '/CSS/': [
                 'middle', // css居中
