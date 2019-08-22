@@ -67,6 +67,7 @@ module.exports = {
                 'memoryManagement', // JS中的内存管理
                 'throttle', // Js防抖和节流
                 'pageJump', // Js页面跳转
+                'popUp', // Js弹窗详解
             ],
             '/CSS/': [
                 'middle', // css居中
