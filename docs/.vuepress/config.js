@@ -95,6 +95,7 @@ module.exports = {
                 'cache', // 浏览器缓存
                 'requests', // 前端网络请求
                 'login', // 浏览器登录验证
+                'drawing', // 浏览器渲染原理
             ],
             '/outils/': [{
                 title: '工具',
