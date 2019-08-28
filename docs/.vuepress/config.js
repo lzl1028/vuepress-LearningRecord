@@ -78,6 +78,7 @@ module.exports = {
                 'concept', // 核心概念
                 'skills', // CSS小技巧
                 'reset-template', // css初始化模板
+                'unit', // CSS计量单位
             ],
             '/HTML/': [
                 'label', // html标签介绍
