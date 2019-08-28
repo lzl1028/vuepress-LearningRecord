@@ -70,11 +70,13 @@ module.exports = {
                 'popUp', // Js弹窗详解
             ],
             '/CSS/': [
+                'attribute', // css3属性与变量
                 'middle', // css居中
                 'layout', // css布局
                 'text', // css 文本
                 'adapter', // 前端适配
                 'concept', // 核心概念
+                'skills', // CSS小技巧
             ],
             '/HTML/': [
                 'label', // html标签介绍
