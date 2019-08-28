@@ -77,6 +77,7 @@ module.exports = {
                 'adapter', // 前端适配
                 'concept', // 核心概念
                 'skills', // CSS小技巧
+                'reset-template', // css初始化模板
             ],
             '/HTML/': [
                 'label', // html标签介绍
