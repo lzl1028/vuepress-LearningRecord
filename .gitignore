@@ -1,3 +1,4 @@
 node_modules
-.history
 docs/.vuepress/dist
+*.html
+.history
