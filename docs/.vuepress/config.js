@@ -122,7 +122,7 @@ module.exports = {
             }, {
                 title: '算法总结',
                 children: [
-                    'outils/methods/sorting', // 排序算法
+                    // 'outils/methods/sorting', // 排序算法
                 ]
             }],
             '/work/': [{
