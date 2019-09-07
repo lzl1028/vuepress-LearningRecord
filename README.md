@@ -1,5 +1,7 @@
 # VuePress
 
+- [VuePress](https://vuepress.vuejs.org/zh/)
+
 - [VuePress中文网](http://caibaojian.com/vuepress/).
 
 - [My-vuepress](https://scorpio-li.github.io/vuepress-document/)
