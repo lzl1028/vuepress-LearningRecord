@@ -100,6 +100,7 @@ module.exports = {
                 'requests', // 前端网络请求
                 'login', // 浏览器登录验证
                 'drawing', // 浏览器渲染原理
+                'dns', // DNS基础知识
             ],
             '/outils/': [{
                 title: '工具',
