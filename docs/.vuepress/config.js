@@ -68,6 +68,8 @@ module.exports = {
                 'throttle', // Js防抖和节流
                 'pageJump', // Js页面跳转
                 'popUp', // Js弹窗详解
+                'design-patterns', // Js设计模式
+                'form', // 表单办法总结
             ],
             '/CSS/': [
                 'attribute', // css3属性与变量
