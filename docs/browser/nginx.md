@@ -36,6 +36,49 @@ nginx是一个高性能的HTTP和**反向代理服务器**，也是一个通用�
 
 ![image](https://user-gold-cdn.xitu.io/2019/3/11/1696a118b4910728?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
+- 默认配置
+
+```nginx
+# 工作进程的数量
+worker_processes  1;
+events {
+    worker_connections  1024; # 每个工作进程连接数
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    # 日志格式
+    log_format  access  '$remote_addr - $remote_user [$time_local] $host "$request" '
+                  '$status $body_bytes_sent "$http_referer" '
+                  '"$http_user_agent" "$http_x_forwarded_for" "$clientip"';
+    access_log  /srv/log/nginx/access.log  access; # 日志输出目录
+    gzip  on;
+    sendfile  on;
+
+    # 链接超时时间，自动断开
+    keepalive_timeout  60;
+
+    # 虚拟主机
+    server {
+        listen       8080;
+        server_name  localhost; # 浏览器访问域名
+
+        charset utf-8;
+        access_log  logs/localhost.access.log  access;
+
+        # 路由
+        location / {
+            root   www; # 访问根目录
+            index  index.html index.htm; # 入口文件
+        }
+    }
+
+    # 引入其他的配置文件
+    include servers/*;
+}
+```
 
 ```
 events { 
@@ -287,3 +330,99 @@ location ~* \.(png|gif|jpg|jpeg)$ {
 
 
 
+
+## 5. 基本命令
+
+```js
+nginx -t              // 检查配置文件是否有语法错误
+nginx -s reload       // 热加载，重新加载配置文件
+nginx -s stop         // 快速关闭
+nginx -s quit         // 等待工作进程处理完成后关闭
+```
+
+## 6. 搭建站点
+
+- 在其他配置文件`servers`目录下，添加新建站点配置文件 xx.conf。
+
+- 电脑 hosts 文件添加  127.0.0.1   xx_domian
+
+```
+# 虚拟主机
+server {
+    listen       8080;
+    server_name  xx_domian; # 浏览器访问域名
+
+    charset utf-8;
+    access_log  logs/xx_domian.access.log  access;
+
+    # 路由
+    location / {
+        root   www; # 访问根目录
+        index  index.html index.htm; # 入口文件
+    }
+}
+```
+
+- 执行命令 nginx -s reload，成功后浏览器访问  xx_domian 就能看到你的页面
+
+## 7. 根据文件类型设置过期时间
+
+```
+location ~.*\.css$ {
+    expires 1d;
+    break;
+}
+location ~.*\.js$ {
+    expires 1d;
+    break;
+}
+
+location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$ {
+    access_log off;
+    expires 15d;    #保存15天
+    break;
+}
+
+# curl -x127.0.0.1:80 http://www.test.com/static/image/common/logo.png -I #测试图片的max-age
+```
+
+## 8. 禁止文件缓存
+
+- 开发环境经常改动代码，由于浏览器缓存需要强制刷新才能看到效果。这是我们可以禁止浏览器缓存提高效率
+
+```
+location ~* \.(js|css|png|jpg|gif)$ {
+    add_header Cache-Control no-store;
+}
+```
+
+## 9. 防盗链
+
+- 可以防止文件被其他网站调用
+
+```
+location ~* \.(gif|jpg|png)$ {
+    # 只允许 192.168.0.1 请求资源
+    valid_referers none blocked 192.168.0.1;
+    if ($invalid_referer) {
+       rewrite ^/ http://$host/logo.png;
+    }
+}
+```
+
+## 10. 静态文件压缩
+
+```
+server {
+    # 开启gzip 压缩
+    gzip on;
+    # 设置gzip所需的http协议最低版本 （HTTP/1.1, HTTP/1.0）
+    gzip_http_version 1.1;
+    # 设置压缩级别，压缩级别越高压缩时间越长  （1-9）
+    gzip_comp_level 4;
+    # 设置压缩的最小字节数， 页面Content-Length获取
+    gzip_min_length 1000;
+    # 设置压缩文件的类型  （text/html)
+    gzip_types text/plain application/javascript text/css;
+}
+```
