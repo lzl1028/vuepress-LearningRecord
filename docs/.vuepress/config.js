@@ -142,6 +142,7 @@ module.exports = {
                 title: '项目问题',
                 children: [
                     '/work/project/question', // 项目问题总结
+                    '/work/project/rendering', // 页面数据渲染优化
                 ]
             }, {
                 title: '代码规范',
