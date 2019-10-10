@@ -70,6 +70,7 @@ module.exports = {
                 'popUp', // Js弹窗详解
                 'design-patterns', // Js设计模式
                 'form', // 表单办法总结
+                'web-worker', // Web Worker为Web内容在后台线程中运行脚本提供了一种简单的方法。
             ],
             '/CSS/': [
                 'attribute', // css3属性与变量
