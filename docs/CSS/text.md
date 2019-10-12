@@ -23,6 +23,7 @@ div {
     - display: -webkit-box; 必须结合的属性，将对象作为弹性伸缩盒子模型显示。
     
     - -webkit-box-orient; 必须结合的属性，设置或检索伸缩盒对象的子元素的排列方式
+    
     - text-overflow: ellipsis; 可选属性，可以用来多行文本的情况下，用省略号“…”隐藏超出范围的文本。
 
 ```css
@@ -123,3 +124,75 @@ p::after {
     1. 加一个渐变效果，贴合文字，就像上述 demo 效果一样
     
     2. 添加 word-break: break-all; 使一个单词能够在换行时进行拆分，这样文字和省略号贴合效果更佳。
+
+### 5. 按钮点击展示所有文本
+
+```html
+<div class="box">
+  <input type="checkbox" name="toggle" id="toggle" style="display: none;">
+  <p>文本内容</p>
+  <label for="toggle">显示更多</label>
+</div>
+```
+
+- 监听按钮的点击行为则用文首说的Checked伪类：
+
+```css
+p {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+input[name="toggle"]:checked {
+ & + p {
+   -webkit-line-clamp: unset;
+ }
+}
+```
+
+- 修改按钮文字：把HTML中的文字去掉，然后换成CSS控制：
+
+```css
+<label for="toggle"></label>
+
+label {
+  &::after {
+    content: "显示更多";
+  }
+}
+input[name="toggle"]:checked {
+  & ~ label {
+    &::after {
+      content: "收起文本";
+    }
+  }
+}
+```
+
+- 通过Js判断按钮出现的条件
+
+```js
+// 原理就是监听文本元素的大小变化，然后动态增加truncated类名😂
+let list = document.querySelectorAll("p");
+let observer = new ResizeObserver(entries => {
+  entries.forEach(item => {
+    item.target.classList[item.target.scrollHeight > item.contentRect.height ? "add" : "remove"]("truncated");
+  });
+});
+
+list.forEach(p => {
+  observer.observe(p);
+  observer.unobserve(item.target); // 移除监听-->只需要监听一次
+});
+```
+
+```css
+p {
+ &.truncated {
+   & + label {
+    display: block;
+   }
+ }   
+}
+```
