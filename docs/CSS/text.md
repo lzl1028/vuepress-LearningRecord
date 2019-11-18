@@ -10,13 +10,26 @@
 
 ```css
 div {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap; /*（设置文字在一行显示，不能换行）*/
+  overflow: hidden; /*（文字长度超出限定宽度，则隐藏超出的内容）*/
+  text-overflow: ellipsis; /*（规定当文本溢出时，显示省略符号来代表被修剪的文本）*/
 }
 ```
 
-### 2. -webkit-line-clamp 实现
+- 优点：
+  1. 无兼容问题
+  
+  2. 响应式截断
+  
+  3. 文本溢出范围才显示省略号，否则不显示省略号
+  
+  4. 省略号位置显示刚好
+
+- 缺点：只支持单行文本截断
+
+### 2. 多行文本溢出
+
+#### 1. 纯 CSS 实现方案：-webkit-line-clamp 实现
 
 - 它需要和 display、-webkit-box-orient 和 overflow 结合使用：
 
@@ -28,10 +41,11 @@ div {
 
 ```css
 div {
-  display: -webkit-box;
+  display: -webkit-box; /*和 -webkit-line-clamp 结合使用，将对象作为弹性伸缩盒子模型显示 ）*/
   overflow: hidden;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* （用来限制在一个块元素显示的文本的行数, 2 表示最多显示 2 行。 为了实现该效果，它需要组合其他的WebKit属性）*/
+  -webkit-box-orient: vertical; /*（和 -webkit-line-clamp 结合使用 ，设置或检索伸缩盒对象的子元素的排列方式 ）*/
+  text-overflow: ellipsis;
 }
 ```
 
@@ -39,8 +53,59 @@ div {
 
 - 使用场景：多用于移动端页面，因为移动设备浏览器更多是基于 webkit 内核，除了兼容性不好，实现截断的效果不错。
 
+#### 2. 基于 JavaScript 的实现方案
 
-### 3. 定位元素实现多行文本截断
+```html
+<script type="text/javascript">
+    const text = '这是一段很长的文本';
+    const totalTextLen = text.length;
+    const formatStr = () => {
+        const ele = document.getElementsByClassName('demo')[0];
+        const lineNum = 2;
+        const baseWidth = window.getComputedStyle(ele).width;
+        const baseFontSize = window.getComputedStyle(ele).fontSize;
+        const lineWidth = +baseWidth.slice(0, -2);
+
+        // 所计算的strNum为元素内部一行可容纳的字数(不区分中英文)
+        const strNum = Math.floor(lineWidth / +baseFontSize.slice(0, -2));
+
+        let content = '';
+        
+      	// 多行可容纳总字数
+        const totalStrNum = Math.floor(strNum * lineNum);
+
+        const lastIndex = totalStrNum - totalTextLen;
+
+        if (totalTextLen > totalStrNum) {
+            content = text.slice(0, lastIndex - 3).concat('...');
+        } else {
+            content = text;
+        }
+        ele.innerHTML = content;
+    }
+    
+    formatStr();
+    
+		window.onresize = () => {
+        formatStr();
+    };
+</script>
+
+<body>
+	<div class='demo'></div>
+</body>
+```
+
+- 优点：
+  1. 无兼容问题
+  2. 响应式截断
+  3. 文本溢出范围才显示省略号，否则不显示省略号
+
+- 缺点： 
+  1. 需要 JS 实现，背离展示和行为相分离原则
+  2. 文本为中英文混合时，省略号显示位置略有偏差
+
+#### 3. 定位元素实现多行文本截断
 
 - 通过伪元素绝对定位到行尾并遮住文字，再通过 overflow: hidden 隐藏多余文字。
 
@@ -72,7 +137,7 @@ p::after {
 
 - 适合场景：文字内容较多，确定文字内容一定会超过容器的，那么选择这种方式不错。
 
-### 4. float 特性实现多行文本截断
+#### 4. float 特性实现多行文本截断
 
 ```html
 <div class="wrap">
@@ -94,7 +159,7 @@ p::after {
   float: right;
   margin-left: -5px;
   width: 100%;
-  word-break: break-all;
+  word-break: break-all; /*（使一个单词能够在换行时进行拆分）*/
 }
 .wrap::before {
   float: left;
@@ -125,7 +190,7 @@ p::after {
     
     2. 添加 word-break: break-all; 使一个单词能够在换行时进行拆分，这样文字和省略号贴合效果更佳。
 
-### 5. 按钮点击展示所有文本
+#### 5. 按钮点击展示所有文本
 
 ```html
 <div class="box">
