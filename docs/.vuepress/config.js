@@ -50,6 +50,7 @@ module.exports = {
                         '/Javascript/fun-parsing/cycle', // 循环
                     ]
                 }, // js函数解析
+                'commonMethods', // JS常用技巧
                 'codeSpecification', // Js编码规范
                 'dom', // DOM事件机制
                 'promise', // 前端异步技术-Promise
