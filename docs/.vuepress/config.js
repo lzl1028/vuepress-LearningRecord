@@ -21,7 +21,8 @@ module.exports = {
                     { text: 'Javascript', link: '/Javascript/' },
                     { text: 'CSS', link: '/CSS/' },
                     { text: 'HTML', link: '/HTML/' },
-                    { text: 'Browser(浏览器)', link: '/browser/' }
+                    { text: 'Browser(浏览器)', link: '/browser/' },
+                    { text: 'expand(拓展)', link: '/expand/' }
                 ]
             },
             { text: '工具函数', link: '/outils/' },
@@ -63,7 +64,7 @@ module.exports = {
                 'code', // 代码优化
                 'obj', // 对象操作
                 'fun', // js基础之函数
-                'es6',
+                'es6', // es6相关知识
                 'errorCode', // Js常见报错
                 'memoryManagement', // JS中的内存管理
                 'throttle', // Js防抖和节流
@@ -72,6 +73,7 @@ module.exports = {
                 'design-patterns', // Js设计模式
                 'form', // 表单办法总结
                 'web-worker', // Web Worker为Web内容在后台线程中运行脚本提供了一种简单的方法。
+                'jq-js', // jQuery-JavaScript一览表
             ],
             '/CSS/': [
                 'attribute', // css3属性与变量
@@ -103,8 +105,12 @@ module.exports = {
                 'cache', // 浏览器缓存
                 'requests', // 前端网络请求
                 'login', // 浏览器登录验证
-                'drawing', // 浏览器渲染原理
+                'drawing', // 浏览器如何渲染网页
                 'dns', // DNS基础知识
+                'mobile', // 移动端知识
+            ],
+            '/expand/': [
+                'safe', // 前端安全
             ],
             '/outils/': [{
                 title: '工具',

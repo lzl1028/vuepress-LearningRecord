@@ -1,4 +1,4 @@
-# Javascript常用技巧
+# Javascript常用操作
 
 ## 1. 使用!!将变量转换成布尔类型
 
@@ -182,4 +182,196 @@ console.log(list.sort(function() {
     return Math.random() - 
 0.5
 })); // [2,1,3]
+```
+
+## 12. 实现值交换
+1. var temp = a; a = b; b = temp; (传统，但需要借助临时变量)
+2. a ^= b; b ^= a; a ^= b; (需要两个整数)
+3. b = [a, a = b][0] (借助数组)
+4. [a, b] = [b, a]; (ES6，解构赋值)
+5. a = a + b; b = a - b; a = a - b; (小学奥赛题)
+
+## 13. 去掉小数部分
+- parseInt(num)
+- ~~num
+- num >> 0
+- num | 0
+
+## 14. 判断 x 是否是整数
+
+```js
+function isInt(x) {
+  return (x ^ 0) === x
+}
+// return Math.round(x) === x
+// return (typeof x === 'number') && (x % 1 === 0)
+// ES6 -> Number.isInteger()
+```
+
+## 15. 递归求阶乘
+
+```js
+function factorial(n) {
+  return (n > 1) ? n * f(n - 1) : n
+}
+```
+
+## 16. 判断符号是否相同
+
+```js
+function sameSign(a, b) {
+  return (a ^ b) >= 0
+}
+```
+
+## 17. 克隆数组
+- arr.slice(0)
+
+## 18. 数组去重
+
+```js
+// ES6
+Array.from(new Set(arr))
+
+// ES5
+arr.filter(function(ele, index, array){
+    return index===array.indexOf(ele)
+})
+```
+
+## 19. 数组最大值
+
+```js
+function maxArr(arr) {
+  return Math.max.apply(null, arr)
+}
+```
+
+## 20. 数组最小值
+
+```js
+function minArr(arr) {
+  return Math.min.apply(null, arr)
+}
+```
+
+## 21. 随机获取数组的一个成员
+
+```js
+function randomOne(arr) {
+  return arr[Math.floor(Math.random() * arr.length)]
+}
+```
+## 22. 产生随机颜色
+
+```js
+function getRandomColor() {
+    return `#${Math.random().toString(16).substr(2, 6)}`
+}
+```
+
+## 23. 随机生成指定长度的字符串
+
+```js
+function randomStr(n) {
+  let standard = 'abcdefghijklmnopqrstuvwxyz9876543210'
+  let len = standard.length
+  let result = ''
+
+  for (let i = 0; i < n; i++) {
+    result += standard.charAt(Math.floor(Math.random() * len))
+  }
+
+  return result
+}
+```
+
+## 24. 深拷贝
+
+- JSON.parse(JSON.stringify(obj))
+
+## 25. 回到顶部
+
+1. **锚点**
+
+- 使用锚点链接是一种简单的返回顶部的功能实现。该实现主要在页面顶部放置一个指定名称的锚点，然后在页面下方放置一个返回到该锚点的链接，用户点击该链接即可返回到该锚点所在的位置。原理和实现都很简单，核心就是通过锚点跳转到指定元素位置，然后把要跳转的元素放到页面顶部。
+
+```html
+<body style="height: 2000px;">
+    <div id="topAnchor"></div>
+    <a href="#topAnchor" style="position: fixed;right: 0;bottom: 0;">回到顶部</a>
+</body>
+```
+
+2. scrollTop
+
+- scrollTop属性表示被隐藏在内容区域上方的像素数。元素未滚动时，scrollTop的值为0，如果元素被垂直滚动了，scrollTop的值大于0，且表示元素上方不可见内容的像素宽度。可以利用scrollTop来实现回到顶部的功能，修改body的scrollTop。示例如下：
+JavaScript实现回到顶部功能的五种方法，建议收藏
+
+```html
+<body style="height: 2000px;">
+    <button id="test" style="position: fixed;right: 0;bottom: 0;">回到顶部</button>
+    <script>
+        var test = document.getElementById("test");
+        test.onclick = function(){
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+        }
+    </script>
+</body>
+]
+```
+
+3. scrollTo()
+
+- scrollTo(x,y)是js原生的方法，作用是滚动当前window中显示的文档至（x,y）点。这是很常用的一种方法，设置scrollTo(0,0)就可以实现回到顶部的效果。示例如下：
+
+```html
+<body style="height: 2000px;">
+    <button id="test" style="position: fixed;right: 0;bottom: 0;">回到顶部</button>
+    <script>
+        var test = document.getElementById("test");
+        test.onclick = function(){
+            // document.body.scrollTop = document.documentElement.scrollTop = 0;
+            scrollTo(0,0);
+        }
+    </script>
+</body>
+```
+
+4. scrollBy()
+
+- scrollBy(x,y)方法滚动当前window中显示的文档，x和y指定滚动的相对量。只要把当前页面的滚动长度作为参数，逆向滚动，则可以实现回到顶部的效果。
+
+```html
+<body style="height: 2000px;">
+    <button id="test" style="position: fixed;right: 0;bottom: 0;">回到顶部</button>
+    <script>
+        var test = document.getElementById("test");
+        test.onclick = function(){
+            var top = document.body.scrollTop || document.documentElement.scrollTop;
+            console.log(top);
+            scrollBy(0,-top);
+        }
+    </script>
+</body>
+```
+
+5. scrollIntoView()
+
+- Element.scrollIntoView方法可以滚动当前元素，使其进入浏览器的可见区域。该方法可以接受一个布尔值作为参数。如果为true，表示元素的顶部与当前区域的可见部分的顶部对齐（前提是当前区域可滚动）；如果为false，表示元素的底部与当前区域的可见部分的尾部对齐（前提是当前区域可滚动）。如果没有提供该参数，默认为true。
+
+- 使用该方法的原理与使用锚点的原理类似，在页面最上方设置目标元素，当页面滚动时，目标元素被滚动到页面区域以外，点击回到顶部按钮，使目标元素重新回到原来位置，则达到预期效果。
+
+```html
+<body style="height: 2000px;">
+    <div id="target"></div>
+    <button id="test" style="position: fixed;right: 0;bottom: 0;">回到顶部</button>
+    <script>
+        var test = document.getElementById("test");
+        var target = document.getElementById('target');
+        test.onclick = function(){
+            target.scrollIntoView();
+        }
+    </script>
+</body>
 ```
