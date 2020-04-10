@@ -45,6 +45,12 @@ module.exports = {
         sidebar: {
             // docs文件夹下面的accumulate文件夹 文档中md文件 书写的位置(命名随意)
             '/Javascript/': [{
+                    title: 'Vue',
+                    collapsable: true,
+                    children: [
+                        '/Javascript/vue/skills', // vue常用开发技巧
+                    ]
+                }, {
                     title: 'Js函数方法解析',
                     collapsable: true,
                     children: [

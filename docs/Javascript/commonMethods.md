@@ -262,6 +262,7 @@ function randomOne(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 ```
+
 ## 22. 产生随机颜色
 
 ```js
@@ -318,7 +319,6 @@ JavaScript实现回到顶部功能的五种方法，建议收藏
         }
     </script>
 </body>
-]
 ```
 
 3. scrollTo()
@@ -374,4 +374,171 @@ JavaScript实现回到顶部功能的五种方法，建议收藏
         }
     </script>
 </body>
+```
+
+## 26. 延迟函数delay
+
+```js
+const delay = ms => new Promise((resolve, reject) => setTimeout(resolve, ms))
+
+const getData = status => new Promise((resolve, reject) => {
+    status ? resolve('done') : reject('fail')
+})
+const getRes = async (data) => {
+    try {
+        const res = await getData(data)
+        const timestamp = new Date().getTime()
+        await delay(1000)
+        console.log(res, new Date().getTime() - timestamp)
+    } catch (error) {
+        console.log(error)
+    }
+}
+getRes(true) // 隔了1秒
+```
+
+## 27. 函数柯里化
+
+```js
+const curring = fn => {
+    const { length } = fn
+    const curried = (...args) => {
+        return (args.length >= length
+              ? fn(...args)
+              : (...args2) => curried(...args.concat(args2)))
+    }
+    return curried
+}
+
+const listMerge = (a, b, c) => [a, b, c]
+const curried = curring(listMerge)
+console.log(curried(1)(2)(3)) // [1, 2, 3]
+
+console.log(curried(1, 2)(3)) // [1, 2, 3]
+
+console.log(curried(1, 2, 3)) // [1, 2, 3]
+```
+
+## 获取当前子元素是其父元素下子元素的排位
+
+```js
+const getIndex = el => {
+    if (!el) {
+        return -1
+    }
+    let index = 0
+    do {
+        index++
+    } while (el = el.previousElementSibling);
+    return index
+}
+
+// el: document.getElementById()
+```
+
+## 获取当前元素相对于浏览器视口的偏移量
+
+```js
+const getOffset = el => {
+    const {
+        top,
+        left
+    } = el.getBoundingClientRect()
+    const {
+        scrollTop,
+        scrollLeft
+    } = document.body
+    return {
+        top: top + scrollTop,
+        left: left + scrollLeft
+    }
+}
+```
+
+## 获取元素类型
+
+```js
+const dataType = obj => Object.prototype.toString.call(obj).replace(/^\[object (.+)\]$/, '$1').toLowerCase();
+```
+
+## 判断是否是移动端
+
+```js
+const isMobile = () => 'ontouchstart' in window
+```
+
+## fade动画
+
+```js
+const fade = (el, type = 'in') {
+    el.style.opacity = (type === 'in' ? 0 : 1)
+    let last = +new Date()
+    const tick = () => {
+        const opacityValue = (type === 'in' 
+            ? (new Date() - last) / 400 // 400: 动画时间
+            : -(new Date() - last) / 400)
+        el.style.opacity = +el.style.opacity + opacityValue
+    	last = +new Date()
+        if (type === 'in'
+          ? (+el.style.opacity < 1)
+          : (+el.style.opacity > 0)) {
+            requestAnimationFrame(tick)
+        }
+    }
+    tick()
+}
+```
+
+## 将指定格式的字符串解析为日期字符串
+
+```js
+const dataPattern = (str, format = '-') => {
+    if (!str) {
+        return new Date()
+    }
+    const dateReg = new RegExp(`^(\\d{2})${format}(\\d{2})${format}(\\d{4})$`)
+    const [, month, day, year] = dateReg.exec(str)
+    return new Date(`${month}, ${day} ${year}`)
+} 
+
+console.log(dataPattern('12-25-1995')) // Mon Dec 25 1995 00:00:00 GMT+0800 (中国标准时间)
+```
+
+## 禁止网页复制粘贴
+
+```js
+const html = document.querySelector('html')
+html.oncopy = () => false
+html.onpaste = () => false
+```
+
+## input框限制只能输入中文
+
+```js
+const input = document.querySelector('input[type="text"]')
+const clearText = target => {
+    const {
+        value
+    } = target
+    target.value = value.replace(/[^\u4e00-\u9fa5]/g, '')
+}
+input.onfocus = ({target}) => {
+    clearText(target)
+}
+input.onkeyup = ({target}) => {
+    clearText(target)
+}
+input.onblur = ({target}) => {
+    clearText(target)
+}
+input.oninput = ({target}) => {
+    clearText(target)
+}
+```
+
+## 去除字符串中的html代码
+
+```js
+const removeHTML = (str = '') => str.replace(/<[\/\!]*[^<>]*>/ig, '')
+console.log(removeHTML('<h1>哈哈哈哈<呵呵呵</h1>')) // 哈哈哈哈<呵呵呵
 ```
