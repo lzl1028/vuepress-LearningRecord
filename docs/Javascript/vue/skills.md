@@ -31,6 +31,7 @@
 }
 </style>
 ```
+
 ## watch高阶使用
 
 ### 立即执行
@@ -517,3 +518,4 @@ this.$messaga({
     duration: 3000
 })
 ```
+

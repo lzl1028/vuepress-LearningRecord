@@ -1,8 +1,8 @@
 # 面试题
 
-## 操作计算题
+## 1. 操作计算题
 
-### 1. ['1','2','3'].map(parseInt)
+### ['1','2','3'].map(parseInt)
 
 - 答案：[1,NaN,NaN]
 
@@ -23,7 +23,7 @@
 
 - 实际调用情况：
 
-```
+```js
 parseInt('1',0,theArray);
 parseInt('2',1,theArray);
 parseInt('3',2,theArray);
@@ -37,10 +37,106 @@ parseInt('3',2,theArray);
 
 - 解决：
 
-```
+```js
 ['1','2','3'].map(function(value){
         return parseInt(value)
 })
-<!--或-->
+// <!--或-->
 ['1','2','3'].map(Number)
 ```
+
+## 2. JavaScript块级作用域的默认变量和声明函数
+
+```js
+{
+  a = 10;
+  function a(){};
+  console.log(a)//10
+};
+console.log(a);//10
+```
+
+### 块级作用域的默认变量
+
+```js
+console.log(window.a, a);//undefined, ReferenceError: a is not defined
+{
+  console.log(window.a,a);//undefined  、a is not defined
+    a = 10;
+    console.log(window.a,a)//10 10
+}
+console.log(window.a,a);//10 10
+```
+我们可以清晰的看到，在块级作用域中默认声明的变量，只有执行了声明代码，变量才会被挂载到全局作用域上。
+
+```js
+console.log(window.a,a);//undefined  undefined
+{
+  console.log(window.a,a);//undefined  、undefined
+    var a = 10;
+    console.log(window.a,a)//10 10
+}
+console.log(window.a,a);//10 10
+```
+对比上一个例子，我们可以得出，使用var声明的变量会在编译阶段被提升到全局作用域上，不过它只是将声明提升，赋值操作并未提升上去。
+
+### 小结
+
+- 在块级作用域中默认声明的变量，只有代码执行到声明语句之后，才可以进行访问，否则会报错。
+
+- 块级作用域中默认声明的变量会被提升到全局作用域。
+
+### 块级作用域的函数声明
+
+块级作用域函数，就像预先在全局作用域中使用var声明了一个变量，且默认值为undefined。
+
+```js
+console.log(window.a,a);//undefined undefined
+{
+  console.log(window.a,a);//undefined function a(){}
+  function a(){};
+  console.log(window.a,a)//function a(){} function a(){}
+}
+console.log(window.a,a);//function a(){} function a(){}
+```
+- 至于第二行window.a=undefoned，而a=function a(){} ，上面在阮一峰老师的文章中说过，声明函数a会被提升到全局作用域，且在其块级作用域中，也会被提升到顶层。而window.a为什么会为undefined呢？因为只有window.a只有等块级作用域中函数声明的定义的那行代码执行过之后，才会被映射到全局作用域。
+
+### 小结：
+
+- 块级作用域函数在编译阶段将函数声明提升到全局作用域，并且会在全局声明一个变量，值为undefined。同时，也会被提升到对应的块级作用域顶层。
+
+- 块级作用域函数只有定义声明函数的那行代码执行过后，才会被映射到全局作用域。
+
+### 块级作用域中有同名的变量和函数声明
+
+```js
+console.log(window.a,a);//undefined undefined
+{
+    console.log(window.a,a);//undefined function a(){}
+    function a() {};
+    a = 10;
+    console.log(window.a,a); //function a(){}  10
+};
+console.log(window.a,a); //function a(){}  function a(){}
+```
+
+首先，块级作用域函数a的声明会被提升到全局作用域，第一行打印比较符合预期。然后在块级作用域中，由于声明函数a提升到块级作用域顶端，所以打印a = function a(){}，而window.a由于并没有执行函数定义的那一行代码，所以仍然为undefined。当执行到声明函数定义的时候，就会把函数a映射到全局作用域中。当执行a = 10的时候，JS引擎会进行LHS查找，此时，声明函数已经被同时提升到全局作用域和块级作用域顶端了，由于遮蔽效果，此时查找a只会找到块级作用域内的a，并不会找到全局作用域的a，这时，a已经被定义，a = 10只会执行赋值操作，并不会进行提升。
+
+```js
+console.log(window.a,a);//undefined undefined
+{
+    console.log(window.a,a);//undefined function a(){}
+       a = 10;
+    function a() {};
+    console.log(window.a,a); //10  10
+};
+console.log(window.a,a); //10 10
+```
+
+我们直接进行下一步，执行a = 10，我们知道，此时，在块级作用域中函数声明已经被提升到顶层，那么此时执行a，就是相当于赋值，将函数声明a赋值为数字a，可以理解吗？如果有疑问，可以看🌰1。然后，执行到函数声明语句，此时，虽然这一行代码是函数声明语句，但是a，已经为数字10了，所以，执行function a(){}之后，a的值10就会被赋值给全局作用域上的a，所以下面打印的window.a,a都为10！！！
+
+### 小结
+
+- 块级作用域函数只有执行函数声明语句的时候，才会重写对应的全局作用域上的同名变量。
+
+

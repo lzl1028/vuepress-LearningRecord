@@ -49,6 +49,7 @@ module.exports = {
                     collapsable: true,
                     children: [
                         '/Javascript/vue/skills', // vue常用开发技巧
+                        '/Javascript/vue/question', // vue开发中遇到的问题
                     ]
                 }, {
                     title: 'Js函数方法解析',
@@ -70,7 +71,6 @@ module.exports = {
                 'code', // 代码优化
                 'obj', // 对象操作
                 'fun', // js基础之函数
-                'es6', // es6相关知识
                 'errorCode', // Js常见报错
                 'memoryManagement', // JS中的内存管理
                 'throttle', // Js防抖和节流
