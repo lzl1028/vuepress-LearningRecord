@@ -40,18 +40,17 @@ ajax(url, () => {
 
 - 我们假定，存在一个"信号中心"，某个任务执行完成，就向信号中心"发布"（publish）一个信号，其他任务可以向信号中心"订阅"（subscribe）这个信号，从而知道什么时候自己可以开始执行。这就叫做"发布/订阅模式"（publish-subscribe pattern），又称"观察者模式"（observer pattern）。
 
-
-```
-<!--首先，f2向信号中心jQuery订阅done信号。-->
+```js
+// <!--首先，f2向信号中心jQuery订阅done信号。-->
 jQuery.subscribe('done', f2);
-<!--然后，f1进行如下改写：-->
+// <!--然后，f1进行如下改写：-->
 function f1() {
   setTimeout(function () {
     // ...
     jQuery.publish('done');
   }, 1000);
 }
-<!--上面代码中，jQuery.publish('done')的意思是，f1执行完成后，向信号中心jQuery发布done信号，从而引发f2的执行。 f2完成执行后，可以取消订阅（unsubscribe）-->
+// <!--上面代码中，jQuery.publish('done')的意思是，f1执行完成后，向信号中心jQuery发布done信号，从而引发f2的执行。 f2完成执行后，可以取消订阅（unsubscribe）-->
 jQuery.unsubscribe('done', f2);
 
 ```

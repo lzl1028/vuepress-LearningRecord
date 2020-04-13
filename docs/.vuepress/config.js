@@ -84,7 +84,6 @@ module.exports = {
             '/CSS/': [
                 'attribute', // css3属性与变量
                 'middle', // css居中
-                'layout', // css布局
                 'text', // css 文本
                 'adapter', // 前端适配
                 'concept', // 核心概念
@@ -124,6 +123,9 @@ module.exports = {
                 children: [
                     '/outils/terminal/command', // 终端命令
                     '/outils/terminal/pdf', // HTML转成PDF
+                    '/outils/terminal/css', // css方法
+                    '/outils/terminal/js', // js方法
+                    '/outils/terminal/browser', // 浏览器方法
                 ]
             }, {
                 title: '前端API',
