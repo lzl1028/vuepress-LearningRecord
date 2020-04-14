@@ -176,6 +176,8 @@ module.exports = {
                 title: 'CSS',
                 children: [
                     '/example/css/descartes', // 笛卡尔心型曲线
+                    '/example/page/layout', // 页面布局
+                    '/example/css/amplification', // 悬停放大图片效果
                 ]
             }]
         }
