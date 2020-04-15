@@ -86,7 +86,6 @@ module.exports = {
                 'middle', // css居中
                 'text', // css 文本
                 'adapter', // 前端适配
-                'concept', // 核心概念
                 'skills', // CSS小技巧
                 'reset-template', // css初始化模板
                 'unit', // CSS计量单位
@@ -137,6 +136,7 @@ module.exports = {
                 title: '常用函数处理',
                 children: [
                     '/outils/methods/url', // 常用URL参数操作方法
+                    '/outils/methods/query', // js精准查询与模糊查询
                 ]
             }, {
                 title: '算法总结',

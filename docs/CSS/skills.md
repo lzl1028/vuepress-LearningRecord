@@ -161,4 +161,72 @@ a[href^="http"]:empty::before {
 }
 ```
 
+## 一段css让全站变灰
+
+- filter: grayscale 使用可以调整元素的灰度值
+
+```css
+.gray-filter {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+    filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+    -webkit-filter: grayscale(1);
+}
+```
+
+- 问题一：加入把这段css加到了body上
+> 对于指定了 filter 样式且值不为 none 时，被应用该样式的元素其子元素中如果有 position 为 absolute 或 fixed 的元素，会为这些元素创建一个新的容器，使得这些绝对或固定定位的元素其定位的基准相对于这个新创建的容器。
+
+- 解决方案1：影响全站的方法我们可以将该样式应用到根元素html上，即使创建了新的定位基准元素，也不会对子孙元素产生不符合预期的影响。
+
+```css
+html {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+    filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+    -webkit-filter: grayscale(1);
+}
+```
+
+- 解决方案2: 非全站变灰我们可以将需要使用filter的元素单独加上
+
+```html
+
+<html>
+    <body>
+        <div class="gray-filter"></div>
+    </body>
+</html>
+
+<style>
+.fixed {
+    position: fixed;
+    top: 100px;
+    left: 100px;
+    height: 100px;
+    width: 100px;
+    background-color: #f00;
+}
+.gray-filter {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+    filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+    -webkit-filter: grayscale(1);
+}
+</style>
+```
+
+
 
