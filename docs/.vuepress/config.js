@@ -50,6 +50,7 @@ module.exports = {
                     children: [
                         '/Javascript/vue/skills', // vue常用开发技巧
                         '/Javascript/vue/question', // vue开发中遇到的问题
+                        '/Javascript/vue/cycle', // vue生命周期
                     ]
                 }, {
                     title: 'Js函数方法解析',
@@ -80,6 +81,7 @@ module.exports = {
                 'form', // 表单办法总结
                 'web-worker', // Web Worker为Web内容在后台线程中运行脚本提供了一种简单的方法。
                 'jq-js', // jQuery-JavaScript一览表
+                'regularExpression', // 正则表达式
             ],
             '/CSS/': [
                 'attribute', // css3属性与变量

@@ -1,6 +1,108 @@
 # vue常用开发技巧
 
-## 1. 样式穿透
+## 路由参数解耦
+
+一般在组件内使用路由参数，大多数人会这样做：
+
+```js
+export default {
+    methods: {
+        getParamsId() {
+            return this.$route.params.id
+        }
+    }
+}
+```
+
+- 在组件中使用 $route 会使之与其对应路由形成高度耦合，从而使组件只能在某些特定的 URL 上使用，限制了其灵活性。
+
+- 正确的做法是通过 props 解耦
+
+```js
+const router = new VueRouter({
+    routes: [{
+        path: '/user/:id',
+        component: User,
+        props: true
+    }]
+})
+```
+
+- 将路由的 props 属性设置为 true 后，组件内可通过 props 接收到 params 参数
+
+```js
+export default {
+    props: ['id'],
+    methods: {
+        getParamsId() {
+            return this.id
+        }
+    }
+}
+```
+
+- 另外你还可以通过函数模式来返回 props
+
+```js
+const router = new VueRouter({
+    routes: [{
+        path: '/user/:id',
+        component: User,
+        props: (route) => ({
+            id: route.query.id
+        })
+    }]
+})
+```
+
+## 函数式组件
+
+函数式组件是无状态，它无法实例化，没有任何的生命周期和方法。创建函数式组件也很简单，只需要在模板添加 functional 声明即可。一般适合只依赖于外部数据的变化而变化的组件，因其轻量，渲染性能也会有所提高。
+
+组件需要的一切都是通过 context 参数传递。它是一个上下文对象，具体属性查看文档。这里 props 是一个包含所有绑定属性的对象。
+
+- 函数式组件
+
+```html
+<template functional>
+    <div class="list">
+        <div class="item" v-for="item in props.list" :key="item.id" @click="props.itemClick(item)">
+            <p>{{item.title}}</p>
+            <p>{{item.content}}</p>
+        </div>
+    </div>
+</template>
+```
+
+- 父组件使用
+
+```html
+<template>
+    <div>
+        <List :list="list" :itemClick="item => (currentItem = item)" />
+    </div>
+</template>
+```
+
+```js
+import List from '@/components/List.vue'
+export default {
+    components: {
+        List
+    },
+    data() {
+        return {
+            list: [{
+                title: 'title',
+                content: 'content'
+            }],
+            currentItem: ''
+        }
+    }
+}
+```
+
+## 样式穿透
 
 在开发中修改第三方组件样式是很常见，但由于 scoped 属性的样式隔离，可能需要去除 scoped 或是另起一个 style 。这些做法都会带来副作用（组件样式污染、不够优雅），样式穿透在css预处理器中使用才生效。
 
@@ -356,6 +458,31 @@ export default {
 ```
 - 使用这个方法后，即使我们同时创建多个计时器，也不影响效果。因为它们会在页面销毁后程序化的自主清除。
 
+## 删除事件监听器
+
+删除事件监听器是一种常见的最佳实践，因为它有助于避免内存泄露并防止事件冲突。
+
+- 如果你想在 created 或 mounted 的钩子中定义自定义事件监听器或第三方插件，并且需要在 beforeDestroy 钩子中删除它以避免引起任何内存泄漏，那么这是一个很好的特性。下面是一个典型的设置：
+```js
+mounted () {
+    window.addEventListener('resize', this.resizeHandler);
+},
+beforeDestroy () {
+    window.removeEventListener('resize', this.resizeHandler);
+}
+```
+
+- 使用 $on('hook:')方法，你可以仅使用一种生命周期方法（而不是两种）来定义/删除事件。
+
+```js
+mounted () {
+  window.addEventListener('resize', this.resizeHandler);
+  this.$on("hook:beforeDestroy", () => {
+    window.removeEventListener('resize', this.resizeHandler);
+  })
+}
+```
+
 ## 手动挂载组件
 
 在一些需求中，手动挂载组件能够让我们实现起来更加优雅。比如一个弹窗组件，最理想的用法是通过命令式调用，就像 elementUI 的 this.$message 。而不是在模板中通过状态切换，这种实现真的很糟糕。
@@ -518,4 +645,86 @@ this.$messaga({
     duration: 3000
 })
 ```
+
+## 动态指令参数
+
+Vue 2.6的最酷功能之一是可以将指令参数动态传递给组件。假设你有一个按钮组件，并且在某些情况下想监听单击事件，而在其他情况下想监听双击事件。这就是这些指令派上用场的地方：
+
+```html
+<template>
+	...
+	<aButton @[someEvent]="handleSomeEvent()" />...
+</template>
+<script>
+  ...
+  data(){
+    return{
+      ...
+      someEvent: someCondition ? "click" : "dbclick"
+    }
+  },
+  methods: {
+    handleSomeEvent(){
+      // handle some event
+    }
+  }  
+</script>
+```
+
+## 重用相同路由的组件
+
+开发人员经常遇到的情况是，多个路由解析为同一个Vue组件。问题是，Vue出于性能原因，默认情况下共享组件将不会重新渲染，如果你尝试在使用相同组件的路由之间进行切换，则不会发生任何变化。
+
+```js
+const routes = [
+  {
+    path: "/a",
+    component: MyComponent
+  },
+  {
+    path: "/b",
+    component: MyComponent
+  },
+];
+```
+
+如果你仍然希望重新渲染这些组件，则可以通过在 router-view 组件中提供 :key 属性来实现。
+
+```html
+<template>
+	<router-view :key="$route.path"></router-view>
+</template>
+```
+
+## 把所有Props传到子组件很容易
+
+这是一个非常酷的功能，可让你将所有 props 从父组件传递到子组件。如果你有另一个组件的包装组件，这将特别方便。所以，与其把所有的 props 一个一个传下去，你可以利用这个，把所有的 props 一次传下去：
+
+```html
+<template>
+  <childComponent v-bind="$props" />
+</template>
+```
+代替：
+
+```html
+<template>
+  <childComponent :prop1="prop1" :prop2="prop2" :prop="prop3" :prop4="prop4" ... />
+</template>
+```
+
+## 把所有事件监听传到子组件很容易
+
+如果子组件不在父组件的根目录下，则可以将所有事件侦听器从父组件传递到子组件，如下所示：
+
+```html
+<template>
+	<div>
+    ...
+		<childComponent v-on="$listeners" />...	
+  <div>
+</template>
+```
+
+如果子组件位于其父组件的根目录，则默认情况下它将获得这些组件，因此不需要使用这个小技巧。
 
