@@ -91,6 +91,7 @@ module.exports = {
                 'skills', // CSS小技巧
                 'reset-template', // css初始化模板
                 'unit', // CSS计量单位
+                'mixed-model', // CSS 混合模式
             ],
             '/HTML/': [
                 'label', // html标签介绍
