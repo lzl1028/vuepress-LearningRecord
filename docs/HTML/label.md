@@ -120,7 +120,77 @@ dialog::backdrop {
 }
 ```
 
+## 4. 表单元素
+
+### 4.1 input标签
+
+#### **defaultValue**: 
+> 返回 / 设置在创建此对象的 HTML 中最初指定的默认值。
+
+```html
+<input type="text" value="Hello world">
+```
+
+```js
+const input = document.querySelector('input');
+
+console.log(input.value);        // 'Hello world'
+
+input.value = 'New value';
+
+console.log(input.value);        // 'New value'
+console.log(input.defaultValue); // 'Hello world'
+```
+
+属性 <font color=FF0000>value</font> 中定义的值最初反映在元素属性 <font color=FF0000>value</font> 中，这没什么特别，但当你改变 <font color=FF0000>value</font> 时，仍然可以使用 <font color=FF0000>defaultValue</font> 访问“初始值”（<font color=FF0000>defaultChecked</font> 在复选框也可用）
+
+#### indeterminate
+
+> 表示复选框或单选按钮没有值且处于不确定的状态。复选框的外观会变成第三个状态，但这不影响 checked 属性的值，单击复选框会将值设置为 false。
+
+<font color=FF0000>indeterminate</font> 属性是一个迷人的属性。你可曾知道复选框具有已选和未选之外的其他可视状态？<font color=FF0000>indeterminate</font> 是一个 property（没有对应的 attribute），你有时候可能会看到带着一个小破折号的复选框，使用这个属性便能做到。
+
+```js
+const input = document.querySelector('input');
+input.indeterminate = true;
+```
+![indeterminate属性效果](../resources/images/html/label-1.png)
+
+- indeterminate 不仅适用于复选框，还可以用于单选按钮和进度元素。假设有一组单选按钮，没有一个按钮被选择。在你未作出选择前，它们都没有被选中同时也都没有不被选中，这时它们就处于 indeterminate 状态。
+
+- 还有一种玩法，你可以对被选定元素使用 CSS 伪类 :indeterminate，这样可以在单选按钮组未被选择时方便展示一些特殊的 UI 组件。
+
+```css
+.msg {
+  display: none;
+}
+
+input:indeterminate ~ .msg {
+  display: block;
+}
+```
+![indeterminate属性效果](../resources/images/html/label-2.png)
+
+- 有关 indeterminate 属性的有趣之处在于你可以将它设置为 true 或 false，这将影响复选框的伪类，但不会影响单选按钮。对于单选按钮，按钮组的实际选择状态始终是正确的。
 
 
+#### selectionStart、selectionEnd 和 selectionDirection
 
+这三个属性可以确定用户选择的内容，并且使用起来非常简单。如果用户在输入字段中选择文本，则可以使用这三个属性计算所选内容。
+
+![属性效果](../resources/images/html/label-3.png)
+
+```js
+const input = document.querySelector('input');
+
+setInterval( _ => {
+  console.log(
+    input.selectionStart,
+    input.selectionEnd,
+    input.selectionDirection;
+  ); // e.g. 2, 5, "forward"
+}, 1000)
+```
+
+- 这段测试代码的作用是每秒记录一次选择值。<font color=FF0000>selectionStart</font> 和 <font color=FF0000>selectionEnd</font> 返回描述我选择位置的索引，但是当你使用鼠标或触控板选择时 <font color=FF0000>selectionDirection</font> 返回的是 none，而使用 SHIFT 和箭头选择文本时会返回 <font color=FF0000>forward</font> 或 <font color=FF0000>backward</font>。
 

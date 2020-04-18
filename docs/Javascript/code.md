@@ -57,6 +57,147 @@ if(['black', 'red', 'blue', 'green', 'yellow'].includes(color)) {
 ['black', 'red', 'blue', 'green', 'yellow'].indexOf(color) >= 0
 
 ```
+
+### 1.1 look-up表代替if-else
+
+类似下面的需求：比如某平台的信用分数评级，超过700-950，就是信用极好，650-700信用优秀，600-650信用良好，550-600信用中等，350-550信用较差。
+
+- 初代
+
+```js
+function showGrace(grace) {
+    let _level='';
+    if(grace>=700){
+        _level='信用极好'
+    }
+    else if(grace>=650){
+        _level='信用优秀'
+    }
+    else if(grace>=600){
+        _level='信用良好'
+    }
+    else if(grace>=550){
+        _level='信用中等'
+    }
+    else{
+        _level='信用较差'
+    }
+    return _level;
+}
+// 问题
+1.万一以后需求，改了比如650-750是信用优秀，750-950是信用极好。这样就整个方法要改。
+
+2.方法存在各种神仙数字：700，650，600，550。日后的维护可能存在问题。
+```
+
+- 进化一代: look-up
+
+```js
+function showGrace(grace) {
+    let graceForLevel=[700,650,600,550];
+    let levelText=['信用极好','信用优秀','信用良好','信用中等','信用较差'];
+    for(let i=0;i<graceForLevel.length;i++){
+        if(grace>=graceForLevel[i]){
+            return levelText[i];
+        }
+    }
+    //如果不存在，那么就是分数很低，返回最后一个
+    return levelText[levelText.length-1];
+}
+// 优点
+优点就是如果有需求修改，只需要修改graceForLevel，levelText。业务逻辑不需要改。
+```
+
+- 封装
+
+```js
+function showGrace(grace,level,levelForGrace) {
+    for(let i=0;i<level.length;i++){
+        if(grace>=level[i]){
+            return levelForGrace[i];
+        }
+    }
+    //如果不存在，那么就是分数很低，返回最后一个
+    return levelForGrace[levelForGrace.length-1];
+}
+let graceForLevel=[700,650,600,550];
+let levelText=['信用极好','信用优秀','信用良好','信用中等','信用较差'];
+```
+
+
+
+### 1.2 配置对象代替switch
+
+- 有一个需求：传入cash，check，draft，zfb，wx_pay，对应输出：现金，支票，汇票，支付宝，微信支付。
+
+原始方法
+```js
+function getPayChanne(tag){
+    switch(tag){
+        case 'cash':return '现金';
+        case 'check':return '支票';
+        case 'draft':return '汇票';
+        case 'zfb':return '支付宝';
+        case 'wx_pay':return '微信支付';
+    }
+}
+```
+
+配置数据和业务逻辑分离
+
+```js
+function getPayChanne(tag){
+    let payChanneForChinese = {
+        'cash': '现金',
+        'check': '支票',
+        'draft': '汇票',
+        'zfb': '支付宝',
+        'wx_pay': '微信支付',
+    };
+    return payChanneForChinese[tag];
+}
+```
+
+- 封装
+
+```js
+let payChanneForChinese = {
+    'cash': '现金',
+    'check': '支票',
+    'draft': '汇票',
+    'zfb': '支付宝',
+    'wx_pay': '微信支付',
+};
+function getPayChanne(tag,chineseConfig){
+    return chineseConfig[tag];
+}
+getPayChanne('cash',payChanneForChinese);
+```
+
+### 1.3 使用 Array.includes 来处理多重条件
+
+```js
+// 条件语句
+function test(fruit) {
+  if (fruit == 'apple' || fruit == 'strawberry') {
+    console.log('red');
+  }
+}
+```
+
+- 如果想要匹配更多的水果时
+
+```js
+function test(fruit) {
+  // 把条件提取到数组中
+  const redFruits = ['apple', 'strawberry', 'cherry', 'cranberries'];
+
+  if (redFruits.includes(fruit)) {
+    console.log('red');
+  }
+}
+```
+
 ## 2.使用同一个方法处理数组和单一元素
 
 ```js

@@ -161,6 +161,7 @@ module.exports = {
                 children: [
                     '/work/project/question', // 项目问题总结
                     '/work/project/rendering', // 页面数据渲染优化
+                    '/work/project/error', // 前端开发中的常见错误
                 ]
             }, {
                 title: '代码规范',
