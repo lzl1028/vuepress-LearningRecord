@@ -162,6 +162,7 @@ module.exports = {
                     '/work/project/question', // 项目问题总结
                     '/work/project/rendering', // 页面数据渲染优化
                     '/work/project/error', // 前端开发中的常见错误
+                    '/work/project/css', // 前端项目中常见的 CSS 问题
                 ]
             }, {
                 title: '代码规范',
