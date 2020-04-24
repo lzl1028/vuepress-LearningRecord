@@ -84,3 +84,17 @@ div {
     border: 5px solid red;
 }
 ```
+
+## 5.position属性
+
+<font color=FF0000>absolute</font> 绝对定位，相对于 static 定位以外的第一个父元素进行定位。
+
+<font color=FF0000>relative</font> 相对定位，相对于其自身正常位置进行定位。
+
+<font color=FF0000>fixed</font> 固定定位，相对于浏览器窗口进行定位。
+
+<font color=FF0000>static</font> 默认值。没有定位，元素出现在正常的流中。
+
+<font color=FF0000>inherit</font> 规定应该从父元素继承 position 属性的值。
+
+

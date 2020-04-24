@@ -166,54 +166,139 @@ relative | top: -999em | 占据空间
 ---
 
 ## 13. 对BFC规范(块级格式化上下文：block formatting context)的理解？
-- BFC规定了内部的Block Box如何布局。定位方案：
 
-    1. 内部的Box会在垂直方向上一个接一个放置。
-    
-    2. Box垂直方向的距离由margin决定，属于同一个BFC的两个相邻Box的margin会发生重叠。
-    
-    3. 每个元素的margin box 的左边，与包含块border box的左边相接触。
-    
-    4. BFC的区域不会与float box重叠。
-    
-    5. BFC是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。
-    
-    6. 计算BFC的高度时，浮动元素也会参与计算。
+### BFC规定了内部的Block Box如何布局。定位方案：
 
-- 满足下列条件之一就可触发BFC
+1. 内部的Box会在垂直方向上一个接一个放置。
 
-    1. 根元素，即html
-    
-    2. float的值不为none（默认）
-    
-    3. overflow的值不为visible（默认）
-    
-    4. display的值为inline-block、table-cell、table-caption
-    
-    5. position的值为absolute或fixed
+2. Box垂直方向的距离由margin决定，属于同一个BFC的两个相邻Box的margin会发生重叠。
+
+3. 每个元素的margin box 的左边，与包含块border box的左边相接触。
+
+4. BFC的区域不会与float box重叠。
+
+5. BFC是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。
+
+6. 计算BFC的高度时，浮动元素也会参与计算。
+
+### 满足下列条件之一就可触发BFC
+
+1. 根元素(html)
+
+2. 浮动元素（元素的 float 不是 none）
+
+3. 绝对定位元素（元素的 position 为 absolute 或 fixed）
+
+4. 行内块元素（元素的 display 为 inline-block）
+
+5. 表格单元格（元素的 display为 table-cell，HTML表格单元格默认为该值）
+
+6. 表格标题（元素的 display 为 table-caption，HTML表格标题默认为该值）
+
+7. 匿名表格单元格元素（元素的 display为 table、table-row、table-row-group、table-header-group、table-footer-group（分别是HTML table、row、tbody、thead、tfoot的默认属性）或 inline-table）
+
+8. overflow 值不为 visible 的块元素
+
+9. display 值为 flow-root 的元素
+
+10. contain 值为 layout、content或 paint 的元素
+
+11. 弹性元素（display为 flex 或 inline-flex元素的直接子元素）
+
+12. 网格元素（display为 grid 或 inline-grid 元素的直接子元素）
+
+13. 多列容器（元素的 column-count 或 column-width 不为 auto，包括 column-count 为 1）
+
+14. column-span 为 all 的元素始终会创建一个新的BFC，即使该元素没有包裹在一个多列容器中（标准变更，Chrome bug）
+
+### BFC能解决的问题：
+
+1. 父元素塌陷
+
+2. 外边距重叠
+
+3. 清除浮动
+
 
 ---
 
 ## 14. 为什么会出现浮动和什么时候需要清除浮动？清除浮动的方式？
-- 浮动元素碰到包含它的边框或者浮动元素的边框停留。由于浮动元素不在文档流中，所以文档流的块框表现得就像浮动框不存在一样。浮动元素会漂浮在文档流的块框上。
-- 浮动带来的问题：
 
-    1. 父元素的高度无法被撑开，影响与父元素同级的元素
+浮动元素碰到包含它的边框或者浮动元素的边框停留。由于浮动元素不在文档流中，所以文档流的块框表现得就像浮动框不存在一样。浮动元素会漂浮在文档流的块框上。
 
-    2. 与浮动元素同级的非浮动元素（内联元素）会跟随其后
+### 浮动带来的问题：
 
-    3. 若非第一个元素浮动，则该元素之前的元素也需要浮动，否则会影响页面显示的结构。
+1. 父元素的高度无法被撑开，影响与父元素同级的元素
 
-- 清除浮动的方式：
+2. 与浮动元素同级的非浮动元素（内联元素）会跟随其后
 
-    1. 父级div定义height
+3. 若非第一个元素浮动，则该元素之前的元素也需要浮动，否则会影响页面显示的结构。
 
-    2. 最后一个浮动元素后加空div标签 并添加样式clear:both。
+### 清除浮动的方式：
 
-    3. 包含浮动元素的父标签添加样式overflow为hidden或auto。
+1. 父级div定义height
 
-    4. 父级div定义zoom
+2. 最后一个浮动元素后加空div标签 并添加样式clear:both。
+```html
+<div class="container">
+    <div class="inner"></div>
+    <div class="clear"></div>
+</div>
+.container{
+    background: blue;
+}
+.inner {
+    width: 100px;
+    height: 100px;
+    background: red;
+    float: left;
+}
+.clear{
+    clear:both;
+}
+```
 
+3. 触发父盒子BFC，包含浮动元素的父标签添加样式overflow为hidden或auto。
+```html
+<div class="outer">
+    <div class="inner">inner</div>
+</div>
+.outer{
+    background: blue;
+    overflow: hidden;
+}
+.inner {
+    width: 100px;
+    height: 100px;
+    background: red;
+    float: left;
+}
+```
+
+4. 父级div定义zoom
+
+5. clearfix
+```html
+<div class="outer clearfix">
+    <div class="inner">inner</div>
+</div>
+.outer{
+    background: blue;
+}
+.inner{
+    width: 100px;
+    height: 100px;
+    background: red;
+    float: left;
+}
+.clearfix:after{
+    content: "";
+    display: block;
+    height: 0;
+    clear:both;
+    visibility: hidden;
+}
+```
 ---
 
 ## 15. 上下margin重合的问题

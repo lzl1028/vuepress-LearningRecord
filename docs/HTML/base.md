@@ -108,3 +108,17 @@ scheme 	| some_text |	定义用于翻译 content 属性值的格式。
 
 
 
+
+## 2. 盒模型
+
+元素都是按照盒模型的规则布局在页面中的。盒模型由 <font color=FF0000>margin + border + padding + content</font> 四个属性组成，分为两种：
+
+- W3C的标准盒模型: <font color=FF0000>width = content</font>，不包含 <font color=FF0000>border + padding</font>
+
+- IE盒模型(怪异盒模型): <font color=FF0000>width = border + padding + content</font>
+
+设置：
+
+- box-sizing: content-box 是W3C盒模型
+
+- box-sizing: border-box 是IE盒模型

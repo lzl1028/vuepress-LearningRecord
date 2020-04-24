@@ -448,3 +448,6 @@ window.resizeTo(screen.availWidth, screen.availHeight);//填充用户的屏幕
 （3）link是XHTML标签，无兼容问题；@import则是在CSS2.1提出的，低版本的浏览器不支持。
 
 （4）link支持使用Javascript控制DOM改变样式；而@import不支持。
+
+## 
+
