@@ -4,7 +4,7 @@
 
 - 回调函数是异步操作最基本的方法。以下代码就是一个回调函数的例子：
 
-```
+```js
 ajax(url, () => {
     // 处理逻辑
 })
@@ -12,7 +12,7 @@ ajax(url, () => {
 ```
 
 - 弱点：就是容易写出回调地狱（Callback hell）。假设多个请求存在依赖性，你可能就会写出如下代码：
-```
+```js
 ajax(url, () => {
     // 处理逻辑
     ajax(url1, () => {
@@ -60,24 +60,36 @@ jQuery.unsubscribe('done', f2);
 ### 1. Promise的三种状态
 
 - Pending----Promise对象实例创建时候的初始状态
+
 - Fulfilled----成功的操作，为表述方便，fulfilled 使用 resolved 代替
+
 - Rejected----可以理解为失败的状态
 
-![image](https://user-gold-cdn.xitu.io/2019/1/6/16821592df2d2d58?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+![image](../resources/images/js/async-1.png)
 
 - pending可以转化为fulfilled或rejected并且只能转化一次，也就是说如果pending转化到fulfilled状态，那么就不能再转化到rejected。并且fulfilled和rejected状态只能由pending转化而来，两者之间不能互相转换。
 
 ### 2. promise的链式调用
 
 - 每次调用返回的都是一个新的Promise实例(这就是then可用链式调用的原因)
+
+  1. then — 运行 promise 函数完成时传递给它的回调
+  
+  2. catch — 运行 promise 函数错误时传递给它的回调
+
 - 如果then中返回的是一个结果的话会把这个结果传递下一次then中的成功回调
+
 - 如果then中出现异常,会走下一个then的失败回调
+
 - 在 then中使用了return，那么 return 的值会被Promise.resolve() 包装(见例1，2)
+
 - then中可以不传递参数，如果不传递会透到下一个then中(见例3)
+
 - catch 会捕获到没有捕获的异常
 
 - example:
-```
+
+```js
 // 例1
 Promise.resolve(1)
 .then(res => {
@@ -93,7 +105,7 @@ return 2 //包装成 Promise.resolve(2)
 Promise:{<resolved>: undefined}
 ```
 
-```
+```js
 // 例3
 let fs = require('fs')
 function read(url) {
@@ -126,13 +138,16 @@ read('./name.txt')
 - Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为与传统函数完全不同，Generator 最大的特点就是可以控制函数的执行。
 
     - 语法上，首先可以把它理解成，Generator 函数是一个状态机，封装了多个内部状态。
+
     - Generator 函数除了状态机，还是一个遍历器对象生成函数。
+
     - 可暂停函数, yield可暂停，next方法可启动，每次返回的是yield后的表达式结果。
+
     - yield表达式本身没有返回值，或者说总是返回undefined。next方法可以带一个参数，该参数就会被当作上一个yield表达式的返回值。
 
 - example:
 
-```
+```js
 function *foo(x) {
   let y = 2 * (yield (x + 1))
   let z = yield (y / 3)
@@ -151,7 +166,7 @@ console.log(it.next(13)) // => {value: 42, done: true}
 
 - 从上例中我们看出手动迭代Generator 函数很麻烦，实现逻辑有点绕，而实际开发一般会配合 co 库去使用。co是一个为Node.js和浏览器打造的基于生成器的流程控制工具，借助于Promise，你可以使用更加优雅的方式编写非阻塞代码。
 
-```
+```js
 // npm install co
 function* r() {
   let r1 = yield read('./1.txt')
@@ -171,22 +186,25 @@ co(r()).then(function(data) {
 ## 6. async/await
 
 - Async/Await简介:
-    - async/await是基于Promise实现的，它不能用于普通的回调函数。
-    - async/await与Promise一样，是非阻塞的。
-    - async/await使得异步代码看起来像同步代码，这正是它的魔力所在。
+  
+  - async/await是基于Promise实现的，它不能用于普通的回调函数。
+  
+  - async/await与Promise一样，是非阻塞的。
+  
+  - async/await使得异步代码看起来像同步代码，这正是它的魔力所在。
 
-- 一个函数如果加上 async ，那么该函数就会返回一个 Promise
+- Async 函数是通过在函数声明之前加上单词 async 来创建的: 一个函数如果加上 async ，那么该函数就会返回一个 Promise
 
-```
+```js
 async function async1() {
   return "1"
 }
 console.log(async1()) // -> Promise {<resolved>: "1"}
 ```
 
-- Async/Await并发请求:
+- Async/Await并发请求: Async 函数可以使用 await 暂停，该关键字只能在 Async 函数中使用。 Await 返回 async 函数完成时返回的任何内容。
 
-```
+```js
 let fs = require('fs')
 function read(file) {
   return new Promise(function(resolve, reject) {
@@ -209,6 +227,20 @@ async function read2() {
   console.log(r)
 }
 readAll() // 2.txt 3.txt
+```
+
+> 这是 promise 和 Async/Await 之间的区别
+
+```js
+// Async / Await
+const asyncGreeting = async () => 'Greetings';
+
+// Promise
+const promiseGreeting = () => new Promise(((resolve) => {
+  resolve('Greetings');
+}));
+asyncGreeting().then(result => console.log(result));
+promiseGreeting().then(result => console.log(result));
 ```
 
 

@@ -184,7 +184,7 @@ module.exports = {
                     '/example/css/descartes', // 笛卡尔心型曲线
                     '/example/page/layout', // 页面布局
                     '/example/css/amplification', // 图片效果
-                    // '/example/html/logo',
+                    '/example/html/input', // 自适应高度输入框
                 ]
             }]
         }
