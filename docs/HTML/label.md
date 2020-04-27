@@ -194,3 +194,165 @@ setInterval( _ => {
 
 - 这段测试代码的作用是每秒记录一次选择值。<font color=FF0000>selectionStart</font> 和 <font color=FF0000>selectionEnd</font> 返回描述我选择位置的索引，但是当你使用鼠标或触控板选择时 <font color=FF0000>selectionDirection</font> 返回的是 none，而使用 SHIFT 和箭头选择文本时会返回 <font color=FF0000>forward</font> 或 <font color=FF0000>backward</font>。
 
+## 5. 图片元素
+
+### 5.1 HTML  img  元素
+
+最简单的情况下，<font color=FF0000>img</font>元素必须包含<font color=FF0000>src</font>属性:
+
+```html
+<img src="cool.jpg" alt="">
+```
+
+#### 设置宽度和高度属性
+
+在页面加载时，它们会在页面图像加载时发生一些布局变化。为了避免这种情况，我们可以为它设置width和height属性:
+
+```html
+<img src="cool.jpg" width="200" height="100" alt="">
+```
+
+![img](/resources/images/html/label-4.gif)
+
+我们看到到右侧图片即使尚未加载仍保留了空间？ 那是因为设置了宽度和高度。
+
+##### 通过 CSS 隐藏图像
+
+图像可以用 CSS 隐藏。 但是，它仍将加载在页面中。 因此，在执行此操作时请小心。如果一个图像应该被隐藏，那么它可能是出于装饰的目的。
+
+```css
+img {
+    display: none;
+}
+```
+同样，上面的方法也不能阻止浏览器加载图像，即使它在视觉上是隐藏的。原因是 img 被认为是一个被替换的元素，所以我们无法控制它所加载的内容。
+
+
+##### 可访问性问题
+
+通过将alt属性设置为有意义的描述，用来访问 HTML 图像，这对于屏幕阅读器用户非常有帮助。
+
+然而，如果一个alt描述是不需要的，请不要删除它，如果你这样做，图像src将被读出,这对可访问性非常不利。
+
+不仅如此，如果图像因为某种原因没有加载，并且它有一个清晰的alt，它将作为一个回退显示。同样通过图例来演示一下。
+
+```html
+<img class="food-thumb" width="300" height="200" src="cheescake.jpg">
+
+<img class="food-thumb" width="300" height="200" src="cheescake.jpg" alt="">
+```
+
+![alt](/resources/images/html/label-5.jpg)
+
+
+##### 响应式图像
+
+<font color=FF0000> img </font>的优点在于可以针对特定视口大小将其扩展为具有多个版本的照片。 我们有两种不同的方式来生成一组响应式图像：
+
+1. <font color=FF0000>srcset</font>属性
+
+```html
+<img src="small.jpg" srcset="medium.jpg 500w, large.jpg 800w" alt="">
+```
+
+这很简单。 对我来说，<font color=FF0000>srcset</font>可以根据屏幕宽度显示多个图像尺寸，这并不是一种完美的解决方案。它让浏览器选择合适的图像，而我们对此无能为力。
+
+2. picture 标签
+
+```html
+<picture>
+  <source srcset="large.jpg" media="(min-width: 800px)" />
+  <source srcset="medium.jpg" media="(min-width: 500px)" />
+  <img src="small.jpg" />
+</picture>
+```
+
+##### 调整图像大小
+
+对于 img ，我们还可以使用的一组很好的特性<font color=FF0000>object-fit</font>和<font color=FF0000>object-position</font>。它们可以控制 img 的大小和定位，就像CSS背景图像。
+
+object-fit 值有：<font color=FF0000>fill, contain, cover, none, scale-down</font>。例如：
+
+```css
+img {
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+```
+
+### 5.2 CSS背景图片(background)
+
+使用CSS背景显示图像时，它需要一个具有内容或特定宽度或高度的元素。 通常，背景图像的主要用途应该是用于装饰目的。
+
+1. 如何使用 CSS 背景图片
+
+```html
+// html
+<div class="element">Some content</div>
+
+// css
+.element {
+    background: url('cool.jpg');
+}
+```
+
+2. 多个背景
+
+```css
+.element {
+    background: url('cool-1.jpg'), url('cool-2.jpg');
+}
+```
+
+3. 隐藏图像
+
+我们可以在特定视口中隐藏和显示图像，如果未使用CSS设置图片，则不会下载该图片。 与使用 img 相比，这是一个额外的好处。
+
+4. 可访问性问题
+
+普通人知道，如果要保存图像，只需单击鼠标左键，然后选择保存即可。 CSS 背景图片并非如此，我们必须先检查元素，然后在DevTools中的url中打开链接，然后才能下载随CSS添加的图像。
+
+5. 伪元素
+
+可以将伪元素与CSS背景图像一起使用，例如在图像顶部显示覆盖图。 对于 img这是不可能的，直到我们为叠加层添加单独的元素。
+
+
+### 5.3 SVG Image
+
+SVG被认为是一种图像，它最大的功能是在不影响质量的情况下进行缩放。此外，使用SVG，我们可以嵌入JPG、PNG或SVG图像。参见下面的 HTML:
+
+```html
+<svg width="200" height="200">
+  <image href="cheesecake.jpg" height="100%" width="100%" preserveAspectRatio="xMidYMid slice" />
+</svg>
+```
+
+<font color=FF0000>prepareAspectRatio</font>？ 它的作用是可以让图像占据SVG的整个宽度和高度，而不会被拉伸或压缩。
+
+- 当 image 宽度较大时，它将填充其父级（SVG）宽度而不会拉伸。
+
+#### 可访问性问题
+
+关于SVG 的可访问性，这使我想起了 title 元素。 例如，我们可以像下面这样添加它：
+
+```html
+<svg width="200" height="200">
+   <title>A photo of blueberry Cheescake</title>
+   <image href="cheesecake.jpg" height="100%" width="100%" preserveAspectRatio="xMidYMid slice" />
+</svg>
+```
+
+我们还可以使用 desc 元素
+
+```html
+<svg width="200" height="200">
+   <title>A photo of blueberry Cheescake</title>
+   <desc>A meaningful description about the image</desc>
+   <image href="cheesecake.jpg" height="100%" width="100%" preserveAspectRatio="xMidYMid slice" />
+</svg>
+```
+
+#### 非开发人员无法下载
+
+必须先检查元素并复制图像的URL，然后才能下载嵌入SVG的图像。 但是，如果我们要防止用户下载特定的图像，这可能是一件好事。
+

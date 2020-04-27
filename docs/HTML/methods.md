@@ -189,7 +189,7 @@ Array.from(document.querySelectorAll('a'))
     - elements 则对应 HTMLFormControlsCollection 接口，这并非一个真正的数组，其中的每一项内容也未必代表一个 HTML 元素。
     - animal 是多个单选按钮的集合，只是因为他们具有相同的 name 特性才聚集在一起（RadioNodeList 接口就是为此而生的），而 value 则返回该集合中所选中的那个单选按钮的 value 特性。
 
-# 15.select()
+## 15.select()
 
 - .select() 方法会将你指定的元素中的所有内容全选。
 

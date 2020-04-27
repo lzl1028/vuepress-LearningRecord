@@ -163,6 +163,7 @@ module.exports = {
                     '/work/project/rendering', // 页面数据渲染优化
                     '/work/project/error', // 前端开发中的常见错误
                     '/work/project/css', // 前端项目中常见的 CSS 问题
+                    '/work/project/logo', // 网站 Logo
                 ]
             }, {
                 title: '代码规范',
@@ -178,11 +179,12 @@ module.exports = {
                 ]
             }],
             '/example/': [{
-                title: 'CSS',
+                title: '实例',
                 children: [
                     '/example/css/descartes', // 笛卡尔心型曲线
                     '/example/page/layout', // 页面布局
                     '/example/css/amplification', // 图片效果
+                    // '/example/html/logo',
                 ]
             }]
         }
