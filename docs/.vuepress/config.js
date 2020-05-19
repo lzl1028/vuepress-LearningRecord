@@ -82,6 +82,7 @@ module.exports = {
                 'web-worker', // Web Worker为Web内容在后台线程中运行脚本提供了一种简单的方法。
                 'jq-js', // jQuery-JavaScript一览表
                 'regularExpression', // 正则表达式
+                'closure', // 闭包
             ],
             '/CSS/': [
                 'attribute', // css3属性与变量
