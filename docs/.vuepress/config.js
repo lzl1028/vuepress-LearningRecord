@@ -62,7 +62,6 @@ module.exports = {
                 'commonMethods', // JS常用技巧
                 'codeSpecification', // Js编码规范
                 'dom', // DOM事件机制
-                'promise', // 前端异步技术-Promise
                 'async', // 前端异步编程
                 'performance', // 性能优化
                 'eventLoop', // 事件循环
@@ -82,7 +81,7 @@ module.exports = {
                 'web-worker', // Web Worker为Web内容在后台线程中运行脚本提供了一种简单的方法。
                 'jq-js', // jQuery-JavaScript一览表
                 'regularExpression', // 正则表达式
-                'closure', // 闭包
+                'closure', // 闭包,
             ],
             '/CSS/': [
                 'attribute', // css3属性与变量
@@ -112,7 +111,6 @@ module.exports = {
                 'nginx', // nginx介绍
                 'cache', // 浏览器缓存
                 'requests', // 前端网络请求
-                'login', // 浏览器登录验证
                 'drawing', // 浏览器如何渲染网页
                 'dns', // DNS基础知识
                 'mobile', // 移动端知识
@@ -156,6 +154,7 @@ module.exports = {
                     '/work/interview/css', // 面试题（css篇）
                     '/work/interview/html', // 面试题（html篇）
                     '/work/interview/js', // 面试题（js篇）
+                    '/work/interview/vue', // 面试题（vue篇）
                 ]
             }, {
                 title: '项目问题',

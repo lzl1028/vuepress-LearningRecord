@@ -11,7 +11,7 @@
 <!-[if gte IE 7]> IE7以及IE7以上版本可识别 <![endif]-><br />
 <!-[if IE 8]> 仅IE8可识别 <![endif]-><br />
 <!-[if IE 9]> 仅IE9可识别 <![endif]--><br />
-<!-- more -->
+
 ## 2. 符号解释：
 - ！（非）;
 - lt (小于);
@@ -26,9 +26,11 @@
 ## 4. 排查CSS3兼容问题
 
 ## 5. 使用CSS hack
+
 [CSS hack大全](http://www.webhj.com/hj-650.html)
 
 ## 6.判断浏览器类型：
+
 方式一：
 
 ```js
@@ -48,6 +50,7 @@ if (isIE){
 ```
 
 方式二：
+
 ```js
 if(navigator.appName == 'Microsoft Internet Explorer' && navigator.appVersion.match(/6./i)=='6.'){
     alert('IE 6');

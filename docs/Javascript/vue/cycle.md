@@ -57,7 +57,7 @@
 
 > 组件，分别在他们的钩子函数中打印日志，观察执行顺序。得到的结果如图所示，父组件先创建，然后子组件创建；子组件先挂载，然后父组件挂载。
 
-```
+```js
 父beforeCreate-> 父create -> 子beforeCreate-> 子created -> 子mounted -> 父mounted
 ```
 
@@ -79,6 +79,10 @@
 父beforeCreate->父created->父beforeMount->子beforeCreate->子created->子beforeMount->子mounted->父mounted
 ```
 
+```js
+home beforeCreate --> home created --> home beforeMount --> list beforeCreate --> list created --> list beforeMount --> list mounted --> listMounted --> home mounted
+```
+
 #### 更新过程
 
 ```js
@@ -89,4 +93,8 @@
 
 ```js
 父beforeDestroy->子beforeDestroy->子destroyed->父destroyed
+```
+
+```js
+home beforeDestroy --> list beforeDestroy --> list destroyed --> home destroyed
 ```

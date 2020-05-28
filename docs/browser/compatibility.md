@@ -1,27 +1,34 @@
 # H5 键盘兼容性
 
 ## 1. 键盘弹出的不同表现
+
 - IOS：IOS 的键盘处在窗口的最上层，当键盘弹起时，webview 的高度 height 并没有改变，只是 scrollTop 发生变化，页面可以滚动。且页面可以滚动的最大限度为弹出的键盘的高度，而只有键盘弹出时页面恰好也滚动到最底部时，scrollTop 的变化值为键盘的高度，其他情况下则无法获取。这就导致在 IOS 情况下难以获取键盘的真实高度。
+
 - Android: webview 中留出空间，该空间小于等于的键盘空间，变化的高度差会随着布局而不同，有的认为 ==键盘高度 + 页面高度 = 原页面高度；== 是错误的误导，只有在某种很巧合的布局情况下才可套用此公式。
 
 
 ## 2. 键盘收起的不同表现
 
 - IOS：触发键盘上的按钮收起键盘或者输入框以外的页面区域时，输入框会失去焦点，因此会触发输入框的 blur 事件。
+
 - Android: 触发键盘上的按钮收起键盘时，输入框并不会失去焦点，因此不会触发页面的 blur 事件；触发输入框以外的区域时，输入框会失去焦点，触发输入框的 blur 事件。
 
 
 ## 3. 监听键盘的弹出与收起
+
 在 h5 中目前没有接口可以直接监听键盘事件，但我们可以通过分析键盘弹出、收起的触发过程及表现形式，来判断键盘是弹出还是收起的状态。
 
 - 键盘弹出：输入框获取焦点时会自动触发键盘的弹起动作，因此，我们可以监听输入框的 focus 事件，在里面实现键盘弹出后所需的页面逻辑。这在 ios 及 android 中表现一致。
+
 - 键盘收起：从第 2 部分可知，触发键盘收起的不同形式会存在差异化表现，当触发其他页面区域收起键盘时，我们可以监听输入框的 blur 事件，在里面实现键盘收起后所需的页面逻辑。而在通过键盘按钮收起键盘时在 ios 与 android 端存在差异化表现，下面具体分析：
 
     - IOS：触发了输入框 blur 事件，仍然通过该办法监听。
-    - Android：没有触发输入框的 blur 事件。但通过第 1、2 部分我们可以知道，在 android 中，键盘的状态切换（弹出、收起）不仅和输入框关联，同时还会影响到 webview 高度的变化，那我们不妨通过监听 webview height 的变化来判断键盘是否收起。
+    
+	- Android：没有触发输入框的 blur 事件。但通过第 1、2 部分我们可以知道，在 android 中，键盘的状态切换（弹出、收起）不仅和输入框关联，同时还会影响到 webview 高度的变化，那我们不妨通过监听 webview height 的变化来判断键盘是否收起。
 
-- 下面举例说明，其中页面中含有一个输入框：
-```
+下面举例说明，其中页面中含有一个输入框：
+
+```js
 <div class="txd"> 
 	Welcome to TXD!  
 </div>
@@ -29,22 +36,28 @@
 	<input id="input" type="tel" />
 </div>
 ```
+
 - ios & android 键盘弹出：
-```
+
+```js
 const $input = document.getElementById('input');
 $input.addEventListener('focus', () => {
 	// 处理键盘弹出后所需的页面逻辑
 }, false);
 ```
+
 - ios 键盘收起：
-```
+
+```js
 const $input = document.getElementById('input');
 $input.addEventListener('blur', () => {
 	// 处理键盘收起后所需的页面逻辑
 }, false);
 ```
+
 - android 键盘弹出与收起：
-```
+
+```js
 /*键盘弹起后页面高度变小*/
 const originHeight = document.documentElement.clientHeight || document.body.clientHeight;
 window.addEventListener('resize', () => {
