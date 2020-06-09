@@ -2,13 +2,76 @@
 
 ## 1. 基本数据类型有哪几种？null 是对象吗？基本数据类型和复杂数据类型(引用类型)存储有什么区别？
 
-- 基本类型有6种，分别是undefined,null,bool,string,number,symbol(ES6新增)。
+基本类型：在es2020发布了bigint类型之后，js中的基本类型一种包含七种，分别是
 
-- 虽然 typeof null 返回的值是 object,但是null不是对象，而是基本数据类型的一种。
+- string 字符类型
 
-- 基本数据类型存储在栈内存，存储的是值。五种基本类型: Undefined、Null、Boolean、Number和String。
+- number 数值类型
 
-- 复杂数据类型的值存储在堆内存，地址（指向堆中的值）存储在栈内存。当我们把对象赋值给另外一个变量的时候，复制的是地址，指向同一块内存空间，当其中一个对象改变时，另一个对象也会变化。引用类型: Object、Array和Function。
+- boolean 布尔类型
+
+- undefined
+
+- null
+
+- Symbol
+
+- Bigint
+
+虽然 typeof null 返回的值是 object,但是null不是对象，而是基本数据类型的一种。
+
+基本数据类型存储在栈内存，存储的是值。五种基本类型: Undefined、Null、Boolean、Number和String。
+
+- 基本类型的值是存放到栈内存里面的
+
+- 基本类型的比较是它们的值的比较
+
+- 基本类型的值是不可变的，对值的修改会在栈内存中开辟新的空间
+
+- 基本类型上面不能挂载新的属性
+
+```js
+let a = 2
+let b = a
+// 对a的值的修改，会在栈内存开辟新的空间，所以不会影响到b的值
+a = 3
+// 输出 3 2
+console.log(a,b)
+
+// 不能给基本类型上面挂载新的属性
+a.testProp = '挂载的属性'
+// 输出undefined
+console.log(a.testProp)
+```
+
+复杂数据类型的值存储在堆内存，地址（指向堆中的值）存储在栈内存。当我们把对象赋值给另外一个变量的时候，复制的是地址，指向同一块内存空间，当其中一个对象改变时，另一个对象也会变化。引用类型: Object、Array和Function。
+
+引用类型 在js中，除了八种基本类型，其他都属于引用类型: <font color=FF0000>Object,Array,Function,RegExp,Date</font>等等
+
+引用类型的特点包括
+
+- 引用类型的值保存在堆内存中，而引用保存到栈内存中
+
+- 引用类型的值是按引用访问的
+
+- 引用类型的值是可变的（在堆内存中直接修改）
+
+- 引用类型上面可以挂载新的属性
+
+```js
+let obj1 = {a: 1, b: 2}
+let obj2 = obj1
+// 因为引用类型的值是保存到堆内存的，obj1与obj2引用的是同一块堆内存空间，所以对obj1的值进行
+// 修改，会直接影响到obj2的值
+obj1.a = 3
+// 输出 3
+console.log(obj2.a)
+
+// 挂载新的属性
+obj1.testProp = '挂载的新属性值'
+// 输出 "挂载的新属性值"
+console.log(obj1.testProp)
+```
 
 ## 2. typeof 是否正确判断类型? instanceof呢？ instanceof 的实现原理是什么？
 
