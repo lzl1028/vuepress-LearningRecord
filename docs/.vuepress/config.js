@@ -185,7 +185,8 @@ module.exports = {
                     '/example/page/layout', // 页面布局
                     '/example/css/amplification', // 图片效果
                     '/example/html/input', // 自适应高度输入框
-                    '/example/js/scroll-top-absorption' // 滚动吸顶
+                    '/example/js/scroll-top-absorption', // 滚动吸顶
+                    '/example/file/upload-compressed', // 图片上传及canvas压缩
                 ]
             }]
         }
