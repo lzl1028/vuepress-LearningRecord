@@ -1,6 +1,6 @@
 module.exports = {
-    title: '天狼',
-    description: '这是Scorpion的Vue技术文档（博客）',
+    title: '天狼的Blog',
+    description: '这是Scorpion的Vuepress技术文档（博客）',
     // 注入到当前页面的 HTML <head> 中的标签
     head: [
         ['link', { rel: 'icon', href: '/favicon.ico' }], // 增加一个自定义的 favicon(网页标签的图标)
@@ -9,8 +9,19 @@ module.exports = {
     markdown: {
         lineNumbers: true // 代码块显示行号
     },
+    // 插件
+    plugins: [
+        ["@vuepress/back-to-top"], // 返回顶部
+        ["@vuepress/nprogress"], // 加载进度条
+        // globalUIComponents是用于注入全局的UI, 它以数组的形式接收参数名字, 这里的名字必须与components文件夹下的.vue文件同名, 全局UI就是一个Vue组件
+        {
+            name: "page-plugin",
+            globalUIComponents: ["fixed"],
+        },
+        // 
+    ],
     themeConfig: {
-        sidebarDepth: 2, // e'b将同时提取markdown中h2 和 h3 标题，显示在侧边栏上。
+        sidebarDepth: 1, // 将同时提取markdown中h2 标题，显示在侧边栏上。
         lastUpdated: 'Last Updated', // 文档更新时间：每个文件git最后提交的时间
         // 导航栏配置
         nav: [

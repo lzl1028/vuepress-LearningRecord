@@ -10,5 +10,10 @@
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "vuepress": "^1.2.0",
+        "@vuepress/plugin-back-to-top": "^1.5.1",
+        "@vuepress/plugin-nprogress": "^1.5.1"
+    }
 }
