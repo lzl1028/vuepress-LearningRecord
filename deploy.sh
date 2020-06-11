@@ -20,6 +20,6 @@ git commit -m 'deploy'
 git push -f git@github.com:Scorpio-li/vuepress-document master:gh-pages
 
 # 如果发布到 https://<USERNAME>.github.io/<REPO>  REPO=github上的项目
-# git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
+# git push -f git@github.com:Scorpio-li/vuepress-document.git master:gh-pages
 
 cd -
