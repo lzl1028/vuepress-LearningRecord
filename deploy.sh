@@ -16,10 +16,13 @@ git init
 git add -A
 git commit -m 'deploy'
 
+git config user.name 'lzl'
+git config user.email 'lzl102872@163.com'
 # 如果发布到 https://<USERNAME>.github.io  USERNAME=你的用户名 
-git push -f git@github.com:Scorpio-li/vuepress-document master:gh-pages
+# git push -f git@github.com:Scorpio-li/Scorpio-li.github.io.git master
 
 # 如果发布到 https://<USERNAME>.github.io/<REPO>  REPO=github上的项目
-# git push -f git@github.com:Scorpio-li/vuepress-document.git master:gh-pages
+# git push -f git@github.com:Scorpio-li/blog.git master:gh-pages
+git push -f https://github.com/Scorpio-li/blog.git master:gh-pages
 
 cd -

@@ -5,7 +5,7 @@ module.exports = {
     head: [
         ['link', { rel: 'icon', href: '/favicon.ico' }], // 增加一个自定义的 favicon(网页标签的图标)
     ],
-    base: '/vuepress-document/', // 这是部署到github相关的配置 下面会讲
+    base: '/blog/', // 这是部署到github相关的配置 下面会讲
     markdown: {
         lineNumbers: true // 代码块显示行号
     },
@@ -32,6 +32,7 @@ module.exports = {
                     { text: 'Javascript', link: '/Javascript/' },
                     { text: 'CSS', link: '/CSS/' },
                     { text: 'HTML', link: '/HTML/' },
+                    { text: 'Node', link: '/node/' },
                     { text: 'Browser(浏览器)', link: '/browser/' },
                     { text: 'expand(拓展)', link: '/expand/' }
                 ]
@@ -109,6 +110,9 @@ module.exports = {
                 'special', // html特殊标签
                 'base', // html基础标签
                 'methods', // html元素方法
+            ],
+            '/node/': [
+                'advance', // node 进阶需要了解的问题
             ],
             '/browser/': [
                 'work', // 浏览器工作原理
