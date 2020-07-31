@@ -4,10 +4,10 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "vuepress dev docs",
+        "docs:dev": "vuepress dev docs",
         "build": "vuepress build docs",
         "docs:build": "vuepress build docs",
-        "deploy": "bash deploy.sh"
+        "d": "bash deploy.sh"
     },
     "keywords": [],
     "author": "",

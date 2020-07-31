@@ -154,6 +154,7 @@ module.exports = {
                 children: [
                     '/outils/methods/url', // 常用URL参数操作方法
                     '/outils/methods/query', // js精准查询与模糊查询
+                    '/outils/methods/array', // js数组操作
                 ]
             }, {
                 title: '算法总结',
