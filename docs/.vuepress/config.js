@@ -113,6 +113,7 @@ module.exports = {
             ],
             '/node/': [
                 'advance', // node 进阶需要了解的问题
+                'build', // 搭建nodejs开发环境及目录设计
             ],
             '/browser/': [
                 'work', // 浏览器工作原理
