@@ -181,6 +181,7 @@ module.exports = {
                     '/work/project/error', // 前端开发中的常见错误
                     '/work/project/css', // 前端项目中常见的 CSS 问题
                     '/work/project/logo', // 网站 Logo
+                    '/work/project/login', // 用户无感刷新 access_token(登录)
                 ]
             }, {
                 title: '代码规范',

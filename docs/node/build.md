@@ -173,11 +173,11 @@ nodemon -w src 表示监听src目录下的文件变化，一旦文件变化将�
 
 
 ## 如何划分node目录结构实现一个node通用服务类Xoa来实现经典的MVC架构
-[1]()
+![1](../resources/images/node/directory-structure.jpg)
 
 具体目录如下：
 
-[2]()
+![2](../resources/images/node/directory-pic.jpg)
 ## 原生javascript实现一个简单的node服务层的封装
 
 我们都知道nodejs有http模块方便我们快速创建一个node服务器，代码可能长这个样子：
@@ -197,7 +197,7 @@ app.use(routerA)
 
 一个自己的小型服务框架：
 
-[3]()
+![3](../resources/images/node/xoa.jpg)
 
 代码如下：
 
@@ -253,7 +253,7 @@ app.listen(3000)
 好在node社区提供了一个强大的第三方模块glob，我们可以通过glob来遍历目录实现自动化注册路由，关于glob的用法这里就不带大家细说了，用法非常简单。
 比如我们的路由文件有如下几个：
 
-[4]()
+![4](../resources/images/node/routes.jpg)
 
 我们要保证路由目录下面的路由文件都有导出，然后在 入口文件中我们可以这么实现：
 ```js
