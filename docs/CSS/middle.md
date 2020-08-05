@@ -8,13 +8,13 @@
 
 - 用法：对子框设置display:inline-block，对父框设置text-align:center。
 
-```
+```html
 <div class="parent">
     <div class="child>DEMO</div>
 </div>
 ```
 
-```
+```css
 .child{
     display:inline-block;
 }
@@ -29,13 +29,13 @@
 
 - 用法：对子框设置display:table，再设置margin:0 auto。
 
-```
+```html
 <div class="parent">
     <div class="child>DEMO</div>
 </div>
 ```
 
-```
+```css
 .child {
     display:table;
     margin:0 auto;
@@ -48,13 +48,13 @@
 
 - 用法：对父框设置position:relative，对子框设置position:absolute，left:50%，transform:translateX(-50%)。
 
-```
+```html
 <div class="parent">
     <div class="child>DEMO</div>
 </div>
 ```
 
-```
+```css
 .parent {
     position:relative;
 }
@@ -71,13 +71,13 @@
 
 - 用法：先将父框设置为display:flex，再设置justify-content:center。
 
-```
+```html
 <div class="parent">
     <div class="child>DEMO</div>
 </div>
 ```
 
-```
+```css
 .parent {
     display:flex;
     justify-content:center;
@@ -90,13 +90,13 @@
 
 - 用法：先将父框设置为display:flex，再设置子框margin:0 auto。
 
-```
+```html
 <div class="parent">
     <div class="child>DEMO</div>
 </div>
 ```
 
-```
+```css
 .parent {
     display:flex;
 }
@@ -160,7 +160,7 @@
 
 - 用法：先将父框设置为display:table-cell，再设置vertical-align:middle。
 
-```
+```html
 <div class="parent">
     <div class="child>DEMO</div>
 </div>
@@ -196,17 +196,18 @@
 
 - 用法：先将父框设置为position:flex，再设置align-items:center。
 
-```
+```css
 .parent {
     position:flex;
     align-items:center;
 }
 ```
+
 ### 6. calc（动态计算）
 
 - 原理：让div的top属性与上方的距离（50%的外框高度 - 50%的div高度）
 
-```
+```css
 div {
     position: relative;
     top: calc(50% - 20px);
@@ -220,7 +221,7 @@ div {
 
 - 原理：使用inline-block+text-align水平居中，再用table-cell+vertical-align垂直居中，将二者结合起来。。
 
-```
+```css
 .parent {
     text-align:center;
     display:table-cell;
@@ -235,7 +236,7 @@ div {
 
 - 原理：将水平居中时的absolute+transform和垂直居中时的absolute+transform相结合。
 
-```
+```css
 .parent {
     position:relative;
 }
@@ -247,15 +248,123 @@ div {
 }
 ```
 
-### 3. 使用flex+justify-content+align-items
+### 3. 绝对定位 + margin
+
+```css
+.father {
+    position: relative;
+}
+.child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+}
+
+// 或者
+
+.father {
+    position: relative;
+}
+.child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+```
+
+
+### 4. 绝对定位 + calc
+
+```css
+.father {
+    position: relative;
+}
+.child {
+    /*position: absolute;*/
+    /*top: calc(50% - 50px);*/
+    /*left: calc(50% - 50px);*/
+
+    /*或者*/
+    position: absolute;
+    --widthChild: 100px;
+    --heightChild: 100px;
+    width: var(--widthChild);
+    height: var(--heightChild);
+    top: calc(50% - calc(var(--widthChild) / 2));
+    left: calc(50% - calc(var(--heightChild) / 2));
+}
+```
+
+### 5. 通过text-align
+
+```css
+.father {
+    line-height: 300px;
+    text-align: center;
+    font-size: 0;
+}
+.child {
+    font-size: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: initial;
+    text-align: left;
+}
+```
+
+### 6. 使用table-cell布局
+
+```css
+.father {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+.child {
+    display: inline-block;
+}
+```
+
+### 7. 使用flex+justify-content+align-items
 
 - 原理：通过设置CSS3布局利器flex中的justify-content和align-items，从而达到水平垂直居中。
 
-```
+```css
 .parent {
     display:flex;
     justify-content:center;
     align-items:center;
+}
+```
+
+### 8. 使用Grid
+
+```css
+.father {
+    display: grid;
+}
+.child {
+    align-self: center;
+    justify-self: center;
+}
+```
+
+### 9. writing-mode + text-align
+
+```css
+.father {
+    writing-mode: vertical-lr;
+    text-align: center;
+}
+.child {
+    writing-mode: horizontal-tb;
+    display: inline-block;
+    margin: 0 calc(50% - 50px);
 }
 ```
 
@@ -267,4 +376,24 @@ div {
 
 
 
+
+
+### 10. 伪元素 + calc 
+
+```css
+.father::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-left: -5px; /*content宽度*/
+}
+.child {
+    --widthChild: 100px;
+    width: var(--widthChild);
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: calc(calc(50% - calc(var(--widthChild) / 2)));
+}
+```
 
