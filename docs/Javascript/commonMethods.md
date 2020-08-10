@@ -184,6 +184,28 @@ console.log(list.sort(function() {
 })); // [2,1,3]
 ```
 
+- 方法二：
+
+```js
+const arrayShuffle = array => {
+    if (!Array.isArray(array)) {
+        throw new Error('Argument must be an array')
+	}
+    let end = array.length
+    if (!end) {
+        return array
+    }
+    while (end) {
+        let start = Math.floor(Math.random() * end--)
+        ;[array[start], array[end]] = [array[end], array[start]]
+    }
+    return array
+}
+
+// e.g.
+arrayShuffle([1, 2, 3])
+```
+
 ## 12. 实现值交换
 1. var temp = a; a = b; b = temp; (传统，但需要借助临时变量)
 2. a ^= b; b ^= a; a ^= b; (需要两个整数)
@@ -467,6 +489,15 @@ const dataType = obj => Object.prototype.toString.call(obj).replace(/^\[object (
 const isMobile = () => 'ontouchstart' in window
 ```
 
+## 判断是否支持webp图片格式
+
+```js
+const canUseWebp = () => (document.createElement('canvas').toDataURL('image/webp', 0.5).indexOf('data:image/webp') === 0)
+
+// e.g.
+canUseWebp() // 新版的chrome里为true，火狐里为false
+```
+
 ## fade动画
 
 ```js
@@ -542,3 +573,232 @@ input.oninput = ({target}) => {
 const removeHTML = (str = '') => str.replace(/<[\/\!]*[^<>]*>/ig, '')
 console.log(removeHTML('<h1>哈哈哈哈<呵呵呵</h1>')) // 哈哈哈哈<呵呵呵
 ```
+
+## 返回日期数列里与目标数列最近的日期下标
+
+```js
+const getNearestDateIndex = (targetDate, dates) => {
+    if (!targetDate || !dates) {
+        throw new Error('Argument(s) is illegal !')
+    }
+    if (!dates.length) {
+        return -1
+    }
+    const distances = dates.map(date => Math.abs(date - targetDate))
+    return distances.indexOf(Math.min(...distances))
+}
+
+// e.g.
+const targetDate = new Date(2019, 7, 20)
+const dates = [
+  new Date(2018, 0, 1),
+  new Date(2019, 0, 1),
+  new Date(2020, 0, 1),
+]
+getNearestDateIndex(targetDate, dates) // 2
+```
+
+## 返回日期数列里最小的日期
+
+```js
+const getMinDate = dates => {
+    if (!dates) {
+        throw new Error('Argument(s) is illegal !')
+    }
+    if (!dates.length) {
+        return dates
+	}
+    return new Date(Math.min.apply(null, dates)).toISOString()
+}
+
+// e.g.
+const dates = [
+  new Date(2018, 3, 10),
+  new Date(2019, 3, 10),
+  new Date(2020, 3, 10),
+]
+getMinDate(dates) // 2018-04-09T16:00:00.000Z
+```
+
+## 连字符转驼峰
+
+```js
+const toCamelCase = (str = '', separator = '-') => {
+    if (typeof str !== 'string') {
+        throw new Error('Argument must be a string')
+    }
+    if (str === '') {
+        return str
+    }
+    const newExp = new RegExp('\\-\(\\w\)', 'g')
+    return str.replace(newExp, (matched, $1) => {
+        return $1.toUpperCase()
+    })
+}
+
+// e.g.
+toCamelCase('hello-world') // helloWorld
+```
+
+## 驼峰转连字符
+
+```js
+const fromCamelCase = (str = '', separator = '-') => {
+    if (typeof str !== 'string') {
+        throw new Error('Argument must be a string')
+    }
+    if (str === '') {
+        return str
+    }
+    return str.replace(/([A-Z])/g, `${separator}$1`).toLowerCase()
+}
+
+// e.g.
+fromCamelCase('helloWorld') // hello-world
+```
+
+## 等级判断
+
+```js
+const getLevel = (value = 0, ratio = 50, levels = '一二三四五') => {
+    if (typeof value !== 'number') {
+        throw new Error('Argument must be a number')
+    }
+    const levelHash = '一二三四五'.split('')
+	const max = levelHash[levelHash.length - 1]
+	return levelHash[Math.floor(value / ratio)] || max
+}
+
+// e.g.
+getLevel1(0) // 一
+getLevel1(40) // 一
+getLevel(77) // 二
+```
+
+## 判断dom是否相等
+
+```js
+const isEqualNode = (dom1, dom2) => dom1.isEqualNode(dom2)
+
+/*
+    <div>这是第一个div</div>
+    <div>这是第二个div</div>
+    <div>这是第一个div</div>
+*/
+const [一, 二, 三,] = document.getElementsByTagName('div')
+
+// e.g.
+isEqualNode(一, 二) // false
+isEqualNode(一, 三) // true
+isEqualNode(二, 三) // false
+```
+
+## 获取指定范围内的随机数
+
+```js
+const getRandom = (min = 0, max = 100) => {
+    if (typeof min !== 'number' || typeof max !== 'number') {
+        throw new Error('Argument(s) is illegal !')
+	}
+    if (min > max) {
+        [min, max] = [max, min]
+    }
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+// e.g.
+getRandom(1, 100) // 89
+getRandom(1, 100) // 5
+```
+
+## 文件尺寸格式化
+
+```js
+const formatSize = size => {
+    if (typeof +size !== 'number') {
+        throw new Error('Argument(s) is illegal !')
+	}
+    const unitsHash = 'B,KB,MB,GB'.split(',')
+    let index = 0
+    while (size > 1024 && index < unitsHash.length) {
+        size /= 1024
+        index++
+    }
+    return Math.round(size * 100) / 100 + unitsHash[index]
+}
+formatSize('10240') // 10KB
+formatSize('10240000') // 9.77MB
+```
+
+## 获取数组前/后指定数量元素
+
+```js
+const arrayRange = (array, index, distance = '+') => {
+    if (!Array.isArray(array) || typeof index !== 'number' || index < 0) {
+        throw new TypeError('Argument(s) is illegal');
+    }
+    return array.slice(0, `${distance}${index}`)
+}
+
+arrayRange(['a', 'b', 'c'], 2) // ["a", "b"]
+arrayRange(['a', 'b', 'c'], 2, '-') // ["a"]
+```
+
+## 用户名-手机号加密特殊处理
+
+### 用户名-只保留姓氏或中间字符特殊处理
+
+1. 方法 1:封装函数,利用substr截取字符串**
+
+```js
+function formatName(name) {
+  let newStr;
+  if (name.length === 2) {
+    newStr = name.substr(0, 1) + '*'; // 通过substr截取字符串从第0位开始截取,截取1个
+  } else if (name.length > 2) {
+    // 当名字大于2位时
+    let char = '';
+    for (let i = 0, len = name.length - 2; i < len; i++) {
+      // 循环遍历字符串
+      char += '*';
+    }
+    newStr = name.substr(0, 1) + char + name.substr(-1, 1);
+  } else {
+    newStr = name;
+  }
+
+  return newStr;
+}
+console.log(formatName('王海龙')); // 输出 王*龙
+```
+
+2. 方法 2: 使用正则表达式，只保留姓后面都变为`***``
+
+```js
+var str = '王小明';
+var reg = /(?<=.)./g;
+result = str.replace(reg, '*');
+console.log(result); // 王**
+```
+
+### 手机号码中间 4 位用星号（*）替换显示
+
+1. 方法 1: 使用正则表达式
+
+```js
+var phone = '13701134148';
+var resultPhone = phone.replace(/^(\d{3})\d{4}(\d+)/, '$1****$2');
+console.log(resultPhone); // 137****4148
+```
+
+2. 方法 2: 使用substr方法,字符串截取
+
+```js
+var phone = '13701134148';
+var mphone = phone.substr(0, 3) + '****' + phone.substr(7);
+console.log(mphone);
+// 如果用 Es6 模板字符串的话,可以不用+号做拼接
+var phone = '13701134148';
+var mphone = `${phone.substr(0, 3)}****${phone.substr(7)}`;
+```
+

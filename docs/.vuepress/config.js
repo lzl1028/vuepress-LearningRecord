@@ -94,6 +94,7 @@ module.exports = {
                 'jq-js', // jQuery-JavaScript一览表
                 'regularExpression', // 正则表达式
                 'closure', // 闭包,
+                'inherit', // js继承
             ],
             '/CSS/': [
                 'attribute', // css3属性与变量
@@ -183,6 +184,7 @@ module.exports = {
                     '/work/project/logo', // 网站 Logo
                     '/work/project/login', // 用户无感刷新 access_token(登录)
                     '/work/project/scheme', // 项目中遇到的一些问题的解决方案
+                    '/work/project/optimize', // 项目中遇到的一些问题的解决方案
                 ]
             }, {
                 title: '代码规范',

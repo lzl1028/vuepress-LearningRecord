@@ -1021,3 +1021,202 @@ export default {
 ## 24.组件名应该由多个单词组成
 
 因为这样做可以避免跟现有的以及未来的 HTML 元素相冲突。更关键的是，这样做不会被打，当然你也可以做，祝你好运，（手动调皮）。
+
+## 25. 文本格式化，filter更简单
+
+### 使用filter 简化逻辑
+
+我想把时间戳显示成yyyy-MM-DD HH:mm:ss的格式怎么办？是需要在代码中先将日期格式化之后，再渲染到模板吗？就像下面这样
+
+```js
+<template>
+  <div>
+    {{ dateStr }}
+    <ul>
+      <li v-for="(item, index) in getList" :key="index">
+        {{ item.date }}
+      </li>
+    </ul>
+  </div>
+</template>
+<script>
+import { format } from '@/utils/date'
+export default {
+  data() {
+    return {
+      date: Date.now(),
+      list: [
+        {
+          date: Date.now()
+        }
+      ]
+    }
+  },
+  computed: {
+    dateStr() {
+      return format(this.date, 'yyyy-MM-DD HH:mm:ss')
+    },
+    getList() {
+      return this.list.map(item => {
+        return {
+          ...item,
+          date: format(item.date, 'yyyy-MM-DD HH:mm:ss')
+        }
+      })
+    }
+  }
+}
+</script>
+```
+
+像上面的写法，针对每一个日期字段都需要调用format，然后通过计算属性进行转换？这时候可以考虑使用Vue提供的filter去简化
+
+```js
+<template>
+  <div>
+    <!--使用过滤器-->
+    {{ dateStr | formatDate }}
+    <ul>
+      <li v-for="(item, index) in list" :key="index">
+        <!--在v-for中使用过滤器-->
+        {{ item.date | formatDate }}
+      </li>
+    </ul>
+  </div>
+</template>
+<script>
+import { format } from '@/utils/date'
+export default {
+  filters: {
+    formatDate(value) {
+      return format(value, 'yyyy-MM-DD HH:mm:ss')
+    }
+  },
+  data() {
+    return {
+      date: Date.now(),
+      list: [
+        {
+          date: Date.now()
+        }
+      ]
+    }
+  }
+}
+</script>
+```
+
+### 注册全局filter
+
+有些过滤器使用的很频繁，比如上面提到的日期过滤器，在很多地方都要使用，这时候如果在每一个要用到的组件里面都去定义一遍，就显得有些多余了，这时候就可以考虑Vue.filter注册全局过滤器
+
+对于全局过滤器，一般建议在项目里面添加filters目录，然后在filters目录里面添加
+
+```js
+// filters\index.js
+
+import Vue from 'vue'
+import { format } from '@/utils/date'
+
+Vue.filter('formatDate', value => {
+  return format(value, 'yyyy-MM-DD HH:mm:ss')
+})
+```
+
+然后将filters里面的文件引入到main.js里面，这时候就可以在组件里面直接用了，比如将前面的代码可以修改为
+
+```js
+<template>
+  <div>
+    <!--使用过滤器-->
+    {{ dateStr | formatDate }}
+    <ul>
+      <li v-for="(item, index) in list" :key="index">
+        <!--在v-for中使用过滤器-->
+        {{ item.date | formatDate }}
+      </li>
+    </ul>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      date: Date.now(),
+      list: [
+        {
+          date: Date.now()
+        }
+      ]
+    }
+  }
+}
+</script>
+```
+
+## 释放组件资源
+
+什么是资源? 每创建出一个事物都需要消耗资源，资源不是凭空产生的，是分配出来的。所以说，当组件销毁后，尽量把我们开辟出来的资源块给销毁掉，比如 setInterval , addEventListener等，如果你不去手动给释放掉，那么它们依旧会占用一部分资源。这就导致了没有必要的资源浪费。多来几次后，可以想象下资源占用率肯定是上升的。
+
+- 添加的事件
+
+```js
+created() {
+  addEventListener('click', Function, false)
+},
+beforeDestroy() {
+  removeEventListener('click', Function false)
+}
+```
+
+- 定时器
+
+```js
+created() {
+  this.currentInterVal = setInterval(code,millisec,lang)
+},
+beforeDestroy() {
+  clearInterval(this.currentInterVal)
+}
+```
+
+## 长列表
+
+项目当中，会涉及到非常多的长列表场景，区别于普通的分页来说，大部分的前端在做这种 无限列表 的时候，大部分新手前端都是通过一个 vFor 将数据遍历出来，想的多一点的就是做一个分页。滚动到底部的时候就继续请求 API 。其实这也是未思考妥当的。随着数据的加载，DOM会越来越多，这样就导致了性能开销的问题产生了，当页面上的DOM太多的时候，难免给我的客户端造成一定的压力，所以对于长列表渲染的时候，建议将DOM移除掉，类似于图片懒加载的模式，只有出现在视图上的DOM才是重要的DOM。网络上有一些很好的解决方案，如 vue-virtual-scroller 库等等，大家可以理性的选择。
+
+## 图片合理的优化方式
+
+图片应该都不陌生吧，在网页中，往往存在大量的图片资源，这些资源或大或小。当我们页面中DOM中存在大量的图片时，难免不会碰到一些加载缓慢的问题，导致图片出现加载失败的问题。网络上大部分都在使用 懒加载 的使用方式，只有当 存在图片的DOM 出现在页面上才会进行图片的加载，无形中起到了分流的作用，下面就说一套实践的方案吧
+
+- 小图标使用 SVG 或者字体图标
+
+- 通过 base64 和 webp  的方式加载小型图片
+
+- 能通过cdn加速的大图尽量用cdn
+
+- 大部分框架都带有懒加载的图片，不要嫌麻烦，多花点时间使用它
+
+## 路由器按需加载
+
+对于路由的懒加载，如果还不会的话，那么就真该好好的重新去学习一下了。路由懒加载的方式有两种，一种是require 另一种是 import 。当路由按需加载后，那么Vue服务在第一次加载时的压力就能够相应的小一些，不会出现 超长白屏P0问题 。下面是两种路由懒加载的写法：
+
+```js
+// require法
+component: resolve=>(require(['@/components/HelloWorld'],resolve))
+
+// import
+component: () => import('@/components/HelloWorld')
+```
+
+## UI框架使用方式
+
+确保在使用UI框架如， Element ， And Design 等UI框架的时候，都使用官方给暴露出来的按需加载组件。只有真正用到它的时候时候才会加载当前UI框架的组件，而不是一开始就将整个组件库给加载出来，我们都知道，一个UI框架其实很大，相对比其他的东西来说。因此，它在方便我们开发者的同时，也无形中产生了多余的开销。但是项目周期开发的时候，不得不依赖它。所以建议尽量的使用按需加载。合理的对项目进行止损，如果你不在意，非常嫌麻烦，那么可以进行全局引入。
+
+```js
+import { Button } from 'xxxx
+```
+
+## 首屏优化
+
+众所周知，第一次打开Vue的时候，如果你的项目够大，那么首次加载资源时，会非常的久。由于资源没有加载完毕，界面的DOM也不会渲染，会造成白屏的问题。用户此时并不知道是加载的问题，所以会带来一个不好的体验。因此通常会在public下写一个加载动画，告诉用户，网页在加载中这个提示。当页面加载成功后，页面渲染出来的这一个体验比白屏等开机要好太多了。因此，推荐大家都设计一个自家公司的loading加载方式放入index.html中吧。
+
