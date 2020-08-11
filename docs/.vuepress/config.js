@@ -111,6 +111,7 @@ module.exports = {
                 'special', // html特殊标签
                 'base', // html基础标签
                 'methods', // html元素方法
+                'video', // H5 video标签
             ],
             '/node/': [
                 'advance', // node 进阶需要了解的问题

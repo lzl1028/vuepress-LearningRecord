@@ -1220,3 +1220,130 @@ import { Button } from 'xxxx
 
 众所周知，第一次打开Vue的时候，如果你的项目够大，那么首次加载资源时，会非常的久。由于资源没有加载完毕，界面的DOM也不会渲染，会造成白屏的问题。用户此时并不知道是加载的问题，所以会带来一个不好的体验。因此通常会在public下写一个加载动画，告诉用户，网页在加载中这个提示。当页面加载成功后，页面渲染出来的这一个体验比白屏等开机要好太多了。因此，推荐大家都设计一个自家公司的loading加载方式放入index.html中吧。
 
+## 优雅更新props
+
+更新 prop 在业务中是很常见的需求，但在子组件中不允许直接修改 prop，因为这种做法不符合单向数据流的原则，在开发模式下还会报出警告。因此大多数人会通过 $emit 触发自定义事件，在父组件中接收该事件的传值来更新 prop。
+
+- child.vue
+
+```js
+export defalut {
+    props: {
+        title: String  
+    },
+    methods: {
+        changeTitle(){
+            this.$emit('change-title', 'hello')
+        }
+    }
+}
+``` 
+
+- parent.vue
+
+```html
+<child :title="title" @change-title="changeTitle"></child>
+```
+
+```js
+export default {
+    data(){
+        return {
+            title: 'title'
+        }  
+    },
+    methods: {
+        changeTitle(title){
+            this.title = title
+        }
+    }
+}
+```
+
+这种做法没有问题，我也常用这种手段来更新 prop。但如果你只是想单纯的更新 prop，没有其他的操作。那么 sync 修饰符能够让这一切都变得特别简单。
+
+```html
+<child :title.sync="title"></child>
+```
+
+```js
+export defalut {
+    props: {
+        title: String  
+    },
+    methods: {
+        changeTitle(){
+            this.$emit('update:title', 'hello')
+        }
+    }
+}
+```
+
+只需要在绑定属性上添加 .sync，在子组件内部就可以触发 update:属性名 来更新 prop。可以看到这种手段确实简洁且优雅，这让父组件的代码中减少一个“没必要的函数”。
+
+## provide/inject
+
+这对选项需要一起使用，以允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并在其上下游关系成立的时间里始终生效。
+
+简单来说，一个组件将自己的属性通过 provide 暴露出去，其下面的子孙组件 inject 即可接收到暴露的属性。
+
+- App.vue 
+
+```js
+export default {
+    provide() {
+        return {
+            app: this
+        }
+    } 
+}
+```
+
+- child.vue:
+
+```js
+export default {
+    inject: ['app'],
+    created() {
+        console.log(this.app) // App.vue实例
+    }
+}
+```
+
+- 在 2.5.0+ 版本可以通过设置默认值使其变成可选项:
+
+```js
+export default {
+    inject: {
+        app: {
+            default: () => ({})
+        }
+    },
+    created() {
+        console.log(this.app) 
+    }
+}
+```
+
+- 如果你想为 inject 的属性变更名称，可以使用 from 来表示其来源：
+
+```js
+export default {
+    inject: {
+        myApp: {
+            // from的值和provide的属性名保持一致
+            from: 'app',
+            default: () => ({})
+        }
+    },
+    created() {
+        console.log(this.myApp) 
+    }
+}
+```
+
+:::tips
+需要注意的是 provide 和 inject 主要在开发高阶插件/组件库时使用。并不推荐用于普通应用程序代码中。但是某些时候，或许它能帮助到我们。
+:::
+
+
