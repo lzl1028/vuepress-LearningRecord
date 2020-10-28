@@ -11,7 +11,6 @@ var isAndroid = /Android/i.test(navigator.userAgent);
 var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 ```
 ## 判断是否是手机浏览器
-
 ```js
 var isMobile = /mobi/i.test(navigator.userAgent.toLowerCase());
 ```
@@ -37,7 +36,7 @@ navigator.vibrate([]);
 ```js
 navigator.geolocation.getCurrentPosition();
 
-<!--可以通过配置enableHighAcuracy设置为高经度模式，默认为false。-->
+// <!--可以通过配置enableHighAcuracy设置为高经度模式，默认为false。-->
 navigator.geolocation.getCurrentPosition(locationSuccess, locationError, {
 
     enableHighAcuracy: true,

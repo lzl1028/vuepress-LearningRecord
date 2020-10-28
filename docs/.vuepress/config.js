@@ -209,6 +209,8 @@ module.exports = {
                     '/example/html/input', // 自适应高度输入框
                     '/example/js/scroll-top-absorption', // 滚动吸顶
                     '/example/file/upload-compressed', // 图片上传及canvas压缩
+                    '/example/map/visual-data-map', // 不依赖任何库实现自己的可视化数据地图
+                    '/example/back/vide-background', // 移动端背景视频
                 ]
             }]
         }

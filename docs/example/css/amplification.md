@@ -569,3 +569,501 @@ h1 {
 
 - mix-blend-mode — CSS 属性描述了元素的内容应该与元素的直系父元素的内容和元素的背景如何混合。
 :::
+
+### 鼠标滑过样式
+
+- 纯图片的DIV
+
+```html
+<div class="lists">
+    <a href="#" class="box">
+        <img src="avatar.jpg">
+    </a>
+    <a href="#" class="box">
+        <img src="avatar.jpg">
+    </a>
+</div>
+```
+
+#### 1. 缓动上移
+
+```css
+.lists{
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+}
+.box{
+    width: 200px;
+    height: 200px;
+    transition: all 0.3s;
+}
+.box~.box{
+    margin-left: 15px;
+}
+.box img{width: 100%;height: 100%;}
+.box:hover{
+    transform: translateY(-6px);
+}
+```
+
+#### 2. 放大效果
+
+```css
+.lists{
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+}
+.box{
+    width: 200px;
+    height: 200px;
+    transition: all 0.3s;
+}
+.box~.box{
+    margin-left: 15px;
+}
+.box img{width: 100%;height: 100%;}
+.box:hover{
+    transform: scale(1.03);
+}
+```
+
+#### 3. 框内放大效果
+
+```css
+.lists{
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+}
+.box{
+    width: 200px;
+    height: 200px;
+    overflow:hidden;
+}
+.box~.box{
+    margin-left: 15px;
+}
+.box img{
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s;
+}
+.box:hover img{
+    transform: scale(1.1);
+}
+```
+
+#### 4. 蒙层效果
+
+```css
+.lists{
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+}
+.box{
+    width: 200px;
+    height: 200px;
+    overflow:hidden;
+    background-color: #4f4f4f;
+}
+.box~.box{
+    margin-left: 15px;
+}
+.box img{
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s;
+}
+.box:hover img{
+    opacity: 0.8
+}
+```
+
+- 上图下文的DIV
+
+```html
+<div class="lists">
+    <a href="#" class="item">
+        <div class="item_pic">
+            <img src="avatar.jpg">
+        </div>
+        <div class="item_content">
+            <div class="title">Kitty的标题标题</div>
+            <div class="content">这是内容</div>
+        </div>
+    </a>
+</div>
+```
+
+#### 1. 框内放大图片+阴影
+
+```css
+.lists{
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+}
+.item{
+    width: 200px;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #eee;
+    transition: all 0.5s;
+}
+.item .item_pic{
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+.item .item_pic img{
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s;
+}
+.item:hover .item_pic img{
+    transform: scale(1.1);
+}
+.item:hover{
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+.item_content{
+    padding: 20px 10px;
+}
+```
+
+#### 2. 缓动上滑+阴影
+
+```css
+.lists{
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+}
+.item{
+    width: 200px;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #eee;
+    transition: all 0.5s;
+    margin-right: 20px;
+}
+.item .item_pic{
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+.item .item_pic img{
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s;
+}
+.item:hover{
+    /*-1或者-2最佳*/
+    transform: translateY(-1px);  
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+.item_content{
+    padding: 20px 10px;
+}
+```
+
+#### 3. 蒙层效果+文字变色+边框
+
+```css
+.lists{
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+}
+.item{
+    width: 200px;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #eee;
+    margin-right: 20px;
+    transition: all 0.5s;
+}
+.item .item_pic{
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    background-color: #4f4f4f;
+}
+.item .item_pic img{
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s;
+}
+.item:hover{
+    border: 1px solid green;
+}
+.item:hover .item_pic img{
+    opacity: 0.8;
+}
+.item:hover .item_content{
+    color: green;
+}
+.item_content{
+    padding: 20px 10px;
+    transition: all 0.5s;
+}
+```
+
+### 文字覆盖图片DIV
+
+```html
+<div class="box">
+    <img src="avatar.jpg" alt="Kitty的头像" />
+    <div class="box2">
+        <h3>Kitty的头像</h3>                
+        <p>Kitty的名字</p>
+    </div>            
+</div>
+```
+
+```css
+.box {
+    position:relative;
+    z-index:1;
+    display:inline-block;
+    overflow:hidden;
+    background:#3085a3;
+    text-align:center;
+    cursor:pointer
+}
+.box img {
+    width:200px;
+    height:200px;
+    opacity:1;
+    transition:opacity .35s,transform .35s;
+    float:left;
+}
+.box:hover img {
+    opacity:.5;
+}
+.box h3 {
+    margin-top:20%;
+    transition:transform .35s;
+    transform:translate3d(0,20px,0);
+    opacity:0;
+    color:#fff;
+    font-size:16px;
+}
+.box p {
+    margin:10px 0 0;
+    padding:15px;
+    border:1px solid #fff;
+    opacity:0;
+    transition:opacity .35s,transform .35s;
+    transform:translate3d(0,20px,0) scale(1.1);
+    color:#FFF;
+}
+.box:hover h3 {
+    transform:translate3d(0,0,0);
+    opacity:1;
+}
+.box:hover p {
+    opacity:1;
+    transform:translate3d(0,0,0) scale(1);
+}
+.box2 {
+    width:200px;
+    height:200px;
+    padding:15px;
+    position:absolute;
+    box-sizing: border-box;
+}   
+```
+
+### 文字滑动进入
+
+```html
+<div class="lists">
+    <div class="item">
+        <div class="text">
+          <h1>标题名称</h1>
+          <img src="avatar.jpg">
+          <h2 class="animate-text">Kitty 的测试案例</h2>
+          <p class="animate-text">这里放内容简介，内容简介,这里放内容简介，内容简介,这里放内容简介，内容简介</p>
+          <div class="dots"> <span></span> <span></span> <span></span> </div>
+        </div>
+    </div>
+</div>
+```
+
+```css
+* { margin: 0; padding: 0;}
+.lists{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+.item {
+    width: 300px;
+    height: 300px;
+    background-color: #99aeff;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.4s ease-out;
+    box-shadow: 0px 35px 77px -17px rgba(0, 0, 0, 0.44);
+    overflow: hidden;
+    color: #fff;
+}
+.item img {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    transition: all 0.4s ease-out;
+}
+.item .text {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    z-index: 99;
+    position: absolute;
+    padding: 30px;
+}
+.item h1 {
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+.item h2 {
+    margin-top: 20px;
+    font-style: italic;
+    transform: translateX(200px);
+}
+.item p {
+    margin-top: 20px;
+    line-height: 25px;
+    transform: translateX(-200px);
+    transition-delay: 0.2s;
+}
+.animate-text {
+    opacity: 0;
+    transition: all 0.6s ease-in-out;
+}
+.item:hover {
+    box-shadow: 0px 35px 77px -17px rgba(0, 0, 0, 0.64);
+    transform: scale(1.05);
+}
+.item:hover img {
+    opacity: 0.2;
+}
+.item:hover .animate-text {
+    transform: translateX(0);
+    opacity: 1;
+}
+.dots {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    margin: 0 auto;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.dots span {
+    width: 5px;
+    height: 5px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: block;
+    opacity: 0;
+    transition: transform 0.4s ease-out, opacity 0.5s ease;
+    transform: translateY(30px);
+}
+.item:hover span {
+    opacity: 1;
+    transform: translateY(0px);
+}
+.dots span:nth-child(1) {
+    transition-delay: 0.05s;
+}
+.dots span:nth-child(2) {
+    transition-delay: 0.1s;
+}
+.dots span:nth-child(3) {
+    transition-delay: 0.15s;
+}
+```
+
+### 按钮滑动进入
+
+```html
+<div class="item">
+    <img src="avatar.jpg" alt="" />
+    <div class="btns">
+        <div class="follow">关注</div>
+        <div class="love">点赞</div>
+    </div>
+</div>
+```
+
+```css
+.item{
+    width: 300px;
+    height: 300px;
+    margin: 100px auto;
+    cursor: pointer;
+    position: relative;
+}
+.item img{
+    width: 100%;
+    height: 100%;
+    background-color: #4f4f4f;
+    position: relative;
+    z-index: 2;
+}
+.item:hover .btns{
+    z-index: 3;
+}
+.item .btns{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.3);
+    transition: all 0.6s;
+}
+.follow,.love{
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-size: 14px;
+    opacity: 0;
+    background-color: #fff;
+    color: #999;
+}
+.item:hover .follow{
+    transform: translateY(80px);
+    opacity: 1;
+}
+.item:hover .love{
+    transform: translateY(-80px);
+    opacity: 1;
+}
+.follow{
+    position: absolute;
+    left: calc(50% - 50px);
+    top: -30px;
+}
+.love{
+    position: absolute;
+    bottom: -30px;
+    left: calc(50% - 50px);
+}
+```
