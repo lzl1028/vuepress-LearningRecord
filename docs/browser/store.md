@@ -1,6 +1,20 @@
 # 前端本地存储
 
-浏览器的本地存储主要分为<font color=FF0000>Cookie</font>、<font color=FF0000>WebStorage</font>和<font color=FF0000>IndexedDB</font>, 其中<font color=FF0000>WebStorage</font>又可以分为<font color=FF0000>localStorage</font>和<font color=FF0000>sessionStorage</font>。
+- 浏览器的本地存储主要分为:
+    
+    1. <font color=FF0000>Cookie</font>
+    
+    2. 浏览器存储 Api 又称<font color=FF0000>WebStorage</font>
+    
+    3. <font color=FF0000>IndexedDB</font>
+
+- 其中<font color=FF0000>WebStorage</font>又可以分为<font color=FF0000>localStorage</font>和<font color=FF0000>sessionStorage</font>。
+
+|   | cookie  | sessionStorage  | LocalStorage  | IndexedDB |
+| ------------ | ------------ | ------------ | ------------ | -------------- |
+|  存储大小	 |  大小不能超过 4kb	 |   |  存储大小限制为 5MB+	 |   |
+| 服务器通信	  |  浏览器会使用 Cookie HTTP-header 通过网络发送 cookie	 |  不会随每个请求被发送到服务器	 |   |   |
+|  生命周期	 |   |   |  数据不会过期。它在浏览器重启甚至系统重启后仍然存在	 |   |
 
 ## 1. cookie(cookie的内容主要包括：名字，值，过期时间，路径和域。)
 
@@ -9,6 +23,8 @@
 HTTP 协议是一个无状态协议，客户端向服务器发请求，服务器返回响应，故事就这样结束了，但是下次发请求如何让服务端知道客户端是谁呢？这种背景下，就产生了 Cookie.
 
 Cookie 本质上就是浏览器里面存储的一个很小的文本文件，内部以键值对的方式来存储(在chrome开发者面板的<font color=FF0000>Application</font>这一栏可以看到)。向同一个域名下发送请求，都会携带相同的 Cookie，服务器拿到 Cookie 进行解析，便能拿到客户端的状态。
+
+![cookie的组成参数](./images/cookie-constitute.png)
 
 ### 作用：用来做状态存储
 
@@ -24,9 +40,9 @@ cookie是纯文本，没有可执行代码。存储数据，当用户访问了�
 
 ### 特征
 
-1. 不同的浏览器存放的cookie位置不一样，也是不能通用的。
+1. 不同的浏览器存放的cookie位置不一样，也是不能通用的。（浏览器限制）
 
-2. cookie的存储是以域名形式进行区分的，不同的域下存储的cookie是独立的。
+2. cookie的存储是以域名形式进行区分的，不同的域下存储的cookie是独立的。（特定域限制）
 
 3. 我们可以设置cookie生效的域（当前设置cookie所在域的子域），也就是说，我们能够操作的cookie是当前域以及当前域下的所有子域
 
@@ -110,9 +126,13 @@ function checkCookie(){
 //这里对Cookie的生存期进行了定义，也就是355天
 ```
 
+::: tip
+注意： chrome87系统之后可以通过cookieStore进行cookie相关操作，并且增加了cookie监控方法
+:::
+
 ## 2. WebStorage
 
-### 1. localStorage（本地存储）
+### 1. localStorage（本地存储/永久存储）
 
 这是一种持久化的存储方式，也就是说如果不手动清除，数据就永远不会过期。它也是采用Key - Value的方式存储数据，底层数据接口是sqlite，按域名将数据分别保存到对应数据库文件里。它能保存更大的数据（IE8上是10MB，Chrome是5MB），同时保存的数据不会再发送给服务器，避免带宽浪费。
 
@@ -167,7 +187,7 @@ localStorage.clear()
 
 - ④ localStorage不能被爬虫爬取，不要用它完全取代URL传参
 
-### 2. sessionStorage(session机制是一种服务器端的机制，服务器使用一种类似于散列表的结构（也可能就是使用散列表）来保存信息。)
+### 2. sessionStorage(session机制是一种服务器端的机制，服务器使用一种类似于散列表的结构（也可能就是使用散列表）来保存信息。——跨回话存储)
 
 和服务器端使用的session类似，是一种会话级别的缓存，关闭浏览器会数据会被清除。不过有点特别的是它的作用域是窗口级别的，也就是说不同窗口间的sessionStorage数据不能共享的。使用方法（和localStorage完全相同）：
 
