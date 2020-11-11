@@ -857,9 +857,11 @@ xhttp = new ActiveXObject("Microsoft.XMLHTTP");
 - javaScript权威指南：
     1. null 和 undefined 都表示“值的空缺”，你可以认为undefined是表示系统级的、
     2. 出乎意料的或类似错误的值的空缺，而null是表示程序级的、正常的或在意料之中的值的空缺
+
 ## 8. JS哪些操作会造成内存泄露？
 
 （1）意外的全局变量引起的内存泄露。
+
 ```js
 function leak(){  
   leak="xxx";//leak成为一个全局变量，不会被回收  
@@ -873,6 +875,7 @@ function leak(){
 （4）被遗忘的定时器或者回调 
 
 （5）子元素存在引起的内存泄露。
+
 ## 9. 怎样添加、移除、移动、复制、创建和查找节点？
 
 （1）创建新节点

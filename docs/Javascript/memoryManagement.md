@@ -37,6 +37,7 @@ someElement.addEventListener('click', function(){
 ```
 
 - 有些函数调用结果是分配对象内存：
+
 ```js
 var d = new Date(); // 分配一个 Date 对象
 
@@ -44,6 +45,7 @@ var e = document.createElement('div'); // 分配一个 DOM 元素
 ```
 
 - 有些方法分配新变量或者新对象：
+
 ```js
 var s = "azerty";
 var s2 = s.substr(0, 3); // s2 是一个新的字符串
@@ -170,6 +172,10 @@ div.onclick = function() {
 
 ## 内存泄漏
 
+内存泄露（Memory Leaks）：是指应用程序已经不再需要的内存，由于某种原因未返回给操作系统或者空闲内存池（Pool of Free Memory）。
+
+内存泄露可能带来的问题：变慢、卡顿、高延迟。
+
 ### 什么是内存泄漏
 
 - 程序的运行需要内存。只要程序提出要求，操作系统或者运行时（runtime）就必须供给内存。
@@ -234,6 +240,7 @@ foo();
 #### 被遗忘的定时器和回调函数
 
 - 在很多库中, 如果使用了观察者模式, 都会提供回调方法, 来调用一些回调函数。 要记得回收这些回调函数。举一个 setInterval的例子：
+
 ```js
 var serverData = loadData();
 setInterval(function() {
@@ -243,6 +250,7 @@ setInterval(function() {
     }
 }, 5000); // 每 5 秒调用一次
 ```
+
 - 如果后续 renderer 元素被移除，整个定时器实际上没有任何作用。 但如果你没有回收定时器，整个定时器依然有效, 不但定时器无法被内存回收， 定时器函数中的依赖也无法回收。在这个案例中的 serverData 也无法被回收。
 
 
@@ -276,6 +284,7 @@ setInterval(replaceThing, 1000);
 #### DOM 引用
 
 - 很多时候, 我们对 Dom 的操作, 会把 Dom 的引用保存在一个数组或者 Map 中。
+
 ```js
 var elements = {
     image: document.getElementById('image')
@@ -292,6 +301,7 @@ function removeImage() {
 - 上述案例中，即使我们对于 image 元素进行了移除，但是仍然有对 image 元素的引用，依然无法对齐进行内存回收。
 
 - 另外需要注意的一个点是，对于一个 Dom 树的叶子节点的引用。
+
 举个例子: 如果我们引用了一个表格中的td元素，一旦在 Dom 中删除了整个表格，我们直观的觉得内存回收应该回收除了被引用的 td 外的其他元素。
 但是事实上，这个 td 元素是整个表格的一个子元素，并保留对于其父元素的引用。
 这就会导致对于整个表格，都无法进行内存回收。所以我们要小心处理对于 Dom 元素的引用。

@@ -204,6 +204,7 @@ module.exports = {
                 title: '实例',
                 children: [
                     '/example/css/descartes', // 笛卡尔心型曲线
+                    '/example/page/package', // package.json分析
                     '/example/page/layout', // 页面布局
                     '/example/css/amplification', // 图片效果
                     '/example/html/input', // 自适应高度输入框
