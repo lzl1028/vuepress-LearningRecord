@@ -248,7 +248,30 @@ slice/map/forEach/every/filter/reduce/entries/find
 
 ## 9. let、const 以及 var 的区别是什么？
 
-- let 和 const 定义的变量不会出现变量提升，而 var 定义的变量会提升。
+变量的赋值可以分为三个阶段：
+
+- 创建变量，在内存中开辟空间
+
+- 初始化变量，将变量初始化为undefined
+
+- 真正赋值
+
+关于let、var和function：
+
+- let 的「创建」过程被提升了，但是初始化没有提升。
+
+- var 的「创建」和「初始化」都被提升了。
+
+- function 的「创建」「初始化」和「赋值」都被提升了。
+
+<!-- - let 和 const 定义的变量不会出现变量提升，而 var 定义的变量会提升。 -->
+```js
+let name = 'ConardLi'
+{
+  console.log(name) // Uncaught ReferenceError: name is not defined
+  let name = 'code秘密花园'
+}
+```
 
 - let 和 const 是JS中的块级作用域
 

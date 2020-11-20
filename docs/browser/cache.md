@@ -245,9 +245,11 @@ Push Cache（推送缓存）是 HTTP/2 中的内容，当以上三种缓存都�
 
 在HTTP/1.0和HTTP/1.1当中，这个字段是不一样的。
 
-- 在早期，也就是HTTP/1.0时期，使用的是Expires
+- 在早期，也就是HTTP/1.0时期，使用的是Expires, **它指定了一个绝对的过期时期**
 
 - 而HTTP/1.1使用的是Cache-Control。让我们首先来看看Expires。
+
+这两个字段的效果是类似的，客户端都会通过对比本地时间和服务器返回的生存时间来检测缓存是否可用。如果缓存没有超出它的生存时间，客户端就会直接采用本地的缓存。如果生存日期已经过了，这个缓存也就宣告失效。接着客户端将再次与服务器进行通信来验证这个缓存是否需要更新。
 
 #### 1. Expires
 
@@ -309,11 +311,11 @@ Cache-Control:max-age=3600
 
 - 协商缓存生效，返回304和Not Modified
 
-![image]((../resources/images/browser/cache-3.png)
+![image](../resources/images/browser/cache-3.png)
 
 - 协商缓存失效，返回200和请求结果
 
-![image]((../resources/images/browser/cache-4.png)
+![image](../resources/images/browser/cache-4.png)
 
 - 协商缓存可以通过设置两种HTTP Header 实现：
     

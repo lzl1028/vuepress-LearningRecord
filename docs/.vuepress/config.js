@@ -132,6 +132,7 @@ module.exports = {
                 'drawing', // 浏览器如何渲染网页
                 'dns', // DNS基础知识
                 'mobile', // 移动端知识
+                'router', // 前端路由
             ],
             '/expand/': [
                 'safe', // 前端安全
