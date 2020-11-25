@@ -171,6 +171,74 @@ HTTP2 新增的一个强大的新功能，就是服务器可以对一个客户�
 
 ### 4. 善用缓存，不重复加载相同的资源
 
+### 5. 减少重绘重排
+
+#### 浏览器渲染过程
+
+1. 解析HTML生成DOM树。
+
+2. 解析CSS生成CSSOM规则树。
+
+3. 将DOM树与CSSOM规则树合并在一起生成渲染树。
+
+4. 遍历渲染树开始布局，计算每个节点的位置大小信息。
+
+5. 将渲染树每个节点绘制到屏幕。
+
+#### 重排
+
+当改变 DOM 元素位置或大小时，会导致浏览器重新生成渲染树，这个过程叫重排。
+
+#### 重绘
+
+当重新生成渲染树后，就要将渲染树每个节点绘制到屏幕，这个过程叫重绘。不是所有的动作都会导致重排，例如改变字体颜色，只会导致重绘。记住，重排会导致重绘，重绘不会导致重排 。
+
+重排和重绘这两个操作都是非常昂贵的，因为 JavaScript 引擎线程与 GUI 渲染线程是互斥，它们同时只能一个在工作。
+
+#### 什么操作会导致重排？
+
+- 添加或删除可见的 DOM 元素
+
+- 元素位置改变
+
+- 元素尺寸改变
+
+- 内容改变
+
+- 浏览器窗口尺寸改变
+
+#### 如何减少重排重绘？
+
+- 用 JavaScript 修改样式时，最好不要直接写样式，而是替换 class 来改变样式。
+
+- 如果要对 DOM 元素执行一系列操作，可以将 DOM 元素脱离文档流，修改完成后，再将它带回文档。推荐使用隐藏元素（display:none）或文档碎片（DocumentFragement），都能很好的实现这个方案。
+
+### 6. 使用事件委托
+
+事件委托利用了事件冒泡，只指定一个事件处理程序，就可以管理某一类型的所有事件。所有用到按钮的事件（多数鼠标事件和键盘事件）都适合采用事件委托技术， 使用事件委托可以节省内存。
+
+```js
+<ul>
+  <li>苹果</li>
+  <li>香蕉</li>
+  <li>凤梨</li>
+</ul>
+
+// good
+document.querySelector('ul').onclick = (event) => {
+  const target = event.target
+  if (target.nodeName === 'LI') {
+    console.log(target.innerHTML)
+  }
+}
+
+// bad
+document.querySelectorAll('li').forEach((e) => {
+  e.onclick = function() {
+    console.log(this.innerHTML)
+  }
+}) 
+```
 ## 打包发版
 
 ### 1.  压缩文件
@@ -265,6 +333,51 @@ img.src = img.dataset.src
 	}
 }
 ```
+
+#### (3). 降低图片质量
+
+例如 JPG 格式的图片，100% 的质量和 90% 质量的通常看不出来区别，尤其是用来当背景图的时候。我经常用 PS 切背景图时， 将图片切成 JPG 格式，并且将它压缩到 60% 的质量，基本上看不出来区别。
+
+压缩方法有两种:
+
+1. 一是通过 webpack 插件 image-webpack-loader
+
+2. 二是通过在线网站进行压缩。
+
+以下附上 webpack 插件 image-webpack-loader 的用法。
+
+```shell
+npm i -D image-webpack-loader
+```
+
+webpack 配置
+
+```js
+{
+  test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+  use:[
+    {
+    loader: 'url-loader',
+    options: {
+      limit: 10000, /* 图片大小小于1000字节限制时会自动转成 base64 码引用*/
+      name: utils.assetsPath('img/[name].[hash:7].[ext]')
+      }
+    },
+    /*对图片进行压缩*/
+    {
+      loader: 'image-webpack-loader',
+      options: {
+        bypassOnDebug: true,
+      }
+    }
+  ]
+}
+```
+
+
+#### (4). 使用 webp 格式的图片
+
+WebP 的优势体现在它具有更优的图像数据压缩算法，能带来更小的图片体积，而且拥有肉眼识别无差异的图像质量；同时具备了无损和有损的压缩模式、Alpha 透明以及动画的特性，在 JPEG 和 PNG 上的转化效果都相当优秀、稳定和统一。
 
 ## 函数
 

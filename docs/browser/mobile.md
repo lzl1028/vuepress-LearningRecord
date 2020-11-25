@@ -83,6 +83,7 @@
     body{font-family:Helvetica;}
     ```
 - 移动端字体单位font-size选择px还是rem
+    
     - 对于只需要适配少部分手机设备，且分辨率对页面影响不大的，使用px即可
 
     - 对于需要适配各种移动设备，使用rem，例如只需要适配iPhone和iPad等分辨率差别比较挺大的设备
