@@ -9,5 +9,6 @@
             "strings": true
         },
         "editor.acceptSuggestionOnEnter": "on"
-    }
+    },
+    "vscode.tsc.compiler.alertTSConfigChanges": "never"
 }

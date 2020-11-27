@@ -133,6 +133,7 @@ module.exports = {
                 'dns', // DNS基础知识
                 'mobile', // 移动端知识
                 'router', // 前端路由
+                'communication', // 多页应用中各个页签之间数据交互的技术手段
             ],
             '/expand/': [
                 'safe', // 前端安全
