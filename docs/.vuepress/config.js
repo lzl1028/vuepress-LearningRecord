@@ -188,6 +188,7 @@ module.exports = {
                     '/work/project/login', // 用户无感刷新 access_token(登录)
                     '/work/project/scheme', // 项目中遇到的一些问题的解决方案
                     '/work/project/optimize', // 项目中遇到的一些问题的解决方案
+                    '/work/project/dataEncryption', // 敏感数据加密方案
                 ]
             }, {
                 title: '代码规范',
