@@ -4,6 +4,57 @@
 
 nginx是一个高性能的HTTP和**反向代理服务器**，也是一个通用的TCP/UDP代理服务器，最初由俄罗斯人Igor Sysoev编写。
 
+### 安装Nginx
+
+- 在Linux服务器安装
+
+```linux
+yum -y install gcc
+yum install -y pcre pcre-devel
+yum install -y zlib zlib-devel
+yum install -y openssl openssl-devel                  【使用 https则需要下载这两个包】
+wget http://nginx.org/download/nginx-1.17.10.tar.gz   【按自己的需求安装指定版本】
+tar -zxvf nginx-1.17.10.tar.gz
+cd nginx-1.17.10
+./configure					      【默认安装到 /usr/local/nginx】
+make
+make install
+cd /usr/local/nginx/sbin/
+./nginx  			      		      【启动】
+./nginx -s reload 		     		      【重启】
+./nginx -s stop		      			      【停止】
+```
+
+> 如果端口被占用了，修改nginx的监听端口，再reload一下就好了【或者查看哪个进程用了，然后kill了（不推荐）】
+
+> nginx配置文件在 /usr/local/nginx/conf
+
+- 在服务器用docker安装
+
+```
+docker search nginx
+docker pull nginx:latest
+docker images
+docker run --name mynginx -p 12306:80 -d nginx 【启动一个名为mynginx的容器，并将本地的12306端口映射到容器内部的80端口】
+```
+
+> ps1：注意要在服务器的安全组配置一个12306的入口【访问 http://[服务器ip]:12306 】
+
+> ps2：docker需要进入容器查看配置，执行命令 docker exec -it [id] bash ，一般来说docker的容器里面是没有vim命令的，可以执行 apt-get update && apt-get install vim。一般来说，配置在 /etc/nginx
+
+- 在macOs安装【不推荐】
+
+```
+brew search nginx
+brew install nginx
+nginx -v		【查看版本】
+nginx 			【运行】
+nginx -s reload 	【重启】
+nginx -s stop		【停止】
+```
+
+> ps：如果端口被占用了，修改nginx的监听端口，再reload一下就好了【或者查看哪个进程用了，然后kill了（不推荐）】
+
 
 ## 2. 正向代理与反向代理
 
@@ -19,6 +70,8 @@ nginx是一个高性能的HTTP和**反向代理服务器**，也是一个通用�
 
 - 正向代理对我们是透明的，对服务端是非透明的，即服务端并不知道自己收到的是来自代理的访问还是来自真实客户端的访问。
 
+- 如果国内想访问google.com 是访问不到的，这时候我们可以访问一个能访问google.com的服务器Z，让这个服务器Z访问google.com后把google.com的内容返回给我们，这个服务器Z就叫做代理服务器。
+
 ### 反向代理
 
 - **反向代理**（Reverse Proxy）方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。
@@ -27,6 +80,7 @@ nginx是一个高性能的HTTP和**反向代理服务器**，也是一个通用�
 
 - 反向代理对服务端是透明的，对我们是非透明的，即我们并不知道自己访问的是代理服务器，而服务器知道反向代理在为他服务。
 
+- 当我们去访问baidu.com的时候，baidu会把这个请求打到一个服务器Z上【为了访问速度或者减轻服务器负担啥的】，再由这个服务器Z去转发我们的请求去我们不知道哪个的目标服务器，这个服务器Z就叫做反向代理服务器，类似于中转站。
 
 ## 3. 基本配置
 
@@ -118,6 +172,165 @@ http
 - location：配置请求的路由，以及各种页面的处理情况。
 
 - upstream：配置后端服务器具体地址，负载均衡配置不可或缺的部分。
+
+```
+# 更多配置信息 http://nginx.org/en/docs/
+user nginx;
+
+# 工作进程：一般是 cpu有几核就写几，可以最大限度的去发挥它的性能
+worker_processes auto;
+
+# 错误日志路径
+error_log /var/log/nginx/error.log;
+
+# 千万别动这玩意，是给守护进程用的
+pid /var/run/nginx.pid;
+
+# 负载动态模块
+include /usr/share/nginx/modules/*.conf
+
+# 并发连接数：最大并发数 -> 一个工作进程下的最大连接【默认 1024】
+events {
+    worker_connections 1024;
+}
+
+# http 配置
+http {
+    # 日志格式
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+                      
+    # 访问日志的路径
+    access_log          /var/log/nginx/access.log  main;
+    
+    # sendfile & tcp_nopush & tcp_nodelay的解释 https://www.jianshu.com/p/cac0a92b9530
+    # 是否允许上传文件
+    sendfile            on;
+    
+    # 允许把http response header和文件的开始放在一个文件里发布，作用是减少网络报文段的数量
+    tcp_nopush          on;
+    
+    # 内核会等待将更多的字节组成一个数据包，从而提高I/O性能
+    tcp_nodelay         on;
+    
+    # gzip 压缩
+    gzip                on;
+    
+    # 长连接多长时间没有通信自动断开
+    keepalive_timeout   65;
+    
+    # 为了快速处理静态数据集，例如服务器名称， 映射指令的值，MIME类型，请求头字符串的名称，nginx使用哈希表
+    types_hash_max_size 2048;
+    
+    # 文件扩展名与类型映射表
+    include             /etc/nginx/mime.types;
+    
+    # 默认文件类型
+    default_type        application/octet-stream;
+    
+    # 定义反向代理服务器
+    upstream web{
+        # 设置后，后面每次访问都是定位到第一次访问到的服务器
+        ip_hash;             
+        
+        # 这里的 server如果只写一个就是单纯的额外网发布,如果写 n 个就是负载均衡  
+        server 127.0.0.1:8080;
+        server 127.0.0.1:8888 weight=1; #添加权重
+    }
+    
+    #-------------------------------------------------------------------------
+    # 加载模块化配置文件，可以把下面 server的配置写到 /etc/nginx/conf.d/ 路径下的某个文件👇
+    # 👆 就可以直接引入，不需要在这个文件写server的配置
+    include                       /etc/nginx/conf.d/*.conf;
+    #-------------------------------------------------------------------------
+    
+    # 一个 server对应一个网站
+    server {
+        # 监听端口
+        listen       80 default_server;
+        listen       [::]:80 default_server;
+        
+        # server域名
+        server_name  localhost;
+        
+        # 站点根目录，即网站程序存放目录       
+        root         /usr/share/nginx/html;
+        
+        # 默认服务器块的加载配置文件
+        include          /etc/nginx/default.d/*.conf;
+        
+        # 对“/”启用反向代理
+        location / {
+            root     html;
+            index    index.html  index.htm;
+        }
+        
+        # 对“/xxx/”启用反向代理
+        location /xxx/ {
+            # 过来的请求代理到哪里，web为前面upstream定义的
+            proxy_pass http://web; 
+            
+            # 如果需要客户端 ip,这个开关可能会重写为反向代理的 ip
+            proxy_redirect off;
+            
+            # nginx 可能会改写头,用原来的值再把它改回来
+            proxy_set_header Hose $host;
+            
+            # 代理服务器转发请求的时候用的协议版本
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_cache_bypass $http_upgrade;
+            
+            # 取客户端真实 ip
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+            # 超时
+            proxy_connect_timeout 600;
+            proxy_read_timeout 600;
+        }
+        # 配置 https
+        server {
+            # 一定要带上 ssl 标记,默认 443 端口
+            listen       443 ssl;
+            server_name  work.com;
+            ssl                  on;
+            
+            # 证书
+            ssl_certificate      /etc/nginx/server.crt;
+            
+            # 密钥
+            ssl_certificate_key  /etc/nginx/server.key;
+            
+            # 超时
+            ssl_session_timeout  5m;
+            
+            location / {
+                root   /usr/local/web/;
+                add_header 'Cache-Control' 'no-store';
+            }
+            
+            error_page 404 /404.html;
+                location = /40x.html {
+            }
+            
+            error_page 500 502 503 504 /50x.html;
+                location = /50x.html {
+            }
+        }
+        
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+        
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    }
+}
+```
 
 
 ### 内置变量
