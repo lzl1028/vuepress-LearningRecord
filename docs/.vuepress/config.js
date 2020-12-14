@@ -95,6 +95,7 @@ module.exports = {
                 'regularExpression', // 正则表达式
                 'closure', // 闭包,
                 'inherit', // js继承
+                'prototype', // js原型及原型链
             ],
             '/CSS/': [
                 'attribute', // css3属性与变量
@@ -189,6 +190,7 @@ module.exports = {
                     '/work/project/scheme', // 项目中遇到的一些问题的解决方案
                     '/work/project/optimize', // 项目中遇到的一些问题的解决方案
                     '/work/project/dataEncryption', // 敏感数据加密方案
+                    '/work/project/timer', // 定时器时间间隔错误解决方案
                 ]
             }, {
                 title: '代码规范',
