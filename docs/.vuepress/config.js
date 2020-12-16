@@ -191,6 +191,8 @@ module.exports = {
                     '/work/project/optimize', // 项目中遇到的一些问题的解决方案
                     '/work/project/dataEncryption', // 敏感数据加密方案
                     '/work/project/timer', // 定时器时间间隔错误解决方案
+                    '/work/project/debugging', // 移动端调试
+                    '/work/project/backPosition', // 回到页面指定位置的三种方式
                 ]
             }, {
                 title: '代码规范',
