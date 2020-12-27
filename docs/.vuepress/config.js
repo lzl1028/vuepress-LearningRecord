@@ -78,7 +78,6 @@ module.exports = {
                 'performance', // 性能优化
                 'eventLoop', // 事件循环
                 'copy', // 深拷贝
-                'this', // this指向
                 'request', // 网络请求
                 'code', // 代码优化
                 'obj', // 对象操作
