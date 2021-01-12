@@ -95,6 +95,7 @@ module.exports = {
                 'closure', // 闭包,
                 'inherit', // js继承
                 'prototype', // js原型及原型链
+                'try-catch'
             ],
             '/CSS/': [
                 'attribute', // css3属性与变量
