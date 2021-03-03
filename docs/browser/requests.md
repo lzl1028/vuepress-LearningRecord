@@ -30,6 +30,7 @@
 
 - axios、request等众多开源库
 
+> Axios是对XMLHttpRequest的封装，而Fetch是一种新的获取资源的接口方式，并不是对XMLHttpRequest的封装。
 
 ## 三、原生Ajax的用法
 
@@ -272,4 +273,211 @@ fetch('http://www.xxx.com',options)
 
 
 
+
+## Fetch和Axios到底有什么区别
+
+最大的不同点在于Fetch是浏览器原生支持，而Axios需要引入Axios库。
+
+### 兼容性
+
+Axios可以兼容IE浏览器，而Fetch在IE浏览器和一些老版本浏览器上没有受到支持，但是有一个库可以让老版本浏览器支持Fetch即它就是whatwg-fetch，它可以让你在老版本的浏览器中也可以使用Fetch，并且现在很多网站的开发都为了减少成本而选择不再兼容IE浏览器。
+
+### 请求方式
+
+Axios：
+
+```js
+const options = {
+  url: "http://example.com/",
+  method: "POST",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json;charset=UTF-8",
+  },
+  data: {
+    a: 10,
+    b: 20,
+  },
+};
+
+axios(options).then((response) => {
+  console.log(response.status);
+});
+```
+
+Fetch：
+
+```js
+const url = "http://example.com/";
+const options = {
+  method: "POST",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json;charset=UTF-8",
+  },
+  body: JSON.stringify({
+    a: 10,
+    b: 20,
+  }),
+};
+
+fetch(url, options).then((response) => {
+  console.log(response.status);
+});
+```
+
+其中最大的不同之处在于传递数据的方式不同，**Axios是放到data属性**里，以**对象**的方式进行传递，而**Fetch则是需要放在body属性**中，以**字符串**的方式进行传递。
+
+### 响应超时
+
+Axios的相应超时设置是非常简单的，直接设置timeout属性就可以了，而Fetch设置起来就远比Axios麻烦，这也是很多人更喜欢Axios而不太喜欢Fetch的原因之一。
+
+```js
+axios({
+  method: "post",
+  url: "http://example.com/",
+  timeout: 4000, // 请求4秒无响应则会超时
+  data: {
+    firstName: "David",
+    lastName: "Pollock",
+  },
+})
+  .then((response) => {
+    /* 处理响应 */
+  })
+  .catch((error) => console.error("请求超时"));
+```
+
+Fetch提供了AbortController属性，但是使用起来不像Axios那么简单。
+
+```js
+const controller = new AbortController();
+
+const options = {
+  method: "POST",
+  signal: controller.signal,
+  body: JSON.stringify({
+    firstName: "David",
+    lastName: "Pollock",
+  }),
+};
+const promise = fetch("http://example.com/", options);
+
+// 如果4秒钟没有响应则超时
+const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+promise
+  .then((response) => {
+    /* 处理响应 */
+  })
+  .catch((error) => console.error("请求超时"));
+```
+
+### 对数据的转化
+
+Axios还有非常好的一点就是会自动对数据进行转化，而Fetch则不同，它需要使用者进行手动转化。
+
+```js
+// axios
+axios.get("http://example.com/").then(
+  (response) => {
+    console.log(response.data);
+  },
+  (error) => {
+    console.log(error);
+  }
+);
+
+// fetch
+fetch("http://example.com/")
+  .then((response) => response.json()) // 需要对响应数据进行转换
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => console.error(error));
+```
+
+Fetch提供的转化API有下面几种：
+
+- arrayBuffer()
+
+- blob()
+
+- json()
+
+- text()
+
+- formData()
+
+### HTTP拦截器
+
+Axios的一大卖点就是它提供了拦截器，可以统一对请求或响应进行一些处理，相信如果看过一个比较完整的项目的请求封装的话，一定对Axios的拦截器有一定的了解，它是一个非常重要的功能。
+
+使用它可以为请求附加token、为请求增加时间戳防止请求缓存，以及拦截响应，一旦状态码不符合预期则直接将响应消息通过弹框的形式展示在界面上，比如密码错误、服务器内部错误、表单验证不通过等问题。
+
+```js
+axios.interceptors.request.use((config) => {
+  // 在请求之前对请求参数进行处理
+  return config;
+});
+
+// 发送GET请求
+axios.get("http://example.com/").then((response) => {
+  console.log(response.data);
+});
+```
+
+而Fetch没有拦截器功能，但是要实现该功能并不难，直接重写全局Fetch方法就可以办到。
+
+```js
+fetch = ((originalFetch) => {
+  return (...arguments) => {
+    const result = originalFetch.apply(this, arguments);
+    return result.then(console.log("请求已发送"));
+  };
+})(fetch);
+
+fetch("http://example.com/")
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+  });
+```
+
+### 同时请求
+
+Axios：
+
+```js
+axios
+  .all([
+    axios.get("https://api.github.com/users/iliakan"),
+    axios.get("https://api.github.com/users/taylorotwell"),
+  ])
+  .then(
+    axios.spread((obj1, obj2) => {
+      ...
+    })
+  );
+```
+
+Fetch：
+
+```js
+Promise.all([
+  fetch("https://api.github.com/users/iliakan"),
+  fetch("https://api.github.com/users/taylorotwell"),
+])
+  .then(async ([res1, res2]) => {
+    const a = await res1.json();
+    const b = await res2.json();
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+### 浏览器原生支持
+
+Fetch唯一碾压Axios的一点就是现代浏览器的原生支持。
 
