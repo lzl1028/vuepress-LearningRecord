@@ -916,6 +916,7 @@ function leak(){
 - getElementsByTagName() //通过标签名称
 - getElementsByName() //通过元素的Name属性的值
 - getElementById() //通过元素Id，唯一性
+
 ## 10. $(document).ready()方法和window.onload有什么区别？
 
 (1)、window.onload方法是在网页中所有的元素(包括元素的所有关联文件)完全加载到浏览器后才执行的。
@@ -1320,3 +1321,41 @@ function instanceOf(left, right) {
   }
 }
 ```
+
+## 20. js的运行机制, 事件队列和循环
+
+## 21. HTTP协议
+
+## 22. cookie, session, token
+
+<!-- DOM -->
+
+## 事件关于事件的机制
+
+- 冒泡和捕获
+
+- 事件委托
+
+- 自定义事件
+
+- Event对象
+
+- 面向对象
+
+## 了解面向对象的思想，能够以面向对象的思想构建应用。比如封装一个日历组件，设计对象所需的属性值和方法。
+
+- new方法
+
+- 继承，派生
+
+- 原型和原型链
+
+## 函数
+
+- 熟悉Array，String等的方法
+
+- call和apply方法的使用
+
+- 链式调用
+
+- this

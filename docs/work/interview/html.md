@@ -449,5 +449,10 @@ window.resizeTo(screen.availWidth, screen.availHeight);//填充用户的屏幕
 
 （4）link支持使用Javascript控制DOM改变样式；而@import不支持。
 
-## 
+## 5. html语义化标签的理解; 结构化的理解; 能否写出简洁的html结构; SEO优化
+
+## 6. h5中新增的属性; 如自定义属性data, 类名className等, 新增表单元素, 拖拽Drag
+
+## 7. h5中新增的API, 修改的API, 废弃的API 稍作了解 (离线存储, audio, video)
+
 

@@ -286,3 +286,54 @@ SSR有着更好的SEO、并且首屏加载速度更快等优点。不过它也�
 - location.hash的值实际就是URL中#后面的东西。
 
 - history实际采用了HTML5中提供的API来实现，主要有history.pushState()和history.replaceState()。
+
+<!-- 基础 -->
+## 基本指令
+
+## 实例的属性和方法
+
+## 实例的生命周期
+
+## 组件基础: 创建,注册,添加属性方法,套用等…
+
+## 组件通信传值 父子, 兄弟, 跨级
+
+## 插槽slot等…
+
+<!-- 高级 -->
+
+## vue-router: 搭建SPA
+
+## 路由,组件的配置
+
+## 路由间的传值
+
+## 路由跳转
+
+## 路由的导航守卫
+
+## 记住在router.js 和 组件页面中的使用方式
+
+## vuex: 状态管理: 数据仓库store
+
+## 实例化仓库的5大属性的使用：state, getters, mutations, actions, modules
+
+## 辅助函数mapState等…, 仓库中计算属性的映射, 方便操作
+
+## 记住在 store.js 和 组件中 使用方式
+
+<!-- VUE深入, 源码阅读 -->
+
+## 数据响应式原理
+
+## virtual dom
+
+## diff 算法
+
+## nextTick等等…
+
+## vue2和vue3的数据绑定
+
+## vue3的componest API
+
+## vite的用法

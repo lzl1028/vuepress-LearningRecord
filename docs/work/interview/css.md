@@ -381,7 +381,8 @@ CSS : @media only screen and (max-device-width:480px) {/css样式/}
 
 ## 21. 怎么让Chrome支持小于12px 的文字？
 ```css
-p{font-size:10px;-webkit-transform:scale(0.8);} //0.8是缩放比例
+p{font-size:10px;-webkit-transform:scale(0.8);} 
+/* 0.8是缩放比例 */
 ```
 
 ---
@@ -457,3 +458,17 @@ p{font-size:10px;-webkit-transform:scale(0.8);} //0.8是缩放比例
     3. CSS3中伪类和伪元素的语法不同；
     4. 可以同时使用多个伪类，而只能同时使用一个伪元素；
     
+    
+## CSS选择器( 三大特性 )
+
+## BFC机制
+
+## 盒模型
+
+## CSS模块化开发(封装); SCSS和LESS的使用
+
+## 屏幕适配 以及 页面自适应
+
+## CSS3中新增的选择器
+
+## CSS3中新增的属性, transform trasition animation等…
